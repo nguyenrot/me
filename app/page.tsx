@@ -1,5 +1,5 @@
 import Background3D from "@/components/Background3D";
-import HeroSection from "@/components/HeroSection";
+import Hero3D from "@/components/Hero3D";
 import AboutSection from "@/components/AboutSection";
 import SkillsSection from "@/components/SkillsSection";
 import ExperienceSection from "@/components/ExperienceSection";
@@ -11,7 +11,7 @@ export default function Home() {
     <main className="relative min-h-screen overflow-x-hidden">
       <Background3D />
       <div className="relative z-10">
-        <HeroSection />
+        <Hero3D />
         <AboutSection />
         <SkillsSection />
         <ExperienceSection />
