@@ -163,6 +163,13 @@ body {
   pointer-events: none;
 }
 
+/* ─── CARD 3D TILT ─── */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+  will-change: transform;
+}
+
 /* ─── KEYFRAME ANIMATIONS ─── */
 
 @keyframes holo-shift {

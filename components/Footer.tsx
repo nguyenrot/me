@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+
+const FooterScene = dynamic(() => import("./3d/FooterScene"), { ssr: false });
 
 export default function Footer() {
   const [time, setTime] = useState("");
@@ -24,12 +27,14 @@ export default function Footer() {
 
   return (
     <footer className="relative px-4 pb-10 pt-6 sm:px-8">
-      <div className="mx-auto max-w-6xl">
+      <FooterScene />
+
+      <div className="relative z-10 mx-auto max-w-6xl">
         {/* Gradient divider */}
         <div className="mb-8 h-px bg-gradient-to-r from-transparent via-[rgba(255,215,0,0.25)] to-transparent" />
 
         <div className="text-center">
-          {/* Status line */}
+          {/* Status */}
           <p className="font-space text-[10px] uppercase tracking-[0.4em] text-[rgba(255,215,0,0.35)]">
             ◈ Cultivation Stable • Qi Flow Optimal • Realm: Active ◈
           </p>
@@ -40,6 +45,7 @@ export default function Footer() {
             style={{
               color: "#ffd700",
               textShadow: "0 0 12px rgba(255,215,0,0.3)",
+              animation: "neon-pulse-gold 3s ease-in-out infinite",
             }}
           >
             Phạm Kỷ Nguyên
