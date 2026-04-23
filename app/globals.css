@@ -170,6 +170,66 @@ body {
   will-change: transform;
 }
 
+/* Rotating border beam — conic gradient via pseudo-elements */
+.border-beam-wrapper {
+  position: absolute;
+  inset: -1px;
+  z-index: 10;
+  border-radius: inherit;
+  overflow: hidden;
+  transition: opacity 0.4s ease;
+  /* Outer glow aura — pulsing shadow in beam color */
+  box-shadow:
+    0 0 8px 1px var(--beam-color, #ffd700),
+    0 0 20px 2px color-mix(in srgb, var(--beam-color, #ffd700) 40%, transparent),
+    inset 0 0 8px 1px color-mix(in srgb, var(--beam-color, #ffd700) 15%, transparent);
+  animation: beam-glow-pulse 2.5s ease-in-out infinite;
+}
+
+/* Spinning gradient layer */
+.border-beam-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(
+    from var(--beam-angle, 0deg),
+    transparent 0%,
+    transparent 50%,
+    color-mix(in srgb, var(--beam-color, #ffd700) 30%, transparent) 62%,
+    var(--beam-color, #ffd700) 72%,
+    #fff 80%,
+    var(--beam-color, #ffd700) 88%,
+    color-mix(in srgb, var(--beam-color, #ffd700) 30%, transparent) 95%,
+    transparent 100%
+  );
+  animation: border-beam-spin 2.5s linear infinite;
+}
+
+/* Inner cutout — masks the center to leave only the border visible */
+.border-beam-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: inherit;
+  background: rgb(8 8 22 / 0.97);
+}
+
+@keyframes border-beam-spin {
+  0% { --beam-angle: 0deg; }
+  100% { --beam-angle: 360deg; }
+}
+
+@keyframes beam-glow-pulse {
+  0%, 100% { opacity: var(--_opacity, 1); }
+  50% { opacity: calc(var(--_opacity, 1) * 0.7); }
+}
+
+@property --beam-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 /* ─── KEYFRAME ANIMATIONS ─── */
 
 @keyframes holo-shift {

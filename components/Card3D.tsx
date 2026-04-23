@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useCallback, ReactNode } from "react";
+import { useRef, useCallback, useState, ReactNode } from "react";
 
 interface Card3DProps {
   children: ReactNode;
@@ -15,8 +15,8 @@ interface Card3DProps {
 }
 
 /**
- * 3D tilt card wrapper — mouse-tracking perspective tilt + dynamic light highlight.
- * Pure CSS/JS, no R3F overhead.
+ * 3D tilt card wrapper — mouse-tracking perspective tilt + dynamic light +
+ * rotating border beam on hover.
  */
 export default function Card3D({
   children,
@@ -31,6 +31,7 @@ export default function Card3D({
 }: Card3DProps) {
   const ref = useRef<HTMLDivElement>(null);
   const lightRef = useRef<HTMLDivElement>(null);
+  const [hovered, setHovered] = useState(false);
 
   const handleMove = useCallback(
     (e: React.MouseEvent) => {
@@ -60,23 +61,42 @@ export default function Card3D({
     const light = lightRef.current;
     if (el) el.style.transform = "perspective(800px) rotateX(0) rotateY(0) scale3d(1, 1, 1)";
     if (light) light.style.opacity = "0";
+    setHovered(false);
   }, []);
 
-  // Always render a div wrapper — use an inner anchor if needed
+  const handleEnter = useCallback(() => setHovered(true), []);
+
+  /* shared overlays */
+  const overlays = (
+    <>
+      {/* Rotating border beam */}
+      <div
+        className="border-beam-wrapper pointer-events-none"
+        style={{
+          opacity: hovered ? 1 : 0,
+          "--beam-color": glowColor,
+        } as React.CSSProperties}
+      />
+      {/* Light follow overlay */}
+      <div
+        ref={lightRef}
+        className="pointer-events-none absolute inset-0 z-20 rounded-[inherit] opacity-0 transition-opacity duration-300"
+      />
+    </>
+  );
+
   if (Tag === "a") {
     return (
       <div
         ref={ref}
         className={`card-3d ${className}`}
         onMouseMove={handleMove}
+        onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
         style={style}
       >
         <a href={href} target={target} rel={rel} className="absolute inset-0 z-30" />
-        <div
-          ref={lightRef}
-          className="pointer-events-none absolute inset-0 z-20 rounded-[inherit] opacity-0 transition-opacity duration-300"
-        />
+        {overlays}
         {children}
       </div>
     );
@@ -87,13 +107,11 @@ export default function Card3D({
       ref={ref}
       className={`card-3d ${className}`}
       onMouseMove={handleMove}
+      onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
       style={style}
     >
-      <div
-        ref={lightRef}
-        className="pointer-events-none absolute inset-0 z-20 rounded-[inherit] opacity-0 transition-opacity duration-300"
-      />
+      {overlays}
       {children}
     </div>
   );
