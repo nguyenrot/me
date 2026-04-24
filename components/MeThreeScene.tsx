@@ -4,6 +4,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 
+
 /* ─── GLOW TEXTURE ─── */
 function makeGlowTexture(): THREE.CanvasTexture {
   const size = 64;
@@ -31,15 +32,14 @@ function makeGlowTexture(): THREE.CanvasTexture {
 }
 
 /* ─── GOLDEN QI PARTICLES ─── */
-function GoldenQiParticles() {
-  const COUNT = 2500;
+function GoldenQiParticles({ count = 2500 }: { count?: number }) {
   const points = useRef<THREE.Points>(null);
   const glowTex = useMemo(() => makeGlowTexture(), []);
 
   const { positions, velocities } = useMemo(() => {
-    const pos = new Float32Array(COUNT * 3);
-    const vel = new Float32Array(COUNT * 3);
-    for (let i = 0; i < COUNT; i++) {
+    const pos = new Float32Array(count * 3);
+    const vel = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
       pos[i * 3] = (Math.random() - 0.5) * 30;
       pos[i * 3 + 1] = (Math.random() - 0.5) * 20;
       pos[i * 3 + 2] = (Math.random() - 0.5) * 16 - 2;
@@ -51,8 +51,8 @@ function GoldenQiParticles() {
   }, []);
 
   const sizes = useMemo(() => {
-    const s = new Float32Array(COUNT);
-    for (let i = 0; i < COUNT; i++) {
+    const s = new Float32Array(count);
+    for (let i = 0; i < count; i++) {
       s[i] = 0.03 + Math.random() * 0.06;
     }
     return s;
@@ -68,7 +68,7 @@ function GoldenQiParticles() {
     const mx = pointer.x * 12;
     const my = pointer.y * 8;
 
-    for (let i = 0; i < COUNT; i++) {
+    for (let i = 0; i < count; i++) {
       const i3 = i * 3;
       // Apply velocity
       arr[i3] += velocities[i3] + Math.sin(time * 0.3 + i * 0.1) * 0.002;
@@ -117,20 +117,19 @@ function GoldenQiParticles() {
 }
 
 /* ─── NEON CYBER PARTICLES ─── */
-function NeonParticles() {
-  const COUNT = 1200;
+function NeonParticles({ count = 1200 }: { count?: number }) {
   const points = useRef<THREE.Points>(null);
   const glowTex = useMemo(() => makeGlowTexture(), []);
 
   const { positions, colors } = useMemo(() => {
-    const pos = new Float32Array(COUNT * 3);
-    const col = new Float32Array(COUNT * 3);
+    const pos = new Float32Array(count * 3);
+    const col = new Float32Array(count * 3);
     const neonColors = [
       [0, 0.96, 1], // cyan
       [1, 0, 0.67], // magenta
       [0.67, 0, 1], // violet
     ];
-    for (let i = 0; i < COUNT; i++) {
+    for (let i = 0; i < count; i++) {
       pos[i * 3] = (Math.random() - 0.5) * 32;
       pos[i * 3 + 1] = (Math.random() - 0.5) * 22;
       pos[i * 3 + 2] = (Math.random() - 0.5) * 18 - 3;
@@ -150,7 +149,7 @@ function NeonParticles() {
     const arr = attr.array as Float32Array;
     const time = clock.getElapsedTime();
 
-    for (let i = 0; i < COUNT; i++) {
+    for (let i = 0; i < count; i++) {
       const i3 = i * 3;
       arr[i3] += Math.sin(time * 0.15 + i * 0.5) * 0.003;
       arr[i3 + 1] += Math.cos(time * 0.12 + i * 0.3) * 0.002;
@@ -368,8 +367,8 @@ export default function MeThreeScene() {
         intensity={0.15}
         color="#00f5ff"
       />
-      <GoldenQiParticles />
-      <NeonParticles />
+      <GoldenQiParticles count={1500} />
+      <NeonParticles count={800} />
       <SpiritualOrbs />
       <EnergyRings />
       <FloatingLotus position={[-6, 3, -5]} scale={0.8} />

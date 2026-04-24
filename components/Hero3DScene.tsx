@@ -32,16 +32,6 @@ const CONFIG = {
   ORB_INTENSITY: 2.5,
   ORB_RING_COUNT: 3,
 
-  // Sword Swarm
-  SWORD_COUNT: 100,
-  SWORD_FOLLOW_SPEED: 0.02,
-  SWORD_SPREAD: 14,
-  SWORD_Z_MIN: -20,
-  SWORD_Z_MAX: -4,
-  SWORD_ROTATE_SPEED: 0.8,
-  SWORD_COLOR_A: "#8844ff",
-  SWORD_COLOR_B: "#00ccff",
-
   // Camera
   CAM_PARALLAX_X: 1.2,
   CAM_PARALLAX_Y: 0.8,
@@ -383,153 +373,8 @@ function EnergyOrb() {
   );
 }
 
-/* ══════════════════════════════════════════════════════════════
-   5. SWORD SWARM — 100 InstancedMesh swords following mouse
-   ══════════════════════════════════════════════════════════════ */
-
-// Custom sword geometry: elongated diamond/blade shape
-function makeSwordGeometry(): THREE.BufferGeometry {
-  const vertices = new Float32Array([
-    // Blade tip (top)
-    0, 1.0, 0,
-    // Blade edges
-    -0.06, 0.2, 0.02,
-    0.06, 0.2, 0.02,
-    0.06, 0.2, -0.02,
-    -0.06, 0.2, -0.02,
-    // Guard
-    -0.12, 0.0, 0.03,
-    0.12, 0.0, 0.03,
-    0.12, 0.0, -0.03,
-    -0.12, 0.0, -0.03,
-    // Pommel (bottom)
-    0, -0.35, 0,
-  ]);
-
-  const indices = [
-    // Top blade faces
-    0, 1, 2,  0, 2, 3,  0, 3, 4,  0, 4, 1,
-    // Middle body
-    1, 5, 6,  1, 6, 2,  2, 6, 7,  2, 7, 3,
-    3, 7, 8,  3, 8, 4,  4, 8, 5,  4, 5, 1,
-    // Bottom handle
-    9, 6, 5,  9, 7, 6,  9, 8, 7,  9, 5, 8,
-  ];
-
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
-  geo.setIndex(indices);
-  geo.computeVertexNormals();
-  return geo;
-}
-
-function SwordSwarm({
-  scrollProgress,
-}: {
-  scrollProgress: React.RefObject<number>;
-}) {
-  const meshRef = useRef<THREE.InstancedMesh>(null);
-  const { pointer } = useThree();
-
-  // Per-sword state
-  const swordState = useMemo(() => {
-    const state = [];
-    for (let i = 0; i < CONFIG.SWORD_COUNT; i++) {
-      state.push({
-        // Current position
-        x: (Math.random() - 0.5) * CONFIG.SWORD_SPREAD,
-        y: (Math.random() - 0.5) * CONFIG.SWORD_SPREAD * 0.7,
-        z:
-          CONFIG.SWORD_Z_MIN +
-          Math.random() * (CONFIG.SWORD_Z_MAX - CONFIG.SWORD_Z_MIN),
-        // Target offset from mouse
-        offsetX: (Math.random() - 0.5) * CONFIG.SWORD_SPREAD,
-        offsetY: (Math.random() - 0.5) * CONFIG.SWORD_SPREAD * 0.7,
-        // Rotation
-        rotX: Math.random() * Math.PI * 2,
-        rotY: Math.random() * Math.PI * 2,
-        rotZ: Math.random() * Math.PI * 2,
-        rotSpeedX: (Math.random() - 0.5) * CONFIG.SWORD_ROTATE_SPEED,
-        rotSpeedY: (Math.random() - 0.5) * CONFIG.SWORD_ROTATE_SPEED,
-        rotSpeedZ: (Math.random() - 0.5) * CONFIG.SWORD_ROTATE_SPEED * 0.3,
-        // Scale
-        scale: 0.3 + Math.random() * 0.5,
-        // Follow speed (variation per sword)
-        followSpeed: CONFIG.SWORD_FOLLOW_SPEED * (0.5 + Math.random() * 1.0),
-      });
-    }
-    return state;
-  }, []);
-
-  const swordGeo = useMemo(() => makeSwordGeometry(), []);
-
-  // Two-color gradient material
-  const swordMat = useMemo(() => {
-    return new THREE.MeshBasicMaterial({
-      color: CONFIG.SWORD_COLOR_A,
-      transparent: true,
-      opacity: 0.65,
-      toneMapped: false,
-    });
-  }, []);
-
-  const dummy = useMemo(() => new THREE.Object3D(), []);
-
-  useFrame(({ clock }) => {
-    if (!meshRef.current) return;
-    const time = clock.getElapsedTime();
-    const scroll = scrollProgress.current ?? 0;
-
-    // Mouse target in world-ish coords
-    const mx = pointer.x * 8;
-    const my = pointer.y * 5;
-
-    // Scroll makes swords fly faster and fade
-    const scrollFade = Math.max(0, 1 - scroll * 2);
-    const scrollSpeed = 1 + scroll * 3;
-
-    for (let i = 0; i < CONFIG.SWORD_COUNT; i++) {
-      const s = swordState[i];
-
-      // Target position: mouse + offset
-      const targetX = mx + s.offsetX;
-      const targetY = my + s.offsetY;
-
-      // Smooth follow
-      s.x += (targetX - s.x) * s.followSpeed;
-      s.y += (targetY - s.y) * s.followSpeed;
-
-      // Rotation
-      s.rotX += s.rotSpeedX * 0.016 * scrollSpeed;
-      s.rotY += s.rotSpeedY * 0.016 * scrollSpeed;
-      s.rotZ += s.rotSpeedZ * 0.016;
-
-      // Gentle float
-      const floatY = Math.sin(time * 0.5 + i * 0.3) * 0.3;
-
-      dummy.position.set(s.x, s.y + floatY, s.z);
-      dummy.rotation.set(s.rotX, s.rotY, s.rotZ);
-      dummy.scale.setScalar(s.scale * scrollFade);
-      dummy.updateMatrix();
-      meshRef.current.setMatrixAt(i, dummy.matrix);
-    }
-    meshRef.current.instanceMatrix.needsUpdate = true;
-
-    // Fade material
-    swordMat.opacity = 0.65 * scrollFade;
-  });
-
-  return (
-    <instancedMesh
-      ref={meshRef}
-      args={[swordGeo, swordMat, CONFIG.SWORD_COUNT]}
-      frustumCulled={false}
-    />
-  );
-}
-
 /* ═══════════════════════════════════════════
-   6. CAMERA RIG — parallax + scroll
+   5. CAMERA RIG — parallax + scroll
    ═══════════════════════════════════════════ */
 function CameraRig({
   scrollProgress,
@@ -627,7 +472,6 @@ export default function Hero3DScene({
       <QiParticles />
       <FloatingRunes />
       <EnergyOrb />
-      <SwordSwarm scrollProgress={scrollProgress} />
       <CameraRig scrollProgress={scrollProgress} />
 
       {/* Postprocessing — Bloom for the glow */}

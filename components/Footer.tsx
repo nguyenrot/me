@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import {
   heroDividerClassName,
@@ -10,8 +9,6 @@ import {
   heroTitleStyle,
   heroTransition,
 } from "./motion/heroEffects";
-
-const HeroSectionScene = dynamic(() => import("./3d/HeroSectionScene"), { ssr: false });
 
 export default function Footer() {
   const [time, setTime] = useState("");
@@ -35,8 +32,6 @@ export default function Footer() {
 
   return (
     <footer className="relative px-4 pb-10 pt-6 sm:px-8">
-      <HeroSectionScene />
-
       <div className="relative z-10 mx-auto max-w-6xl">
         {/* Gradient divider */}
         <div className={`${heroDividerClassName} mx-auto mb-8 w-full max-w-3xl`} />

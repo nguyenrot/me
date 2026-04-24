@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
 import Card3D from "./Card3D";
 import {
   heroAccent,
@@ -16,8 +15,6 @@ import {
   heroTransition,
 } from "./motion/heroEffects";
 
-const HeroSectionScene = dynamic(() => import("./3d/HeroSectionScene"), { ssr: false });
-
 const SKILLS = [
   { name: "Python", description: "The universal elixir — a versatile spirit language, the foundation for all arts from backend sorcery to AI cultivation.", level: 92, color: "#ffd700", icon: "🐍" },
   { name: "Django", description: "An impenetrable heavenly fortress — a battle-tested framework for building web realms at divine speed.", level: 88, color: "#00f5ff", icon: "🏯" },
@@ -31,8 +28,6 @@ const SKILLS = [
 export default function SkillsSection() {
   return (
     <section id="skills" className="relative px-4 py-24 sm:px-8 sm:py-32">
-      <HeroSectionScene />
-
       <div className="relative z-10 mx-auto max-w-6xl">
         {/* Section Header */}
         <motion.div

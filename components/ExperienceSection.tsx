@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
 import Card3D from "./Card3D";
 import {
   heroAccent,
@@ -15,8 +14,6 @@ import {
   heroTransition,
 } from "./motion/heroEffects";
 
-const HeroSectionScene = dynamic(() => import("./3d/HeroSectionScene"), { ssr: false });
-
 const JOURNEY = [
   { period: "2026 — Present", title: "Software Development Engineer", org: "Workday", description: "Breakthrough to a new realm — joined one of the world's leading sects. Full-time cultivation, on-site. Elevating code mastery to an entirely new level of power.", accent: "#ffd700", badge: "CORE FORMATION" },
   { period: "2022 — 2026", title: "Software Engineer", org: "Paradox", description: "3 years 10 months of secluded cultivation in the Đà Nẵng Realm. Built a rock-solid foundation, mastering Django, SQL, and many other arts. Rose from disciple to pillar of the sect.", accent: "#00f5ff", badge: "FOUNDATION BUILDING" },
@@ -28,8 +25,6 @@ const JOURNEY = [
 export default function ExperienceSection() {
   return (
     <section id="journey" className="relative px-4 py-24 sm:px-8 sm:py-32">
-      <HeroSectionScene />
-
       <div className="relative z-10 mx-auto max-w-5xl">
         {/* Section Header */}
         <motion.div

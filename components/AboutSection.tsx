@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
 import Card3D from "./Card3D";
 import {
   heroAccent,
@@ -15,13 +14,9 @@ import {
   heroTransition,
 } from "./motion/heroEffects";
 
-const HeroSectionScene = dynamic(() => import("./3d/HeroSectionScene"), { ssr: false });
-
 export default function AboutSection() {
   return (
     <section id="about" className="relative px-4 py-24 sm:px-8 sm:py-32">
-      <HeroSectionScene />
-
       <div className="relative z-10 mx-auto max-w-5xl">
         {/* Section Header */}
         <motion.div

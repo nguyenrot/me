@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import dynamic from "next/dynamic";
 import Card3D from "./Card3D";
 import {
   heroAccent,
@@ -17,8 +16,6 @@ import {
   heroTransition,
 } from "./motion/heroEffects";
 
-const HeroSectionScene = dynamic(() => import("./3d/HeroSectionScene"), { ssr: false });
-
 const PROJECTS = [
   { icon: "🌐", name: "Vibe Hub", subtitle: "Main portal — personal digital realm hub", link: "https://pkn.io.vn", accent: "#ffd700" },
   { icon: "🌙", name: "Daily Vibe Journal", subtitle: "Neural mood logging system", link: "https://journal.pkn.io.vn", accent: "#00f5ff" },
@@ -31,8 +28,6 @@ const PROJECTS = [
 export default function LinksSection() {
   return (
     <section id="treasures" className="relative px-4 py-24 sm:px-8 sm:py-32">
-      <HeroSectionScene />
-
       <div className="relative z-10 mx-auto max-w-6xl">
         {/* Section Header */}
         <motion.div
