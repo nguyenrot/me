@@ -18,6 +18,7 @@ export default function Home() {
         <AboutSection />
         <SkillsSection />
         <ExperienceSection />
+        <SocialSection />
         <LinksSection />
         <Footer />
       </main>
