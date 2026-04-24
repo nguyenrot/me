@@ -18,8 +18,8 @@ export default function Home() {
         <AboutSection />
         <SkillsSection />
         <ExperienceSection />
-        <SocialSection />
         <LinksSection />
+        <SocialSection />
         <Footer />
       </main>
     </>
