@@ -2,13 +2,13 @@
 
 /* ─── FORCE DARK BACKGROUND (Tailwind v4 preflight fix) ─── */
 html {
-  background-color: #020208 !important;
+  background-color: #04010d !important;
   color-scheme: dark !important;
   scroll-behavior: smooth;
 }
 
 body {
-  background: #020208 !important;
+  background: #04010d !important;
   color: rgba(200, 216, 255, 0.88);
   min-height: 100vh;
   position: relative;
