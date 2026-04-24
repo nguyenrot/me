@@ -3,8 +3,8 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const POOL_MAX = 12;
-const SPAWN_RATE = 0.35;
+const POOL_MAX = 28;
+const SPAWN_RATE = 0.12;
 const COLORS = ["#ffd700", "#00ccff", "#aa44ff", "#ffffff", "#ffaaee"];
 
 type SparkleDot = {
@@ -31,9 +31,9 @@ export default function SparkleOverlay() {
         x: (e.clientX / window.innerWidth) * 100,
         y: (e.clientY / window.innerHeight) * 100,
         color: COLORS[Math.floor(Math.random() * COLORS.length)],
-        driftX: (Math.random() - 0.5) * 20,
-        driftY: -30 - Math.random() * 30,
-        duration: 0.5 + Math.random() * 0.4,
+        driftX: (Math.random() - 0.5) * 16,
+        driftY: -18 - Math.random() * 20,
+        duration: 0.9 + Math.random() * 0.6,
       },
     ]);
   }, []);
