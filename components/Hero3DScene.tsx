@@ -419,29 +419,9 @@ function CameraRig({
 function NebulaGlow() {
   return (
     <group>
-      {/* Large purple nebula */}
-      <mesh position={[0, 0, -30]}>
-        <planeGeometry args={[80, 80]} />
-        <meshBasicMaterial
-          color="#1a0533"
-          transparent
-          opacity={0.4}
-          toneMapped={false}
-        />
-      </mesh>
-      {/* Ambient light for subtle fill */}
       <ambientLight intensity={0.08} color="#8866cc" />
-      {/* Directional light for depth */}
-      <directionalLight
-        position={[5, 8, 5]}
-        intensity={0.15}
-        color="#aa66ff"
-      />
-      <directionalLight
-        position={[-5, -3, 2]}
-        intensity={0.08}
-        color="#00ccff"
-      />
+      <directionalLight position={[5, 8, 5]} intensity={0.15} color="#aa66ff" />
+      <directionalLight position={[-5, -3, 2]} intensity={0.08} color="#00ccff" />
     </group>
   );
 }
