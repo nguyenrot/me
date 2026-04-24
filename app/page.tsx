@@ -2,6 +2,7 @@ import Hero3D from "@/components/Hero3D";
 import AboutSection from "@/components/AboutSection";
 import SkillsSection from "@/components/SkillsSection";
 import ExperienceSection from "@/components/ExperienceSection";
+import SocialSection from "@/components/SocialSection";
 import LinksSection from "@/components/LinksSection";
 import Footer from "@/components/Footer";
 import SparkleOverlay from "@/components/SparkleOverlay";
