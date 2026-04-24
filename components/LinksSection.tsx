@@ -4,8 +4,20 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import dynamic from "next/dynamic";
 import Card3D from "./Card3D";
+import {
+  heroAccent,
+  heroCardMotion,
+  heroDividerClassName,
+  heroEyebrowClassName,
+  heroHeaderMotion,
+  heroScanlineStyle,
+  heroStagger,
+  heroSubtitleStyle,
+  heroTitleStyle,
+  heroTransition,
+} from "./motion/heroEffects";
 
-const LinksScene = dynamic(() => import("./3d/LinksScene"), { ssr: false });
+const HeroSectionScene = dynamic(() => import("./3d/HeroSectionScene"), { ssr: false });
 
 const PROJECTS = [
   { icon: "🌐", name: "Vibe Hub", subtitle: "Main portal — personal digital realm hub", link: "https://pkn.io.vn", accent: "#ffd700" },
@@ -19,30 +31,28 @@ const PROJECTS = [
 export default function LinksSection() {
   return (
     <section id="treasures" className="relative px-4 py-24 sm:px-8 sm:py-32">
-      <LinksScene />
+      <HeroSectionScene />
 
       <div className="relative z-10 mx-auto max-w-6xl">
         {/* Section Header */}
         <motion.div
           className="mb-12"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8 }}
+          {...heroHeaderMotion}
+          transition={heroTransition(0.3, 0.8)}
         >
-          <p className="font-space text-[11px] uppercase tracking-[0.4em] text-[rgba(0,245,255,0.5)]">
+          <p className={heroEyebrowClassName}>
             {">"} ls /vault/spiritual_treasures
           </p>
           <h2
             className="mt-4 font-orbitron text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight"
-            style={{ color: "#ffd700", textShadow: "0 0 20px rgba(255,215,0,0.3)" }}
+            style={heroTitleStyle}
           >
-            // SPIRITUAL TREASURES
+            {"// SPIRITUAL TREASURES"}
           </h2>
-          <p className="mt-3 font-space text-xs text-[rgba(200,216,255,0.45)]">
+          <p className="mt-3 font-space text-xs" style={heroSubtitleStyle}>
             {PROJECTS.length} artifacts discovered · all realms accessible
           </p>
-          <div className="mt-3 h-px w-32 bg-gradient-to-r from-[#ffd700] via-[#00f5ff] to-transparent" />
+          <div className={heroDividerClassName} />
         </motion.div>
 
         {/* Projects Grid */}
@@ -50,10 +60,8 @@ export default function LinksSection() {
           {PROJECTS.map((project, index) => (
             <motion.div
               key={project.name}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, delay: index * 0.08 }}
+              {...heroCardMotion}
+              transition={heroStagger(index, 0.4, 0.08, 0.85)}
             >
               <Card3D
                 as="a"
@@ -61,23 +69,17 @@ export default function LinksSection() {
                 target="_blank"
                 rel="noreferrer"
                 className="glass-dark group relative block overflow-hidden rounded-2xl p-6"
-                glowColor={project.accent}
+                glowColor={heroAccent(index)}
               >
                 {/* Hover border glow */}
                 <div
                   className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  style={{ boxShadow: `inset 0 0 0 1px ${project.accent}40, 0 0 20px ${project.accent}15` }}
+                  style={{ boxShadow: `inset 0 0 0 1px ${heroAccent(index)}40, 0 0 20px ${heroAccent(index)}20` }}
                 />
 
                 {/* Scanline */}
                 <div className="absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100">
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background: `linear-gradient(180deg, transparent, ${project.accent}06, transparent)`,
-                      animation: "scanline-sweep 2.5s linear infinite",
-                    }}
-                  />
+                  <div className="absolute inset-0" style={heroScanlineStyle} />
                 </div>
 
                 <div className="relative z-10">
@@ -94,14 +96,14 @@ export default function LinksSection() {
                     <ArrowUpRight
                       size={16}
                       className="mt-1 shrink-0 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
-                      style={{ color: `${project.accent}80` }}
+                      style={{ color: `${heroAccent(index)}99` }}
                     />
                   </div>
 
                   {/* Bottom accent */}
                   <div
                     className="mt-5 h-px rounded-full"
-                    style={{ background: `linear-gradient(90deg, transparent, ${project.accent}50, transparent)` }}
+                    style={{ background: `linear-gradient(90deg, transparent, ${heroAccent(index)}60, transparent)` }}
                   />
                 </div>
               </Card3D>

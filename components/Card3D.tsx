@@ -21,7 +21,7 @@ interface Card3DProps {
 export default function Card3D({
   children,
   className = "",
-  glowColor = "#ffd700",
+  glowColor = "#aa44ff",
   maxRotation = 8,
   as: Tag = "div",
   href,

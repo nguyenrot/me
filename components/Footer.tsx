@@ -2,8 +2,16 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
+import {
+  heroDividerClassName,
+  heroHeaderMotion,
+  heroSubtitleStyle,
+  heroTitleStyle,
+  heroTransition,
+} from "./motion/heroEffects";
 
-const FooterScene = dynamic(() => import("./3d/FooterScene"), { ssr: false });
+const HeroSectionScene = dynamic(() => import("./3d/HeroSectionScene"), { ssr: false });
 
 export default function Footer() {
   const [time, setTime] = useState("");
@@ -27,45 +35,41 @@ export default function Footer() {
 
   return (
     <footer className="relative px-4 pb-10 pt-6 sm:px-8">
-      <FooterScene />
+      <HeroSectionScene />
 
       <div className="relative z-10 mx-auto max-w-6xl">
         {/* Gradient divider */}
-        <div className="mb-8 h-px bg-gradient-to-r from-transparent via-[rgba(255,215,0,0.25)] to-transparent" />
+        <div className={`${heroDividerClassName} mx-auto mb-8 w-full max-w-3xl`} />
 
-        <div className="text-center">
+        <motion.div className="text-center" {...heroHeaderMotion} transition={heroTransition(0.3, 0.8)}>
           {/* Status */}
-          <p className="font-space text-[10px] uppercase tracking-[0.4em] text-[rgba(255,215,0,0.35)]">
+          <p className="font-space text-[10px] uppercase tracking-[0.4em] text-[rgba(0,204,255,0.5)]">
             ◈ Cultivation Stable • Qi Flow Optimal • Realm: Active ◈
           </p>
 
           {/* Name */}
           <p
             className="mt-4 font-orbitron text-lg font-bold tracking-[0.15em]"
-            style={{
-              color: "#ffd700",
-              textShadow: "0 0 12px rgba(255,215,0,0.3)",
-              animation: "neon-pulse-gold 3s ease-in-out infinite",
-            }}
+            style={heroTitleStyle}
           >
             Phạm Kỷ Nguyên
           </p>
 
           {/* Copyright */}
-          <p className="mt-3 font-space text-[10px] tracking-[0.25em] text-[rgba(200,216,255,0.35)]">
+          <p className="mt-3 font-space text-[10px] tracking-[0.25em]" style={heroSubtitleStyle}>
             © 2026 // Đà Nẵng, Việt Nam // me.pkn.io.vn
           </p>
 
           {/* Live clock */}
           {time && (
             <div className="mt-3 inline-flex items-center gap-2">
-              <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#ffd700] shadow-[0_0_6px_rgba(255,215,0,0.5)]" />
+              <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#aa44ff] shadow-[0_0_6px_rgba(170,68,255,0.7)]" />
               <span className="font-space text-[10px] tracking-[0.2em] text-[rgba(200,216,255,0.3)]">
                 {time} GMT+7
               </span>
             </div>
           )}
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

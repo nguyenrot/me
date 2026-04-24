@@ -20,12 +20,12 @@ body {
 @theme inline {
   --color-void: #020208;
   --color-void-surface: #0a0a14;
-  --color-gold: #ffd700;
-  --color-gold-deep: #f0b429;
-  --color-gold-dim: rgba(255, 215, 0, 0.15);
-  --color-cyan: #00f5ff;
+  --color-gold: #aa44ff;
+  --color-gold-deep: #cc66ff;
+  --color-gold-dim: rgba(170, 68, 255, 0.15);
+  --color-cyan: #00ccff;
   --color-magenta: #ff00aa;
-  --color-violet: #aa00ff;
+  --color-violet: #aa44ff;
   --color-text: rgba(200, 216, 255, 0.88);
   --color-text-dim: rgba(200, 216, 255, 0.55);
   --font-inter: var(--font-inter);
@@ -47,17 +47,17 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(255, 215, 0, 0.4), rgba(0, 245, 255, 0.3));
+  background: linear-gradient(180deg, rgba(170, 68, 255, 0.45), rgba(0, 204, 255, 0.35));
   border-radius: 999px;
-  border: 1px solid rgba(255, 215, 0, 0.15);
+  border: 1px solid rgba(170, 68, 255, 0.18);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, rgba(255, 215, 0, 0.65), rgba(0, 245, 255, 0.5));
+  background: linear-gradient(180deg, rgba(170, 68, 255, 0.7), rgba(0, 204, 255, 0.55));
 }
 
 ::selection {
-  background: rgba(255, 215, 0, 0.25);
+  background: rgba(170, 68, 255, 0.3);
   color: #fff;
 }
 
@@ -70,30 +70,30 @@ body {
     rgba(2, 2, 14, 0.75),
     rgba(8, 8, 24, 0.65)
   );
-  border: 1px solid rgba(255, 215, 0, 0.12);
+  border: 1px solid rgba(170, 68, 255, 0.16);
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 215, 0, 0.06);
+    inset 0 1px 0 rgba(170, 68, 255, 0.08);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
 
 .glass-dark:hover {
-  border-color: rgba(255, 215, 0, 0.22);
+  border-color: rgba(170, 68, 255, 0.34);
   box-shadow:
     0 12px 48px rgba(0, 0, 0, 0.5),
-    0 0 30px rgba(255, 215, 0, 0.06),
-    inset 0 1px 0 rgba(255, 215, 0, 0.08);
+    0 0 30px rgba(170, 68, 255, 0.12),
+    inset 0 1px 0 rgba(0, 204, 255, 0.08);
 }
 
 /* Holographic gradient text */
 .holo-text {
   background: linear-gradient(
     90deg,
-    #00f5ff 0%,
-    #aa00ff 33%,
-    #ff00aa 66%,
-    #00f5ff 100%
+    #aa44ff 0%,
+    #cc66ff 33%,
+    #00ccff 66%,
+    #aa44ff 100%
   );
   background-size: 300% 100%;
   -webkit-background-clip: text;
@@ -104,11 +104,11 @@ body {
 
 /* Golden text glow */
 .gold-glow-text {
-  color: #ffd700;
+  color: #cc88ff;
   text-shadow:
-    0 0 10px rgba(255, 215, 0, 0.6),
-    0 0 30px rgba(255, 215, 0, 0.3),
-    0 0 60px rgba(255, 215, 0, 0.15);
+    0 0 10px rgba(170, 68, 255, 0.6),
+    0 0 30px rgba(170, 68, 255, 0.3),
+    0 0 60px rgba(0, 204, 255, 0.12);
 }
 
 /* Neon cyan box glow */
@@ -130,11 +130,11 @@ body {
 .animated-border {
   background: linear-gradient(
     var(--border-angle, 0deg),
-    #ffd700,
-    #00f5ff,
-    #aa00ff,
-    #ff00aa,
-    #ffd700
+    #aa44ff,
+    #cc66ff,
+    #00ccff,
+    #ffffff,
+    #aa44ff
   );
   animation: border-rotate 4s linear infinite;
 }
@@ -180,9 +180,9 @@ body {
   transition: opacity 0.4s ease;
   /* Outer glow aura — pulsing shadow in beam color */
   box-shadow:
-    0 0 8px 1px var(--beam-color, #ffd700),
-    0 0 20px 2px color-mix(in srgb, var(--beam-color, #ffd700) 40%, transparent),
-    inset 0 0 8px 1px color-mix(in srgb, var(--beam-color, #ffd700) 15%, transparent);
+    0 0 8px 1px var(--beam-color, #aa44ff),
+    0 0 20px 2px color-mix(in srgb, var(--beam-color, #aa44ff) 40%, transparent),
+    inset 0 0 8px 1px color-mix(in srgb, var(--beam-color, #aa44ff) 15%, transparent);
   animation: beam-glow-pulse 2.5s ease-in-out infinite;
 }
 
@@ -195,11 +195,11 @@ body {
     from var(--beam-angle, 0deg),
     transparent 0%,
     transparent 50%,
-    color-mix(in srgb, var(--beam-color, #ffd700) 30%, transparent) 62%,
-    var(--beam-color, #ffd700) 72%,
+    color-mix(in srgb, var(--beam-color, #aa44ff) 30%, transparent) 62%,
+    var(--beam-color, #aa44ff) 72%,
     #fff 80%,
-    var(--beam-color, #ffd700) 88%,
-    color-mix(in srgb, var(--beam-color, #ffd700) 30%, transparent) 95%,
+    var(--beam-color, #aa44ff) 88%,
+    color-mix(in srgb, var(--beam-color, #aa44ff) 30%, transparent) 95%,
     transparent 100%
   );
   animation: border-beam-spin 2.5s linear infinite;
@@ -302,16 +302,16 @@ body {
 @keyframes neon-pulse-gold {
   0%, 100% {
     text-shadow:
-      0 0 7px rgba(255, 215, 0, 0.5),
-      0 0 20px rgba(255, 215, 0, 0.25),
-      0 0 42px rgba(255, 215, 0, 0.12);
+      0 0 7px rgba(170, 68, 255, 0.5),
+      0 0 20px rgba(170, 68, 255, 0.25),
+      0 0 42px rgba(0, 204, 255, 0.12);
   }
   50% {
     text-shadow:
-      0 0 12px rgba(255, 215, 0, 0.75),
-      0 0 35px rgba(255, 215, 0, 0.4),
-      0 0 70px rgba(255, 215, 0, 0.2),
-      0 0 120px rgba(255, 215, 0, 0.08);
+      0 0 12px rgba(170, 68, 255, 0.75),
+      0 0 35px rgba(170, 68, 255, 0.4),
+      0 0 70px rgba(0, 204, 255, 0.2),
+      0 0 120px rgba(170, 68, 255, 0.08);
   }
 }
 
@@ -354,10 +354,10 @@ body {
 
 @keyframes lotus-glow {
   0%, 100% {
-    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+    filter: drop-shadow(0 0 8px rgba(170, 68, 255, 0.5));
   }
   50% {
-    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.85));
+    filter: drop-shadow(0 0 20px rgba(0, 204, 255, 0.75));
   }
 }
 

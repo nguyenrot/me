@@ -3,8 +3,19 @@
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import Card3D from "./Card3D";
+import {
+  heroAccent,
+  heroCardMotion,
+  heroDividerClassName,
+  heroEyebrowClassName,
+  heroHeaderMotion,
+  heroScanlineStyle,
+  heroStagger,
+  heroTitleStyle,
+  heroTransition,
+} from "./motion/heroEffects";
 
-const ExperienceScene = dynamic(() => import("./3d/ExperienceScene"), { ssr: false });
+const HeroSectionScene = dynamic(() => import("./3d/HeroSectionScene"), { ssr: false });
 
 const JOURNEY = [
   { period: "2026 — Present", title: "Software Development Engineer", org: "Workday", description: "Breakthrough to a new realm — joined one of the world's leading sects. Full-time cultivation, on-site. Elevating code mastery to an entirely new level of power.", accent: "#ffd700", badge: "CORE FORMATION" },
@@ -17,62 +28,61 @@ const JOURNEY = [
 export default function ExperienceSection() {
   return (
     <section id="journey" className="relative px-4 py-24 sm:px-8 sm:py-32">
-      <ExperienceScene />
+      <HeroSectionScene />
 
       <div className="relative z-10 mx-auto max-w-5xl">
         {/* Section Header */}
         <motion.div
           className="mb-12"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8 }}
+          {...heroHeaderMotion}
+          transition={heroTransition(0.3, 0.8)}
         >
-          <p className="font-space text-[11px] uppercase tracking-[0.4em] text-[rgba(0,245,255,0.5)]">
+          <p className={heroEyebrowClassName}>
             {">"} cat /cultivation/journey.log
           </p>
           <h2
             className="mt-4 font-orbitron text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight"
-            style={{ color: "#ffd700", textShadow: "0 0 20px rgba(255,215,0,0.3)" }}
+            style={heroTitleStyle}
           >
-            // CULTIVATION JOURNEY
+            {"// CULTIVATION JOURNEY"}
           </h2>
-          <div className="mt-3 h-px w-32 bg-gradient-to-r from-[#ffd700] via-[#00f5ff] to-transparent" />
+          <div className={heroDividerClassName} />
         </motion.div>
 
         {/* Timeline */}
         <div className="relative">
-          <div className="absolute bottom-0 left-4 top-0 w-px bg-gradient-to-b from-[rgba(255,215,0,0.6)] via-[rgba(0,245,255,0.3)] to-[rgba(170,0,255,0.15)] sm:left-7" />
+          <div className="absolute bottom-0 left-4 top-0 w-px bg-gradient-to-b from-[rgba(170,68,255,0.7)] via-[rgba(0,204,255,0.35)] to-[rgba(170,68,255,0.12)] sm:left-7" />
 
           <div className="space-y-6">
             {JOURNEY.map((item, index) => (
               <motion.div
                 key={item.period + item.org}
                 className="relative pl-12 sm:pl-16"
-                initial={{ opacity: 0, x: -24 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.75, delay: index * 0.1 }}
+                {...heroCardMotion}
+                transition={heroStagger(index, 0.4, 0.08, 0.9)}
               >
                 {/* Timeline dot */}
                 <div
                   className="absolute left-[6px] top-6 h-4 w-4 rounded-full sm:left-[18px]"
                   style={{
-                    background: `radial-gradient(circle, ${item.accent}, ${item.accent}40)`,
-                    boxShadow: `0 0 12px ${item.accent}60, 0 0 24px ${item.accent}20`,
+                    background: `radial-gradient(circle, ${heroAccent(index)}, ${heroAccent(index)}40)`,
+                    boxShadow: `0 0 12px ${heroAccent(index)}60, 0 0 24px ${heroAccent(index)}20`,
                   }}
                 />
 
                 {/* Card */}
-                <Card3D className="glass-dark relative overflow-hidden rounded-2xl p-6 sm:p-8" glowColor={item.accent}>
+                <Card3D className="glass-dark group relative overflow-hidden rounded-2xl p-6 sm:p-8" glowColor={heroAccent(index)}>
+                  <div className="absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100">
+                    <div className="absolute inset-0" style={heroScanlineStyle} />
+                  </div>
                   <div className="relative z-10">
                     <div className="flex flex-wrap items-center gap-3">
                       <span
                         className="rounded-full border px-3 py-1 font-space text-[8px] uppercase tracking-[0.3em]"
                         style={{
-                          borderColor: `${item.accent}30`,
-                          color: item.accent,
-                          background: `${item.accent}08`,
+                          borderColor: `${heroAccent(index)}40`,
+                          color: heroAccent(index),
+                          background: `${heroAccent(index)}10`,
                         }}
                       >
                         {item.badge}
@@ -85,7 +95,7 @@ export default function ExperienceSection() {
                     <h3 className="mt-4 font-orbitron text-lg font-bold text-white/90 sm:text-xl">
                       {item.title}
                     </h3>
-                    <p className="mt-1 font-space text-xs" style={{ color: `${item.accent}90` }}>
+                    <p className="mt-1 font-space text-xs" style={{ color: `${heroAccent(index)}99` }}>
                       {item.org}
                     </p>
 
