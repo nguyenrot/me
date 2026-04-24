@@ -1,7 +1,6 @@
 "use client";
 
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 
@@ -448,21 +447,8 @@ export default function Hero3DScene({
       <fog attach="fog" args={["#020208", 18, 40]} />
 
       <NebulaGlow />
-      <StarField />
-      <QiParticles />
-      <FloatingRunes />
       <EnergyOrb />
       <CameraRig scrollProgress={scrollProgress} />
-
-      {/* Postprocessing — Bloom for the glow */}
-      <EffectComposer>
-        <Bloom
-          luminanceThreshold={CONFIG.BLOOM_THRESHOLD}
-          intensity={CONFIG.BLOOM_INTENSITY}
-          mipmapBlur
-          radius={CONFIG.BLOOM_RADIUS}
-        />
-      </EffectComposer>
     </Canvas>
   );
 }
