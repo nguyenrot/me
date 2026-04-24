@@ -219,6 +219,88 @@ function CameraParallax() {
   return null;
 }
 
+/* ─── RUNE TEXTURE ─── */
+function makeRuneTexture(char: string, color: string): THREE.CanvasTexture {
+  const size = 128;
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d")!;
+  const glow = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+  glow.addColorStop(0, `${color}44`);
+  glow.addColorStop(0.5, `${color}11`);
+  glow.addColorStop(1, "transparent");
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, size, size);
+  ctx.font = `bold ${size * 0.55}px serif`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = color;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 16;
+  ctx.fillText(char, size / 2, size / 2);
+  ctx.fillText(char, size / 2, size / 2);
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.needsUpdate = true;
+  return tex;
+}
+
+const RUNES = ["道", "氣", "元", "仙", "∞"] as const;
+const RUNE_RADIUS = 7;
+
+/* ─── FLOATING RUNES (full-page) ─── */
+function FloatingRunes() {
+  const group = useRef<THREE.Group>(null);
+  const runeData = useMemo(
+    () =>
+      RUNES.map((rune, i) => {
+        const angle = (i / RUNES.length) * Math.PI * 2;
+        const color = i % 2 === 0 ? "#bb66ff" : "#00ccff";
+        return {
+          rune,
+          x: Math.cos(angle) * RUNE_RADIUS,
+          y: Math.sin(angle) * RUNE_RADIUS * 0.55,
+          z: Math.sin(angle) * 2 - 5,
+          phase: i * 1.2,
+          texture: makeRuneTexture(rune, color),
+        };
+      }),
+    []
+  );
+
+  useFrame(({ clock }) => {
+    if (!group.current) return;
+    const time = clock.getElapsedTime();
+    group.current.rotation.y = time * 0.1;
+    group.current.children.forEach((child, i) => {
+      const data = runeData[i];
+      if (!data) return;
+      child.position.y = data.y + Math.sin(time * 0.45 + data.phase) * 0.5;
+    });
+  });
+
+  return (
+    <group ref={group} position={[0, 0, -4]}>
+      {runeData.map((data) => (
+        <sprite
+          key={data.rune}
+          position={[data.x, data.y, data.z]}
+          scale={[1.6, 1.6, 1]}
+        >
+          <spriteMaterial
+            map={data.texture}
+            transparent
+            opacity={0.35}
+            toneMapped={false}
+            depthWrite={false}
+            blending={THREE.AdditiveBlending}
+          />
+        </sprite>
+      ))}
+    </group>
+  );
+}
+
 /* ─── MAIN ─── */
 function PageBackgroundCanvas() {
   return (
@@ -238,6 +320,7 @@ function PageBackgroundCanvas() {
         <Stars />
         <DriftSparkles />
         <QiStreams />
+        <FloatingRunes />
         <CameraParallax />
       </Canvas>
     </div>
