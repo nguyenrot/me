@@ -289,41 +289,11 @@ export default function Hero3D() {
               </div>
             </div>
 
-            {/* ── Data readout ── */}
-            <motion.div
-              className="absolute font-space text-[8px] uppercase tracking-[0.18em]"
-              style={{ right: -96, top: "28%", color: "rgba(0,204,255,0.75)", whiteSpace: "nowrap" }}
-              initial={{ opacity: 0, x: 12 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.3, duration: 0.6 }}
-            >
-              <div className="flex items-center gap-2 mb-1">
-                <div className="h-px w-5 bg-[rgba(0,204,255,0.4)]" />REALM·001
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="h-px w-5 bg-[rgba(0,204,255,0.4)]" />QI·ACTIVE
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="absolute font-space text-[8px] uppercase tracking-[0.18em]"
-              style={{ left: -90, top: "38%", color: "rgba(170,68,255,0.7)", whiteSpace: "nowrap", textAlign: "right" }}
-              initial={{ opacity: 0, x: -12 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.5, duration: 0.6 }}
-            >
-              <div className="flex items-center justify-end gap-2 mb-1">
-                LEVEL·∞<div className="h-px w-5 bg-[rgba(170,68,255,0.4)]" />
-              </div>
-              <div className="flex items-center justify-end gap-2">
-                CODE·MAX<div className="h-px w-5 bg-[rgba(170,68,255,0.4)]" />
-              </div>
-            </motion.div>
           </div>
 
           {/* Status badge */}
           <motion.div
-            className="mt-12 flex justify-center"
+            className="mt-8 flex justify-center"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
