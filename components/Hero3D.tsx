@@ -1,8 +1,151 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+
+/* ─── Per-letter colors ─── */
+const LETTER_GRADIENTS = [
+  "linear-gradient(160deg, #cc55ff 0%, #ffffff 60%, #aa44ff 100%)",
+  "linear-gradient(160deg, #aa44ff 0%, #dd88ff 50%, #00ccff 100%)",
+  "linear-gradient(160deg, #9933ff 0%, #ffffff 55%, #66ddff 100%)",
+  "linear-gradient(160deg, #00ccff 0%, #ffffff 50%, #aa44ff 100%)",
+  "linear-gradient(160deg, #00aaff 0%, #ccffff 50%, #cc55ff 100%)",
+  "linear-gradient(160deg, #cc55ff 0%, #ffffff 60%, #00ccff 100%)",
+];
+
+function HeroTitle() {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [glitching, setGlitching] = useState(false);
+
+  /* Mouse 3D tilt */
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      const el = wrapRef.current;
+      if (!el) return;
+      const dx = (e.clientX / window.innerWidth - 0.5) * 2;
+      const dy = (e.clientY / window.innerHeight - 0.5) * 2;
+      el.style.transform = `perspective(700px) rotateY(${dx * 10}deg) rotateX(${-dy * 6}deg)`;
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => window.removeEventListener("mousemove", onMove);
+  }, []);
+
+  /* Periodic glitch */
+  useEffect(() => {
+    let t: ReturnType<typeof setTimeout>;
+    const schedule = () => {
+      t = setTimeout(() => {
+        setGlitching(true);
+        setTimeout(() => { setGlitching(false); schedule(); }, 130);
+      }, 2600 + Math.random() * 2800);
+    };
+    schedule();
+    return () => clearTimeout(t);
+  }, []);
+
+  const letters = ["N", "G", "U", "Y", "Ê", "N"];
+
+  return (
+    <div
+      ref={wrapRef}
+      className="relative mt-4 select-none"
+      style={{ transformStyle: "preserve-3d", transition: "transform 0.12s ease-out" }}
+    >
+      {/* Drop shadow layer */}
+      <h1
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 font-orbitron font-black leading-none"
+        style={{
+          fontSize: "clamp(3rem, 8vw, 7rem)",
+          WebkitTextFillColor: "transparent",
+          WebkitTextStroke: "1px rgba(170,68,255,0.25)",
+          filter: "blur(18px)",
+          transform: "translate(0, 6px)",
+          opacity: 0.7,
+        }}
+      >
+        NGUYÊN
+      </h1>
+
+      {/* Main letters */}
+      <h1
+        className="relative font-orbitron font-black leading-none"
+        style={{ fontSize: "clamp(3rem, 8vw, 7rem)" }}
+      >
+        {letters.map((letter, i) => (
+          <motion.span
+            key={i}
+            className="inline-block"
+            initial={{ opacity: 0, y: 70, scale: 0.4 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{
+              delay: 0.35 + i * 0.09,
+              duration: 1.1,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            whileHover={{ scale: 1.18, y: -6, transition: { duration: 0.2 } }}
+            style={{
+              background: LETTER_GRADIENTS[i],
+              backgroundSize: "200% 200%",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              animation: `holo-shift ${3.5 + i * 0.3}s ease-in-out infinite`,
+              animationDelay: `${i * 0.18}s`,
+              cursor: "default",
+              filter: `drop-shadow(0 0 ${14 + i * 2}px rgba(${i % 2 === 0 ? "170,68,255" : "0,204,255"},0.55))`,
+            }}
+          >
+            {letter}
+          </motion.span>
+        ))}
+      </h1>
+
+      {/* Glitch chromatic aberration */}
+      {glitching && (
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+          <h1
+            className="absolute inset-0 font-orbitron font-black leading-none"
+            style={{
+              fontSize: "clamp(3rem, 8vw, 7rem)",
+              color: "#ff0055",
+              WebkitTextFillColor: "#ff0055",
+              transform: "translate(-5px, 0)",
+              clipPath: "polygon(0 15%, 100% 15%, 100% 40%, 0 40%)",
+              opacity: 0.9,
+              mixBlendMode: "screen",
+            }}
+          >NGUYÊN</h1>
+          <h1
+            className="absolute inset-0 font-orbitron font-black leading-none"
+            style={{
+              fontSize: "clamp(3rem, 8vw, 7rem)",
+              color: "#00ffff",
+              WebkitTextFillColor: "#00ffff",
+              transform: "translate(5px, 0)",
+              clipPath: "polygon(0 60%, 100% 60%, 100% 85%, 0 85%)",
+              opacity: 0.9,
+              mixBlendMode: "screen",
+            }}
+          >NGUYÊN</h1>
+          <h1
+            className="absolute inset-0 font-orbitron font-black leading-none"
+            style={{
+              fontSize: "clamp(3rem, 8vw, 7rem)",
+              color: "#ffffff",
+              WebkitTextFillColor: "#ffffff",
+              transform: "translate(2px, -2px)",
+              clipPath: "polygon(0 42%, 100% 42%, 100% 58%, 0 58%)",
+              opacity: 0.4,
+              mixBlendMode: "screen",
+            }}
+          >NGUYÊN</h1>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function Hero3D() {
   const sectionRef = useRef<HTMLElement>(null);
