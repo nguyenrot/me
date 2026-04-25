@@ -317,25 +317,7 @@ export default function Hero3D() {
           </motion.div>
 
           {/* Main Title */}
-          <motion.h1
-            className="mt-4 font-orbitron font-black leading-none"
-            style={{
-              fontSize: "clamp(3rem, 8vw, 7rem)",
-              background:
-                "linear-gradient(135deg, #aa44ff 0%, #cc66ff 30%, #ffffff 50%, #00ccff 70%, #aa44ff 100%)",
-              backgroundSize: "200% 200%",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              animation: "holo-shift 4s ease-in-out infinite",
-              filter: "drop-shadow(0 0 20px rgba(170,68,255,0.4))",
-            }}
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 1.2, delay: 0.5 }}
-          >
-            NGUYÊN
-          </motion.h1>
+          <HeroTitle />
 
           {/* Subtitle */}
           <motion.p
