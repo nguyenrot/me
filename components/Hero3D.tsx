@@ -269,8 +269,6 @@ export default function Hero3D() {
         </motion.div>
       </motion.div>
 
-      {/* Bottom gradient fade */}
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-10 h-32 bg-gradient-to-t from-[#020208] to-transparent" />
     </section>
   );
 }
