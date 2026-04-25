@@ -549,6 +549,7 @@ function PageBackgroundCanvas() {
         <Stars />
         <DriftSparkles />
         <QiStreams />
+        <EnergyOrb />
         <FloatingRunes />
         <CameraParallax />
       </Canvas>
