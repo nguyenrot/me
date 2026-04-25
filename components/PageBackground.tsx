@@ -478,6 +478,51 @@ function FloatingRunes() {
   );
 }
 
+/* ─── ENERGY ORB ─── */
+function EnergyOrb() {
+  const group = useRef<THREE.Group>(null);
+  const orbMat = useRef<THREE.MeshBasicMaterial>(null);
+
+  useFrame(({ clock }) => {
+    if (!group.current) return;
+    const time = clock.getElapsedTime();
+    group.current.scale.setScalar(1 + Math.sin(time * 2) * 0.08);
+    group.current.children.forEach((child, i) => {
+      if (i > 1) {
+        (child as THREE.Mesh).rotation.x = time * 0.3 * (i % 2 === 0 ? 1 : -1) + i * 0.5;
+        (child as THREE.Mesh).rotation.z = time * 0.2 * (i % 2 === 0 ? -1 : 1);
+      }
+    });
+    if (orbMat.current) {
+      orbMat.current.opacity = 0.75 + Math.sin(time * 3) * 0.18;
+    }
+  });
+
+  return (
+    <group ref={group} position={[0, 0, -6]}>
+      <mesh>
+        <sphereGeometry args={[0.6, 32, 32]} />
+        <meshBasicMaterial ref={orbMat} color="#8844ff" transparent opacity={0.8} toneMapped={false} />
+      </mesh>
+      <mesh>
+        <sphereGeometry args={[1.0, 16, 16]} />
+        <meshBasicMaterial color="#8844ff" transparent opacity={0.12} toneMapped={false} />
+      </mesh>
+      <pointLight color="#8844ff" intensity={2.5} distance={15} decay={2} />
+      {[
+        { radius: 1.2, tube: 0.012, color: "#aa44ff", opacity: 0.4 },
+        { radius: 1.6, tube: 0.01, color: "#00ccff", opacity: 0.3 },
+        { radius: 2.1, tube: 0.008, color: "#6622cc", opacity: 0.2 },
+      ].map((ring, i) => (
+        <mesh key={i} rotation={[0.5 + i * 0.8, i * 0.3, 0]}>
+          <torusGeometry args={[ring.radius, ring.tube, 8, 64]} />
+          <meshBasicMaterial color={ring.color} transparent opacity={ring.opacity} toneMapped={false} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
 /* ─── CAMERA PARALLAX ─── */
 function CameraParallax() {
   useFrame((state) => {
