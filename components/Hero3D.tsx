@@ -1,30 +1,11 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import dynamic from "next/dynamic";
-
-const Hero3DScene = dynamic(() => import("./Hero3DScene"), {
-  ssr: false,
-  loading: () => null,
-});
 
 export default function Hero3D() {
   const sectionRef = useRef<HTMLElement>(null);
-  const scrollProgressRef = useRef(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const h = sectionRef.current.offsetHeight;
-      const progress = Math.max(0, Math.min(1, -rect.top / h));
-      scrollProgressRef.current = progress;
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <section
@@ -32,11 +13,6 @@ export default function Hero3D() {
       id="hero"
       className="relative flex min-h-screen items-center justify-center overflow-hidden"
     >
-      {/* 3D Canvas */}
-      <div className="absolute inset-0 z-0">
-        <Hero3DScene scrollProgress={scrollProgressRef} />
-      </div>
-
       {/* HTML Overlay — two-column on md+ */}
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-12 px-6 md:flex-row md:items-center md:gap-16 lg:gap-24">
 
