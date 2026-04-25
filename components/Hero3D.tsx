@@ -166,107 +166,169 @@ export default function Hero3D() {
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ duration: 1.1, delay: 0.3, ease: "easeOut" }}
         >
-          <div className="relative">
-            {/* Outer rotating ring */}
+          <div className="relative" style={{ width: 266, height: 266 }}>
+
+            {/* ── Pulse ripple rings ── */}
+            {[0, 1.0, 2.0].map((delay, i) => (
+              <motion.div
+                key={i}
+                className="pointer-events-none absolute rounded-full"
+                style={{ inset: -6, border: "1px solid rgba(170,68,255,0.55)", borderRadius: "50%" }}
+                initial={{ scale: 1, opacity: 0.55 }}
+                animate={{ scale: 1.75, opacity: 0 }}
+                transition={{ duration: 2.6, delay, repeat: Infinity, ease: "easeOut" }}
+              />
+            ))}
+
+            {/* ── Radar sweep ── */}
             <motion.div
-              className="absolute inset-0 rounded-full"
+              className="pointer-events-none absolute overflow-hidden rounded-full"
               style={{
-                background: "conic-gradient(from 0deg, #aa44ff, #00ccff, #aa44ff)",
-                padding: "2px",
+                inset: 3,
                 borderRadius: "50%",
+                background: "conic-gradient(from 0deg, transparent 0deg, rgba(0,204,255,0.14) 28deg, rgba(170,68,255,0.1) 55deg, transparent 85deg)",
+                zIndex: 2,
               }}
               animate={{ rotate: 360 }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 3.5, repeat: Infinity, ease: "linear" }}
             />
 
-            {/* Second ring, counter-rotating */}
+            {/* ── Outer rotating ring (conic) ── */}
             <motion.div
-              className="absolute rounded-full border border-[rgba(0,204,255,0.25)]"
-              style={{
-                inset: "-12px",
-                borderRadius: "50%",
-              }}
-              animate={{ rotate: -360 }}
-              transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
-            >
-              {/* Dot on the ring */}
-              <div
-                className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 h-2 w-2 rounded-full bg-[#00ccff]"
-                style={{ boxShadow: "0 0 8px #00ccff, 0 0 20px rgba(0,204,255,0.5)" }}
-              />
-            </motion.div>
-
-            {/* Third ring */}
-            <motion.div
-              className="absolute rounded-full border border-[rgba(170,68,255,0.18)]"
-              style={{
-                inset: "-24px",
-                borderRadius: "50%",
-              }}
+              className="absolute inset-0 rounded-full"
+              style={{ background: "conic-gradient(from 0deg, #aa44ff, #00ccff, #ff66cc, #aa44ff)", padding: "2px", borderRadius: "50%" }}
               animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
+            />
+
+            {/* ── Second ring counter-rotating ── */}
+            <motion.div
+              className="absolute rounded-full"
+              style={{ inset: "-16px", border: "1px solid rgba(0,204,255,0.3)", borderRadius: "50%" }}
+              animate={{ rotate: -360 }}
+              transition={{ duration: 13, repeat: Infinity, ease: "linear" }}
             >
-              <div
-                className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 h-1.5 w-1.5 rounded-full bg-[#aa44ff]"
-                style={{ boxShadow: "0 0 6px #aa44ff, 0 0 16px rgba(170,68,255,0.5)" }}
-              />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 h-2.5 w-2.5 rounded-full bg-[#00ccff]"
+                style={{ boxShadow: "0 0 10px #00ccff, 0 0 24px rgba(0,204,255,0.6)" }} />
+              <div className="absolute bottom-1/4 right-0 translate-x-1/2 h-1.5 w-1.5 rounded-full bg-[#00ccff]"
+                style={{ boxShadow: "0 0 5px #00ccff" }} />
             </motion.div>
 
-            {/* Gradient border wrapper */}
+            {/* ── Third ring dashed ── */}
+            <motion.div
+              className="absolute rounded-full"
+              style={{ inset: "-30px", border: "1px dashed rgba(170,68,255,0.25)", borderRadius: "50%" }}
+              animate={{ rotate: 360 }}
+              transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+            >
+              <div className="absolute top-1/4 left-0 -translate-x-1/2 h-2 w-2 rounded-full bg-[#aa44ff]"
+                style={{ boxShadow: "0 0 8px #aa44ff, 0 0 18px rgba(170,68,255,0.5)" }} />
+              <div className="absolute bottom-0 right-1/3 translate-y-1/2 h-1 w-1 rounded-full bg-[#ff66cc]"
+                style={{ boxShadow: "0 0 5px #ff66cc" }} />
+            </motion.div>
+
+            {/* ── HUD corner brackets ── */}
+            {[
+              { style: { top: -38, left: -38 }, borders: "border-t-2 border-l-2" },
+              { style: { top: -38, right: -38 }, borders: "border-t-2 border-r-2" },
+              { style: { bottom: -38, left: -38 }, borders: "border-b-2 border-l-2" },
+              { style: { bottom: -38, right: -38 }, borders: "border-b-2 border-r-2" },
+            ].map((b, i) => (
+              <motion.div
+                key={i}
+                className={`absolute h-5 w-5 ${b.borders} border-[rgba(0,204,255,0.75)]`}
+                style={b.style}
+                initial={{ opacity: 0, scale: 0.3 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.9 + i * 0.08, duration: 0.4, ease: "easeOut" }}
+              />
+            ))}
+
+            {/* ── Gradient border wrapper ── */}
             <div
               className="relative rounded-full"
               style={{
                 padding: "3px",
-                background: "linear-gradient(135deg, #aa44ff 0%, #00ccff 50%, #aa44ff 100%)",
+                background: "linear-gradient(135deg, #aa44ff 0%, #00ccff 40%, #ff66cc 70%, #aa44ff 100%)",
                 borderRadius: "50%",
-                boxShadow:
-                  "0 0 30px rgba(170,68,255,0.4), 0 0 60px rgba(170,68,255,0.2), 0 0 100px rgba(0,204,255,0.15)",
+                boxShadow: "0 0 40px rgba(170,68,255,0.55), 0 0 80px rgba(170,68,255,0.25), 0 0 130px rgba(0,204,255,0.15)",
               }}
             >
-              {/* Glow pulse behind avatar */}
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background:
-                    "radial-gradient(circle, rgba(170,68,255,0.3) 0%, rgba(0,204,255,0.15) 50%, transparent 70%)",
-                  borderRadius: "50%",
-                }}
-                animate={{ opacity: [0.5, 1, 0.5], scale: [0.95, 1.05, 0.95] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              />
-
               {/* Avatar image */}
-              <div
-                className="relative overflow-hidden rounded-full"
-                style={{ width: 260, height: 260 }}
-              >
-                <Image
-                  src="/images/avatar.png"
-                  alt="Nguyên"
-                  fill
-                  className="object-cover object-center"
-                  priority
-                />
-                {/* Inner vignette overlay */}
+              <div className="relative overflow-hidden rounded-full" style={{ width: 260, height: 260 }}>
+                <Image src="/images/avatar.png" alt="Nguyên" fill className="object-cover object-center" priority />
+
+                {/* Holographic sheen */}
                 <div
                   className="absolute inset-0 rounded-full"
                   style={{
-                    background:
-                      "radial-gradient(circle at 50% 50%, transparent 55%, rgba(2,2,8,0.4) 100%)",
+                    background: "linear-gradient(135deg, rgba(170,68,255,0.14) 0%, transparent 45%, rgba(0,204,255,0.12) 100%)",
+                    animation: "holo-shift 7s ease-in-out infinite",
+                    mixBlendMode: "screen",
                   }}
+                />
+
+                {/* Scanline sweep */}
+                <motion.div
+                  className="pointer-events-none absolute left-0 right-0"
+                  style={{
+                    height: 3,
+                    background: "linear-gradient(90deg, transparent 0%, rgba(0,204,255,0.55) 35%, rgba(170,68,255,0.45) 65%, transparent 100%)",
+                    filter: "blur(1px)",
+                  }}
+                  initial={{ top: "-5%" }}
+                  animate={{ top: "108%" }}
+                  transition={{ duration: 2.6, repeat: Infinity, repeatDelay: 4, ease: "linear" }}
+                />
+
+                {/* Vignette */}
+                <div
+                  className="absolute inset-0 rounded-full"
+                  style={{ background: "radial-gradient(circle at 50% 50%, transparent 52%, rgba(4,1,13,0.55) 100%)" }}
                 />
               </div>
             </div>
+
+            {/* ── Data readout ── */}
+            <motion.div
+              className="absolute font-space text-[8px] uppercase tracking-[0.18em]"
+              style={{ right: -96, top: "28%", color: "rgba(0,204,255,0.75)", whiteSpace: "nowrap" }}
+              initial={{ opacity: 0, x: 12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.3, duration: 0.6 }}
+            >
+              <div className="flex items-center gap-2 mb-1">
+                <div className="h-px w-5 bg-[rgba(0,204,255,0.4)]" />REALM·001
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="h-px w-5 bg-[rgba(0,204,255,0.4)]" />QI·ACTIVE
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="absolute font-space text-[8px] uppercase tracking-[0.18em]"
+              style={{ left: -90, top: "38%", color: "rgba(170,68,255,0.7)", whiteSpace: "nowrap", textAlign: "right" }}
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.5, duration: 0.6 }}
+            >
+              <div className="flex items-center justify-end gap-2 mb-1">
+                LEVEL·∞<div className="h-px w-5 bg-[rgba(170,68,255,0.4)]" />
+              </div>
+              <div className="flex items-center justify-end gap-2">
+                CODE·MAX<div className="h-px w-5 bg-[rgba(170,68,255,0.4)]" />
+              </div>
+            </motion.div>
           </div>
 
-          {/* Status badge below avatar */}
+          {/* Status badge */}
           <motion.div
-            className="mt-6 flex justify-center"
+            className="mt-12 flex justify-center"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(170,68,255,0.25)] bg-[rgba(2,2,8,0.6)] px-3 py-1.5 backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(170,68,255,0.25)] bg-[rgba(4,1,13,0.6)] px-3 py-1.5 backdrop-blur-sm">
               <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[#00ccff] shadow-[0_0_6px_rgba(0,204,255,0.7)]" />
               <span className="font-space text-[9px] uppercase tracking-[0.25em] text-[rgba(0,204,255,0.8)]">
                 Qi Active · Đà Nẵng-001
