@@ -97,7 +97,7 @@ export default function SocialSection() {
         </motion.div>
 
         {/* Social cards */}
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-5">
+        <div className="flex flex-nowrap justify-center gap-3">
           {SOCIALS.map((s, i) => (
             <motion.a
               key={s.name}
@@ -106,11 +106,11 @@ export default function SocialSection() {
               rel="noopener noreferrer"
               {...heroCardMotion}
               transition={heroStagger(i, 0.2, 0.1)}
-              className="group relative flex flex-col items-center gap-3 overflow-hidden rounded-2xl border px-8 py-7 backdrop-blur-sm transition-all duration-300"
+              className="group relative flex flex-col items-center gap-2 overflow-hidden rounded-2xl border px-5 py-6 backdrop-blur-sm transition-all duration-300"
               style={{
                 borderColor: `${s.accent}22`,
                 background: `radial-gradient(ellipse at top, ${s.accent}0a 0%, rgba(2,2,8,0.7) 70%)`,
-                minWidth: 140,
+                minWidth: 110,
               }}
               whileHover={{
                 scale: 1.06,
