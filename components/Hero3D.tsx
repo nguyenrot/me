@@ -157,7 +157,7 @@ export default function Hero3D() {
       className="relative flex min-h-screen items-center justify-center overflow-hidden"
     >
       {/* HTML Overlay — two-column on md+ */}
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-12 px-6 md:flex-row md:items-center md:gap-16 lg:gap-24">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-12 px-6 md:flex-row md:items-center md:justify-center md:gap-16 lg:gap-20">
 
         {/* ─── LEFT: Avatar ─── */}
         <motion.div
