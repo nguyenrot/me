@@ -48,22 +48,22 @@ const ICON_MAP: Record<string, ReactNode> = {
 
 export default function SocialSection({ socials }: { socials: SocialItem[] }) {
   return (
-    <section id="social" className="relative px-4 py-24 sm:px-8 sm:py-32">
+    <section id="social" className="relative px-4 py-20 sm:px-8 sm:py-32">
       <div className="mx-auto max-w-5xl">
         {/* Header */}
-        <motion.div className="mb-16 text-center" {...heroHeaderMotion} transition={heroTransition(0.1)}>
-          <p className={heroEyebrowClassName}>// ETHEREAL CONNECTIONS</p>
-          <h2 className="mt-3 font-orbitron text-4xl font-black sm:text-5xl" style={heroTitleStyle}>
+        <motion.div className="mb-10 text-center sm:mb-16" {...heroHeaderMotion} transition={heroTransition(0.1)}>
+          <p className={heroEyebrowClassName}>{"// ETHEREAL CONNECTIONS"}</p>
+          <h2 className="mt-3 font-orbitron text-3xl font-black sm:text-5xl" style={heroTitleStyle}>
             FIND ME
           </h2>
           <div className={`${heroDividerClassName} mx-auto`} />
-          <p className="mt-4 font-space text-sm tracking-widest text-[rgba(200,216,255,0.45)]">
+          <p className="mx-auto mt-4 max-w-[24rem] px-2 font-space text-xs leading-6 tracking-[0.18em] text-[rgba(200,216,255,0.45)] sm:max-w-none sm:text-sm sm:tracking-widest">
             Cross-realm communication channels · Sync your qi
           </p>
         </motion.div>
 
         {/* Social cards */}
-        <div className="flex flex-nowrap justify-center gap-3">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           {socials.map((s, i) => (
             <motion.a
               key={s.name}
@@ -72,11 +72,10 @@ export default function SocialSection({ socials }: { socials: SocialItem[] }) {
               rel="noopener noreferrer"
               {...heroCardMotion}
               transition={heroStagger(i, 0.2, 0.1)}
-              className="group relative flex flex-col items-center gap-2 overflow-hidden rounded-2xl border px-5 py-6 backdrop-blur-sm transition-all duration-300"
+              className="group relative flex min-w-0 flex-col items-center gap-2 overflow-hidden rounded-2xl border px-3 py-5 text-center backdrop-blur-sm transition-all duration-300 sm:px-5 sm:py-6"
               style={{
                 borderColor: `${s.accent}22`,
                 background: `radial-gradient(ellipse at top, ${s.accent}0a 0%, rgba(2,2,8,0.7) 70%)`,
-                minWidth: 110,
               }}
               whileHover={{
                 scale: 1.06,
@@ -118,14 +117,14 @@ export default function SocialSection({ socials }: { socials: SocialItem[] }) {
 
               {/* Name */}
               <span
-                className="relative font-orbitron text-sm font-bold tracking-wider"
+                className="relative max-w-full truncate font-orbitron text-sm font-bold tracking-wider"
                 style={{ color: s.accent }}
               >
                 {s.name}
               </span>
 
               {/* Handle */}
-              <span className="relative font-space text-[11px] tracking-widest text-[rgba(200,216,255,0.45)]">
+              <span className="relative max-w-full break-words font-space text-[11px] leading-5 tracking-[0.18em] text-[rgba(200,216,255,0.45)] sm:tracking-widest">
                 {s.handle}
               </span>
 
