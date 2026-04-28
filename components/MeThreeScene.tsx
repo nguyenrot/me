@@ -3,6 +3,7 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
+import { seededRandom } from "@/lib/seededRandom";
 
 
 /* ─── GLOW TEXTURE ─── */
@@ -40,23 +41,23 @@ function GoldenQiParticles({ count = 2500 }: { count?: number }) {
     const pos = new Float32Array(count * 3);
     const vel = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 30;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 20;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 16 - 2;
-      vel[i * 3] = (Math.random() - 0.5) * 0.003;
-      vel[i * 3 + 1] = 0.004 + Math.random() * 0.008;
-      vel[i * 3 + 2] = (Math.random() - 0.5) * 0.002;
+      pos[i * 3] = (seededRandom(i * 47 + 1) - 0.5) * 30;
+      pos[i * 3 + 1] = (seededRandom(i * 47 + 2) - 0.5) * 20;
+      pos[i * 3 + 2] = (seededRandom(i * 47 + 3) - 0.5) * 16 - 2;
+      vel[i * 3] = (seededRandom(i * 47 + 4) - 0.5) * 0.003;
+      vel[i * 3 + 1] = 0.004 + seededRandom(i * 47 + 5) * 0.008;
+      vel[i * 3 + 2] = (seededRandom(i * 47 + 6) - 0.5) * 0.002;
     }
     return { positions: pos, velocities: vel };
-  }, []);
+  }, [count]);
 
   const sizes = useMemo(() => {
     const s = new Float32Array(count);
     for (let i = 0; i < count; i++) {
-      s[i] = 0.03 + Math.random() * 0.06;
+      s[i] = 0.03 + seededRandom(i * 47 + 7) * 0.06;
     }
     return s;
-  }, []);
+  }, [count]);
 
   useFrame(({ clock, pointer }) => {
     if (!points.current) return;
@@ -78,8 +79,8 @@ function GoldenQiParticles({ count = 2500 }: { count?: number }) {
       // Reset if too high
       if (arr[i3 + 1] > 12) {
         arr[i3 + 1] = -12;
-        arr[i3] = (Math.random() - 0.5) * 30;
-        arr[i3 + 2] = (Math.random() - 0.5) * 16 - 2;
+        arr[i3] = (seededRandom(i * 47 + 8) - 0.5) * 30;
+        arr[i3 + 2] = (seededRandom(i * 47 + 9) - 0.5) * 16 - 2;
       }
 
       // Mouse repulsion
@@ -130,16 +131,16 @@ function NeonParticles({ count = 1200 }: { count?: number }) {
       [0.67, 0, 1], // violet
     ];
     for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 32;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 22;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 18 - 3;
+      pos[i * 3] = (seededRandom(i * 53 + 1) - 0.5) * 32;
+      pos[i * 3 + 1] = (seededRandom(i * 53 + 2) - 0.5) * 22;
+      pos[i * 3 + 2] = (seededRandom(i * 53 + 3) - 0.5) * 18 - 3;
       const c = neonColors[i % 3];
       col[i * 3] = c[0];
       col[i * 3 + 1] = c[1];
       col[i * 3 + 2] = c[2];
     }
     return { positions: pos, colors: col };
-  }, []);
+  }, [count]);
 
   useFrame(({ clock }) => {
     if (!points.current) return;

@@ -3,6 +3,7 @@
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
+import { seededRandom } from "@/lib/seededRandom";
 import Scene3DWrapper from "./Scene3DWrapper";
 
 function makeGlow(size = 64): THREE.CanvasTexture {
@@ -79,9 +80,9 @@ function SpiritDust() {
   const positions = useMemo(() => {
     const p = new Float32Array(COUNT * 3);
     for (let i = 0; i < COUNT; i++) {
-      p[i * 3] = (Math.random() - 0.5) * 28;
-      p[i * 3 + 1] = (Math.random() - 0.5) * 14;
-      p[i * 3 + 2] = -4 - Math.random() * 12;
+      p[i * 3] = (seededRandom(i * 29 + 1) - 0.5) * 28;
+      p[i * 3 + 1] = (seededRandom(i * 29 + 2) - 0.5) * 14;
+      p[i * 3 + 2] = -4 - seededRandom(i * 29 + 3) * 12;
     }
     return p;
   }, []);
@@ -93,7 +94,7 @@ function SpiritDust() {
     for (let i = 0; i < COUNT; i++) {
       arr[i * 3 + 1] += 0.005;
       arr[i * 3] += Math.sin(t * 0.2 + i * 0.3) * 0.002;
-      if (arr[i * 3 + 1] > 7) { arr[i * 3 + 1] = -7; arr[i * 3] = (Math.random() - 0.5) * 28; }
+      if (arr[i * 3 + 1] > 7) { arr[i * 3 + 1] = -7; arr[i * 3] = (seededRandom(i * 29 + 4) - 0.5) * 28; }
     }
     (points.current.geometry.getAttribute("position") as THREE.BufferAttribute).needsUpdate = true;
   });

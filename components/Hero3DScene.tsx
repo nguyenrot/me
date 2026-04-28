@@ -3,6 +3,7 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
+import { seededRandom } from "@/lib/seededRandom";
 
 /* ═══════════════════════════════════════════════════════════════
    CONFIG — Tweak these values to customize the scene
@@ -72,9 +73,9 @@ function StarField() {
   const positions = useMemo(() => {
     const arr = new Float32Array(CONFIG.STAR_COUNT * 3);
     for (let i = 0; i < CONFIG.STAR_COUNT; i++) {
-      arr[i * 3] = (Math.random() - 0.5) * CONFIG.STAR_SPREAD;
-      arr[i * 3 + 1] = (Math.random() - 0.5) * CONFIG.STAR_SPREAD;
-      arr[i * 3 + 2] = -Math.random() * CONFIG.STAR_DEPTH - 2;
+      arr[i * 3] = (seededRandom(i * 37 + 1) - 0.5) * CONFIG.STAR_SPREAD;
+      arr[i * 3 + 1] = (seededRandom(i * 37 + 2) - 0.5) * CONFIG.STAR_SPREAD;
+      arr[i * 3 + 2] = -seededRandom(i * 37 + 3) * CONFIG.STAR_DEPTH - 2;
     }
     return arr;
   }, []);
@@ -82,7 +83,7 @@ function StarField() {
   const sizes = useMemo(() => {
     const s = new Float32Array(CONFIG.STAR_COUNT);
     for (let i = 0; i < CONFIG.STAR_COUNT; i++) {
-      s[i] = 0.02 + Math.random() * 0.04;
+      s[i] = 0.02 + seededRandom(i * 37 + 4) * 0.04;
     }
     return s;
   }, []);
@@ -127,17 +128,17 @@ function QiParticles() {
     for (let i = 0; i < CONFIG.QI_COUNT; i++) {
       const i3 = i * 3;
       // Spawn in a cylindrical volume
-      const angle = Math.random() * Math.PI * 2;
-      const r = 2 + Math.random() * CONFIG.QI_SPREAD * 0.5;
+      const angle = seededRandom(i * 41 + 1) * Math.PI * 2;
+      const r = 2 + seededRandom(i * 41 + 2) * CONFIG.QI_SPREAD * 0.5;
       pos[i3] = Math.cos(angle) * r;
-      pos[i3 + 1] = (Math.random() - 0.5) * 18;
+      pos[i3 + 1] = (seededRandom(i * 41 + 3) - 0.5) * 18;
       pos[i3 + 2] = Math.sin(angle) * r - 6;
       // Upward spiraling velocity
-      vel[i3] = (Math.random() - 0.5) * 0.002;
-      vel[i3 + 1] = CONFIG.QI_SPEED + Math.random() * 0.004;
-      vel[i3 + 2] = (Math.random() - 0.5) * 0.002;
+      vel[i3] = (seededRandom(i * 41 + 4) - 0.5) * 0.002;
+      vel[i3 + 1] = CONFIG.QI_SPEED + seededRandom(i * 41 + 5) * 0.004;
+      vel[i3 + 2] = (seededRandom(i * 41 + 6) - 0.5) * 0.002;
       // Color gradient purple → cyan
-      const t = Math.random();
+      const t = seededRandom(i * 41 + 7);
       const c = purple.clone().lerp(cyan, t);
       col[i3] = c.r;
       col[i3 + 1] = c.g;
@@ -161,8 +162,8 @@ function QiParticles() {
       // Reset if too high
       if (arr[i3 + 1] > 12) {
         arr[i3 + 1] = -12;
-        const angle = Math.random() * Math.PI * 2;
-        const r = 2 + Math.random() * CONFIG.QI_SPREAD * 0.5;
+        const angle = seededRandom(i * 41 + 8) * Math.PI * 2;
+        const r = 2 + seededRandom(i * 41 + 9) * CONFIG.QI_SPREAD * 0.5;
         arr[i3] = Math.cos(angle) * r;
         arr[i3 + 2] = Math.sin(angle) * r - 6;
       }

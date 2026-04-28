@@ -3,6 +3,7 @@
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
+import { seededRandom } from "@/lib/seededRandom";
 import Scene3DWrapper from "./Scene3DWrapper";
 
 function makeGlow(size = 64): THREE.CanvasTexture {
@@ -77,10 +78,10 @@ function SealParticles() {
     const a = new Float32Array(COUNT);
     for (let i = 0; i < COUNT; i++) {
       a[i] = (i / COUNT) * Math.PI * 2;
-      const r = 3 + Math.random() * 3;
+      const r = 3 + seededRandom(i * 13 + 1) * 3;
       p[i * 3] = Math.cos(a[i]) * r;
       p[i * 3 + 1] = Math.sin(a[i]) * r;
-      p[i * 3 + 2] = -8 - Math.random() * 4;
+      p[i * 3 + 2] = -8 - seededRandom(i * 13 + 2) * 4;
     }
     return { positions: p, angles: a };
   }, []);
@@ -90,10 +91,10 @@ function SealParticles() {
     const arr = (points.current.geometry.getAttribute("position") as THREE.BufferAttribute).array as Float32Array;
     const t = clock.getElapsedTime();
     for (let i = 0; i < COUNT; i++) {
-      angles[i] += 0.003;
+      const angle = angles[i] + t * 0.18;
       const r = 2 + Math.sin(t * 0.3 + i * 0.2) * 2;
-      arr[i * 3] = Math.cos(angles[i]) * r;
-      arr[i * 3 + 1] = Math.sin(angles[i]) * r;
+      arr[i * 3] = Math.cos(angle) * r;
+      arr[i * 3 + 1] = Math.sin(angle) * r;
     }
     (points.current.geometry.getAttribute("position") as THREE.BufferAttribute).needsUpdate = true;
   });

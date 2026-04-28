@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import HeroAvatar from "@/components/HeroAvatar";
+import { seededRandom } from "@/lib/seededRandom";
 
 function ParticleBurst({
   x,
@@ -15,12 +16,12 @@ function ParticleBurst({
 }) {
   const particles = Array.from({ length: 16 }, (_, i) => {
     const angle = (i / 16) * Math.PI * 2;
-    const distance = 40 + Math.random() * 60;
+    const distance = 40 + seededRandom(i * 43 + 1) * 60;
     return {
       id: i,
       endX: Math.cos(angle) * distance,
       endY: Math.sin(angle) * distance,
-      size: 2 + Math.random() * 4,
+      size: 2 + seededRandom(i * 43 + 2) * 4,
       color: i % 3 === 0 ? "#00f5ff" : i % 3 === 1 ? "#aa00ff" : "#ffd700",
     };
   });

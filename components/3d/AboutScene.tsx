@@ -3,6 +3,7 @@
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
+import { seededRandom } from "@/lib/seededRandom";
 import Scene3DWrapper from "./Scene3DWrapper";
 
 /* ─── Glow texture helper ─── */
@@ -27,12 +28,12 @@ function FloatingScrolls() {
 
   const scrolls = useMemo(() =>
     Array.from({ length: 7 }, (_, i) => ({
-      x: (Math.random() - 0.5) * 20,
-      y: (Math.random() - 0.5) * 10,
-      z: -6 - Math.random() * 8,
-      rotSpeed: 0.1 + Math.random() * 0.2,
+      x: (seededRandom(i * 11 + 1) - 0.5) * 20,
+      y: (seededRandom(i * 11 + 2) - 0.5) * 10,
+      z: -6 - seededRandom(i * 11 + 3) * 8,
+      rotSpeed: 0.1 + seededRandom(i * 11 + 4) * 0.2,
       phase: i * 1.3,
-      scale: 0.3 + Math.random() * 0.3,
+      scale: 0.3 + seededRandom(i * 11 + 5) * 0.3,
     })),
   []);
 
@@ -69,9 +70,9 @@ function QiMist() {
   const positions = useMemo(() => {
     const p = new Float32Array(COUNT * 3);
     for (let i = 0; i < COUNT; i++) {
-      p[i * 3] = (Math.random() - 0.5) * 30;
-      p[i * 3 + 1] = -4 + Math.random() * 2;
-      p[i * 3 + 2] = (Math.random() - 0.5) * 16 - 4;
+      p[i * 3] = (seededRandom(i * 17 + 1) - 0.5) * 30;
+      p[i * 3 + 1] = -4 + seededRandom(i * 17 + 2) * 2;
+      p[i * 3 + 2] = (seededRandom(i * 17 + 3) - 0.5) * 16 - 4;
     }
     return p;
   }, []);

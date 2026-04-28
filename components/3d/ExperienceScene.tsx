@@ -3,6 +3,7 @@
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
+import { seededRandom } from "@/lib/seededRandom";
 import Scene3DWrapper from "./Scene3DWrapper";
 
 function makeGlow(size = 64): THREE.CanvasTexture {
@@ -59,9 +60,9 @@ function TimePath() {
   const positions = useMemo(() => {
     const p = new Float32Array(COUNT * 3);
     for (let i = 0; i < COUNT; i++) {
-      p[i * 3] = -8 + Math.random() * 2;
-      p[i * 3 + 1] = (Math.random() - 0.5) * 30;
-      p[i * 3 + 2] = -5 - Math.random() * 8;
+      p[i * 3] = -8 + seededRandom(i * 19 + 1) * 2;
+      p[i * 3 + 1] = (seededRandom(i * 19 + 2) - 0.5) * 30;
+      p[i * 3 + 2] = -5 - seededRandom(i * 19 + 3) * 8;
     }
     return p;
   }, []);
@@ -71,7 +72,7 @@ function TimePath() {
     const arr = (points.current.geometry.getAttribute("position") as THREE.BufferAttribute).array as Float32Array;
     for (let i = 0; i < COUNT; i++) {
       arr[i * 3 + 1] -= 0.015;
-      if (arr[i * 3 + 1] < -15) { arr[i * 3 + 1] = 15; arr[i * 3] = -8 + Math.random() * 2; }
+      if (arr[i * 3 + 1] < -15) { arr[i * 3 + 1] = 15; arr[i * 3] = -8 + seededRandom(i * 19 + 4) * 2; }
     }
     (points.current.geometry.getAttribute("position") as THREE.BufferAttribute).needsUpdate = true;
   });
@@ -93,9 +94,9 @@ function MiniSwords() {
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const swords = useMemo(() =>
     Array.from({ length: COUNT }, (_, i) => ({
-      angle: (i / COUNT) * Math.PI * 2, radius: 9 + Math.random() * 4,
-      y: (Math.random() - 0.5) * 12, speed: 0.04 + Math.random() * 0.06,
-      phase: Math.random() * Math.PI * 2,
+      angle: (i / COUNT) * Math.PI * 2, radius: 9 + seededRandom(i * 23 + 1) * 4,
+      y: (seededRandom(i * 23 + 2) - 0.5) * 12, speed: 0.04 + seededRandom(i * 23 + 3) * 0.06,
+      phase: seededRandom(i * 23 + 4) * Math.PI * 2,
     })), []);
 
   const geo = useMemo(() => {

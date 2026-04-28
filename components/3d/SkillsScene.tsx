@@ -3,6 +3,7 @@
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
+import { seededRandom } from "@/lib/seededRandom";
 import Scene3DWrapper from "./Scene3DWrapper";
 
 /* ─── Glow texture ─── */
@@ -24,6 +25,7 @@ function makeGlow(size = 64): THREE.CanvasTexture {
 /* ═══ Skill colors/levels passed as props to keep in sync ═══ */
 const SKILL_COLORS = ["#ffd700", "#00f5ff", "#aa00ff", "#ff00aa", "#ffd700", "#00f5ff", "#aa00ff"];
 const SKILL_LEVELS = [92, 88, 90, 85, 83, 78, 87];
+const RUNE_CHARS = ["道", "氣", "元", "仙", "劍", "靈", "功", "修"];
 
 /* ═══ 1. Energy Pillars — one vertical beam per skill ═══ */
 function EnergyPillars() {
@@ -93,11 +95,10 @@ function makeRuneTexture(char: string, color: string): THREE.CanvasTexture {
 
 function RuneCircle() {
   const group = useRef<THREE.Group>(null);
-  const RUNES = ["道", "氣", "元", "仙", "劍", "靈", "功", "修"];
 
   const runeData = useMemo(() =>
-    RUNES.map((r, i) => {
-      const angle = (i / RUNES.length) * Math.PI * 2;
+    RUNE_CHARS.map((r, i) => {
+      const angle = (i / RUNE_CHARS.length) * Math.PI * 2;
       const color = i % 2 === 0 ? "#aa44ff" : "#00ccff";
       return {
         rune: r,
@@ -141,10 +142,10 @@ function QiStreams() {
     const p = new Float32Array(COUNT * 3);
     const v = new Float32Array(COUNT);
     for (let i = 0; i < COUNT; i++) {
-      p[i * 3] = (Math.random() - 0.5) * 30;
-      p[i * 3 + 1] = (Math.random() - 0.5) * 12;
-      p[i * 3 + 2] = -6 - Math.random() * 12;
-      v[i] = 0.02 + Math.random() * 0.04;
+      p[i * 3] = (seededRandom(i * 31 + 1) - 0.5) * 30;
+      p[i * 3 + 1] = (seededRandom(i * 31 + 2) - 0.5) * 12;
+      p[i * 3 + 2] = -6 - seededRandom(i * 31 + 3) * 12;
+      v[i] = 0.02 + seededRandom(i * 31 + 4) * 0.04;
     }
     return { positions: p, velocities: v };
   }, []);
