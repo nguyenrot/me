@@ -13,7 +13,7 @@ git fetch origin main --tags --prune
 git reset --hard "$REF"
 
 STAMP_FILE="node_modules/.x106_install_stamp"
-STAMP_VALUE="$( { sha256sum package.json; [ -f package-lock.json ] && sha256sum package-lock.json; } | sha256sum | awk '{print $1}')"
+STAMP_VALUE="$( { sha256sum package.json; if [ -f package-lock.json ]; then sha256sum package-lock.json; fi; } | sha256sum | awk '{print $1}')"
 if [ ! -d node_modules ] || [ ! -f "$STAMP_FILE" ] || [ "$(cat "$STAMP_FILE" 2>/dev/null)" != "$STAMP_VALUE" ]; then
   echo "[me] installing dependencies..."
   if [ -f package-lock.json ]; then npm ci; else npm install; fi
