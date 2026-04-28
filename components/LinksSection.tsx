@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Card3D from "./Card3D";
+import type { LinkItem } from "@/lib/defaults";
 import {
   heroAccent,
   heroCardMotion,
@@ -16,16 +17,7 @@ import {
   heroTransition,
 } from "./motion/heroEffects";
 
-const PROJECTS = [
-  { icon: "🌐", name: "Vibe Hub", subtitle: "Main portal — personal digital realm hub", link: "https://pkn.io.vn", accent: "#ffd700" },
-  { icon: "🌙", name: "Daily Vibe Journal", subtitle: "Neural mood logging system", link: "https://journal.pkn.io.vn", accent: "#00f5ff" },
-  { icon: "🎨", name: "Generative Art", subtitle: "Procedural canvas engine", link: "https://art.pkn.io.vn", accent: "#aa00ff" },
-  { icon: "💡", name: "Neon Quotes", subtitle: "Holographic quote collector", link: "https://quotes.pkn.io.vn", accent: "#ff00aa" },
-  { icon: "🔮", name: "Habit Tracker", subtitle: "Behavioral cultivation matrix", link: "https://habits.pkn.io.vn", accent: "#00ff88" },
-  { icon: "☕", name: "Cà Phê Diary", subtitle: "Coffee journey logs — Đà Nẵng", link: "https://cafe.pkn.io.vn", accent: "#ffaa00" },
-];
-
-export default function LinksSection() {
+export default function LinksSection({ links }: { links: LinkItem[] }) {
   return (
     <section id="treasures" className="relative px-4 py-24 sm:px-8 sm:py-32">
       <div className="relative z-10 mx-auto max-w-6xl">
@@ -45,14 +37,14 @@ export default function LinksSection() {
             {"// SPIRITUAL TREASURES"}
           </h2>
           <p className="mt-3 font-space text-xs" style={heroSubtitleStyle}>
-            {PROJECTS.length} artifacts discovered · all realms accessible
+            {links.length} artifacts discovered · all realms accessible
           </p>
           <div className={heroDividerClassName} />
         </motion.div>
 
         {/* Projects Grid */}
         <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-          {PROJECTS.map((project, index) => (
+          {links.map((project, index) => (
             <motion.div
               key={project.name}
               {...heroCardMotion}

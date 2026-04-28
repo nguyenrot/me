@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import type { HeroContent } from "@/lib/defaults";
 
 /* ─── Per-letter colors ─── */
 const LETTER_GRADIENTS = [
@@ -147,7 +148,7 @@ function HeroTitle() {
   );
 }
 
-export default function Hero3D() {
+export default function Hero3D({ content }: { content: HeroContent }) {
   const sectionRef = useRef<HTMLElement>(null);
 
   return (
@@ -318,7 +319,7 @@ export default function Hero3D() {
           >
             <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-[#aa44ff] shadow-[0_0_8px_rgba(170,68,255,0.7)]" />
             <span className="font-space text-[10px] uppercase tracking-[0.3em] text-[rgba(200,216,255,0.65)]">
-              Cultivator Profile · Foundation Establishment
+              {content.badge}
             </span>
           </motion.div>
 
@@ -366,7 +367,7 @@ export default function Hero3D() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.65 }}
           >
-            元 // Digital Immortal Cultivator
+            {content.subtitle}
           </motion.p>
 
           {/* Description */}
@@ -376,7 +377,7 @@ export default function Hero3D() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            Code & Qi Dual Cultivator | Đà Nẵng Realm
+            {content.description}
           </motion.p>
 
           {/* CTA Button */}
@@ -390,7 +391,7 @@ export default function Hero3D() {
               href="#about"
               className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-[rgba(170,68,255,0.35)] bg-[rgba(170,68,255,0.08)] px-8 py-3.5 font-orbitron text-sm tracking-[0.2em] text-[#cc88ff] backdrop-blur-sm transition-all duration-300 hover:border-[rgba(170,68,255,0.7)] hover:bg-[rgba(170,68,255,0.15)] hover:text-white hover:shadow-[0_0_40px_rgba(170,68,255,0.25)]"
             >
-              <span className="relative z-10">Enter My Realm</span>
+              <span className="relative z-10">{content.ctaText}</span>
               <span className="relative z-10 text-lg">⚡</span>
               <div className="absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100">
                 <div

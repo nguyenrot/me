@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Important: Next.js Version
 
-This project uses **Next.js 16** which has breaking changes from earlier versions. Before writing any Next.js-specific code, consult `node_modules/next/dist/docs/` — APIs, conventions, and file structure may differ from training data.
+This project uses **Next.js 16** which has breaking changes from earlier versions. Before writing any Next.js-specific code, consult `node_modules/next/dist/docs/` — APIs and conventions may differ from training data.
 
 ## Commands
 
@@ -19,54 +19,54 @@ No test suite is configured.
 
 ## Architecture
 
-Single-page portfolio (SPA) built with Next.js App Router. All content lives in one scrollable page with anchor-based navigation (`#hero`, `#about`, `#skills`, `#journey`, `#links`).
+Single-page portfolio built with Next.js App Router. All content lives in one scrollable page with anchor-based navigation (`#hero`, `#about`, `#skills`, `#journey`, `#links`, `#social`).
 
-**Entry points:**
-- `app/page.tsx` — composes all sections into the page
-- `app/layout.tsx` — fonts, metadata, dark theme enforcement, global styles
+**`app/page.tsx`** is an **async Server Component** that fetches all 6 sections from the API in `Promise.all` and passes data as props to each section component. Section components are pure presentational — no data fetching inside them.
 
-**Component layers:**
+**Section components** (`components/`):
+- `Hero3D` — receives `content: HeroContent`
+- `AboutSection` — receives `about: AboutContent`
+- `SkillsSection` — receives `skills: Skill[]`
+- `ExperienceSection` — receives `journey: JourneyItem[]`
+- `LinksSection` — receives `links: LinkItem[]`
+- `SocialSection` — receives `socials: SocialItem[]`; keeps `ICON_MAP: Record<string, ReactNode>` (6 inline SVGs) hardcoded — only `{ name, handle, link, accent, iconType }` come from the API
 
-1. **Section components** (`components/`) — `Hero3D`, `AboutSection`, `SkillsSection`, `ExperienceSection`, `LinksSection`, `Footer`, `PageBackground`, `SparkleOverlay`. Each section owns its own static data arrays (e.g., `SKILLS`, `JOURNEY`).
+**3D scene components** (`components/3d/`) — Three.js/R3F canvases. Always imported with `dynamic(..., { ssr: false })`.
 
-2. **3D scene components** (`components/3d/`) — Three.js/R3F canvases: `HeroSectionScene`, `AboutScene`, `ExperienceScene`, `SkillsScene`, `FooterScene`, `LinksScene`. Always imported with `dynamic(..., { ssr: false })` because WebGL can't render server-side.
+**Motion utilities** (`components/motion/heroEffects.ts`) — shared Framer Motion variants used by all section components.
 
-3. **Motion utilities** (`components/motion/heroEffects.ts`) — Framer Motion animation variants.
+## Content Fetching
 
-**Animation stack (three separate layers):**
-- **Framer Motion** — UI element entrance/stagger animations
-- **CSS keyframes** (`app/globals.css`) — ambient effects (`rune-float`, `holo-shift`, `scanline-sweep`)
-- **Three.js / @react-three/fiber** — WebGL particle systems and 3D scenes
+```
+lib/content.ts    # getContent<T>(app, section, fallback) — ISR fetch (revalidate: 300s)
+lib/defaults.ts   # Typed interfaces + fallback defaults for all 6 sections
+```
 
-**State:** No global state library. Components use local `useState`/`useRef`/`useEffect`. Scroll position is tracked via vanilla event listeners for parallax triggers.
+Sections: `me/hero`, `me/about`, `me/skills`, `me/experience`, `me/links`, `me/social`.
+
+If the API is unreachable, fallbacks from `lib/defaults.ts` are used with zero visual regression.
+
+## Animation Stack (Three Layers)
+
+1. **Framer Motion** — UI entrance/stagger (`heroEffects.ts` variants)
+2. **CSS keyframes** (`app/globals.css`) — ambient effects: `rune-float`, `holo-shift`, `scanline-sweep`
+3. **Three.js / @react-three/fiber** — WebGL particle systems in `components/3d/`
+
+Scroll parallax is driven by vanilla `scroll` event listeners.
 
 ## Styling
 
-Tailwind CSS v4 with custom `@theme` definitions in `app/globals.css`.
+Tailwind CSS v4 with `@theme` definitions in `app/globals.css`. No `tailwind.config.js`.
 
-Custom design tokens:
-- Colors: `void` (#020208), `gold` (#aa44ff), `cyan` (#00ccff), `magenta` (#ff00aa)
-- Fonts: Inter (body), Orbitron (headings), Space Mono (code/accents)
+Design tokens: background `#020208`, gold `#ffd700`, cyan `#00f5ff`, magenta `#ff00aa`, violet `#aa00ff`.
 
-Hard-coded dark theme — no light mode. The aesthetic is an immersive "immortal cultivator" / sci-fi theme with Asian-inspired rune motifs.
+**Known issue:** Tailwind v4 Preflight + LightningCSS occasionally renders a light background despite `background-color: #020208 !important`. Cosmetic only; documented in `X106/TAILWIND_V4_ISSUE.md`.
 
 ## Deploy
 
-After every code change, deploy to VPS:
-
 ```bash
-cd /Users/kynguyenpham/X106/me
-npm run build
 rsync -avz --exclude 'node_modules' --exclude '.next' --exclude '.git' ./ root@103.90.224.186:/var/www/me/
-ssh root@103.90.224.186 "cd /var/www/me && rm -rf .next && npm run build && pm2 restart me-pkn"
+ssh root@103.90.224.186 "cd /var/www/me && npm run build && pm2 restart me-pkn"
 ```
 
-Live at `me.pkn.io.vn` (port 3001, PM2 process `me-pkn`, VPS path `/var/www/me`).
-
-Infrastructure: Cloudflare → Nginx reverse proxy → Node.js. VPS IP: `103.90.224.186`.
-
-## Key Patterns
-
-- **3D imports must disable SSR:** `dynamic(() => import('./3d/SomeScene'), { ssr: false })`
-- **Static data co-located with sections:** section components define their own data arrays rather than fetching or importing from a separate data layer
-- **No API routes** — pure static frontend with no backend
+Live at `me.pkn.io.vn`, port 3001, PM2 process `me-pkn`, VPS path `/var/www/me`.

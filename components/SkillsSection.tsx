@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Card3D from "./Card3D";
+import type { Skill } from "@/lib/defaults";
 import {
   heroAccent,
   heroCardMotion,
@@ -15,17 +16,7 @@ import {
   heroTransition,
 } from "./motion/heroEffects";
 
-const SKILLS = [
-  { name: "Python", description: "The universal elixir — a versatile spirit language, the foundation for all arts from backend sorcery to AI cultivation.", level: 92, color: "#ffd700", icon: "🐍" },
-  { name: "Django", description: "An impenetrable heavenly fortress — a battle-tested framework for building web realms at divine speed.", level: 88, color: "#00f5ff", icon: "🏯" },
-  { name: "API Development", description: "The art of divine bridges — designing REST & GraphQL APIs, connecting all things across the Digital Realm.", level: 90, color: "#aa00ff", icon: "🌉" },
-  { name: "Integration", description: "The fusion formation — connecting systems, third-party services, and orchestrating data flow between realms.", level: 85, color: "#ff00aa", icon: "🔗" },
-  { name: "Algorithmic Thinking", description: "The art of the heavenly mind — algorithmic reasoning, optimization, and problem-solving at the spiritual intellect level.", level: 83, color: "#ffd700", icon: "🧠" },
-  { name: "AI Agents", description: "The spirit puppet technique — building autonomous AI agents, LLM orchestration, and prompt cultivation.", level: 78, color: "#00f5ff", icon: "🤖" },
-  { name: "Database Software", description: "The ancient archive hall — PostgreSQL, MongoDB, Redis — storing and querying knowledge across ten thousand ages.", level: 87, color: "#aa00ff", icon: "📚" },
-];
-
-export default function SkillsSection() {
+export default function SkillsSection({ skills }: { skills: Skill[] }) {
   return (
     <section id="skills" className="relative px-4 py-24 sm:px-8 sm:py-32">
       <div className="relative z-10 mx-auto max-w-6xl">
@@ -45,14 +36,14 @@ export default function SkillsSection() {
             {"// CULTIVATION REALM"}
           </h2>
           <p className="mt-3 font-space text-xs" style={heroSubtitleStyle}>
-            {SKILLS.length} divine arts mastered · cultivation in progress · seeking dao
+            {skills.length} divine arts mastered · cultivation in progress · seeking dao
           </p>
           <div className={heroDividerClassName} />
         </motion.div>
 
         {/* Skills Grid */}
         <div className="grid gap-5 md:grid-cols-2">
-          {SKILLS.map((skill, index) => (
+          {skills.map((skill, index) => (
             <motion.div
               key={skill.name}
               {...heroCardMotion}

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Card3D from "./Card3D";
+import type { JourneyItem } from "@/lib/defaults";
 import {
   heroAccent,
   heroCardMotion,
@@ -14,15 +15,7 @@ import {
   heroTransition,
 } from "./motion/heroEffects";
 
-const JOURNEY = [
-  { period: "2026 — Present", title: "Software Development Engineer", org: "Workday", description: "Breakthrough to a new realm — joined one of the world's leading sects. Full-time cultivation, on-site. Elevating code mastery to an entirely new level of power.", accent: "#ffd700", badge: "CORE FORMATION" },
-  { period: "2022 — 2026", title: "Software Engineer", org: "Paradox", description: "3 years 10 months of secluded cultivation in the Đà Nẵng Realm. Built a rock-solid foundation, mastering Django, SQL, and many other arts. Rose from disciple to pillar of the sect.", accent: "#00f5ff", badge: "FOUNDATION BUILDING" },
-  { period: "2022", title: "Software Engineer", org: "Paradox — Scottsdale, AZ", description: "Dispatched to Scottsdale, Arizona, USA — 2 months on-site. Experienced international cultivation, broadened cross-realm perspectives, and refined Django & Python skills in a global environment.", accent: "#aa00ff", badge: "OVERSEAS EXPEDITION" },
-  { period: "2021 — 2022", title: "Engineer Intern", org: "Paradox", description: "The spirit root awakened — first steps into the Paradox sect in Đà Nẵng. 5 months of on-site apprenticeship, comprehending the fundamentals of Vue.js and JavaScript. The cultivation path begins.", accent: "#ff00aa", badge: "QI CONDENSATION" },
-  { period: "2018 — 2022", title: "Bachelor's Degree", org: "Duy Tan University", description: "4 years of foundational cultivation at Duy Tan University, Đà Nẵng. Studied Computer Software Engineering, graduated with 'Good' classification. The sacred scriptures of code were first revealed here.", accent: "#ffd700", badge: "MORTAL REALM" },
-];
-
-export default function ExperienceSection() {
+export default function ExperienceSection({ journey }: { journey: JourneyItem[] }) {
   return (
     <section id="journey" className="relative px-4 py-24 sm:px-8 sm:py-32">
       <div className="relative z-10 mx-auto max-w-5xl">
@@ -49,7 +42,7 @@ export default function ExperienceSection() {
           <div className="absolute bottom-0 left-4 top-0 w-px bg-gradient-to-b from-[rgba(170,68,255,0.7)] via-[rgba(0,204,255,0.35)] to-[rgba(170,68,255,0.12)] sm:left-7" />
 
           <div className="space-y-6">
-            {JOURNEY.map((item, index) => (
+            {journey.map((item, index) => (
               <motion.div
                 key={item.period + item.org}
                 className="relative pl-12 sm:pl-16"

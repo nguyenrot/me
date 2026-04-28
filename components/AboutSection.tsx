@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Card3D from "./Card3D";
+import type { AboutContent } from "@/lib/defaults";
 import {
   heroAccent,
   heroCardMotion,
@@ -14,7 +15,7 @@ import {
   heroTransition,
 } from "./motion/heroEffects";
 
-export default function AboutSection() {
+export default function AboutSection({ content }: { content: AboutContent }) {
   return (
     <section id="about" className="relative px-4 py-24 sm:px-8 sm:py-32">
       <div className="relative z-10 mx-auto max-w-5xl">
@@ -48,22 +49,9 @@ export default function AboutSection() {
                 <div className="absolute inset-0" style={heroScanlineStyle} />
               </div>
               <div className="relative z-10 space-y-6 text-base leading-8 text-[rgba(200,216,255,0.82)] sm:text-lg">
-                <p>
-                  Born and raised in <span className="text-[#cc88ff]">Đà Nẵng, Việt Nam</span> — a
-                  coastal city where sky meets ocean, generating abundant spiritual
-                  energy. Started the cultivation path as an Engineer Intern at{" "}
-                  <span className="text-[#00ccff]">Paradox</span> in late 2021, awakening the code
-                  spirit within and beginning the journey of Dual Cultivation:
-                  mastering both technology and craftsmanship.
-                </p>
-                <p>
-                  After nearly 4 years cultivating at Paradox — including an
-                  overseas expedition to <span className="text-[#cc66ff]">Scottsdale, Arizona</span> — the
-                  foundation was established. Now advancing to a new realm as a
-                  Software Development Engineer at{" "}
-                  <span className="text-[#00ccff]">Workday</span>, pushing boundaries and forging
-                  a core of pure code energy.
-                </p>
+                {content.paragraphs.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
               </div>
 
               {/* Quote */}
@@ -72,10 +60,7 @@ export default function AboutSection() {
                   &ldquo;
                 </span>
                 <p className="text-base italic leading-8 text-[rgba(200,216,255,0.7)] sm:text-lg">
-                  The Dao gives birth to One, One gives birth to Two, Two gives
-                  birth to Three, Three gives birth to all things. — From an idea,
-                  code is born. From code, products emerge. From products, entire
-                  digital worlds arise.
+                  {content.quote}
                 </p>
               </div>
             </Card3D>
@@ -83,12 +68,7 @@ export default function AboutSection() {
 
           {/* Info Cards */}
           <div className="space-y-4">
-            {[
-              { label: "◈ NAME", value: "Phạm Kỷ Nguyên" },
-              { label: "⌖ LOCATION", value: "Đà Nẵng, Việt Nam" },
-              { label: "⚙ ROLE", value: "Software Development Engineer" },
-              { label: "⟐ SECT", value: "Workday" },
-            ].map((item, i) => (
+            {content.infoCards.map((item, i) => (
               <motion.div
                 key={item.label}
                 {...heroCardMotion}
