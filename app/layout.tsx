@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Orbitron, Space_Mono } from "next/font/google";
+import { Chakra_Petch, Inter, Space_Mono } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -9,15 +9,15 @@ const inter = Inter({
   weight: ["400", "500", "600", "700"],
 });
 
-const orbitron = Orbitron({
-  subsets: ["latin"],
+const display = Chakra_Petch({
+  subsets: ["latin", "vietnamese"],
   variable: "--font-orbitron",
   display: "swap",
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const spaceMono = Space_Mono({
-  subsets: ["latin"],
+  subsets: ["latin", "vietnamese"],
   variable: "--font-space-mono",
   display: "swap",
   weight: ["400", "700"],
@@ -41,7 +41,7 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${inter.variable} ${orbitron.variable} ${spaceMono.variable}`}
+      className={`${inter.variable} ${display.variable} ${spaceMono.variable}`}
       style={{ backgroundColor: "#020208", colorScheme: "dark" }}
     >
       <head>
