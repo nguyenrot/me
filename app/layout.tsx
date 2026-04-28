@@ -31,6 +31,10 @@ export const metadata: Metadata = {
   title: "NGUYÊN • 元 // Digital Immortal Cultivator",
   description:
     "Phạm Kỷ Nguyên — Digital Immortal Cultivator. Foundation Establishment · Code & Qi Dual Cultivator · Đà Nẵng Realm. A modern immortal cultivator forging digital realms with code and spiritual energy.",
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    shortcut: ["/favicon.svg"],
+  },
 };
 
 export default function RootLayout({
