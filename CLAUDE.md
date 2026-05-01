@@ -64,9 +64,16 @@ Design tokens: background `#020208`, gold `#ffd700`, cyan `#00f5ff`, magenta `#f
 
 ## Deploy
 
+Deploy is git-pull on the VPS, orchestrated from the parent repo:
+
 ```bash
-rsync -avz --exclude 'node_modules' --exclude '.next' --exclude '.git' ./ root@103.90.224.186:/var/www/me/
-ssh root@103.90.224.186 "cd /var/www/me && npm run build && pm2 restart me-pkn"
+# from X106/
+./deploy.sh me              # deploy origin/main
+./deploy.sh me <commit_sha> # deploy/rollback to a specific ref
 ```
+
+The orchestrator SSHs into the VPS and runs `/var/www/me/deploy.sh` (this repo's `deploy.sh`), which `git fetch`/`reset --hard`s the ref, reinstalls deps only when `package.json`/`package-lock.json` hashes change (stamped at `node_modules/.x106_install_stamp`), wipes `.next`, builds, and `pm2 restart me-pkn`.
+
+Health check after restart curls `https://me.pkn.io.vn/` and greps for Vietnamese-mojibake markers (e.g. `Pháº`, `Ká»`, `NguyÃ`) — deploy fails if any are found. If you touch fonts or text encoding, verify Vietnamese diacritics render correctly before deploying.
 
 Live at `me.pkn.io.vn`, port 3001, PM2 process `me-pkn`, VPS path `/var/www/me`.
