@@ -64,16 +64,10 @@ Design tokens: background `#020208`, gold `#ffd700`, cyan `#00f5ff`, magenta `#f
 
 ## Deploy
 
-Deploy is git-pull on the VPS, orchestrated from the parent repo:
+`git push` to `main` triggers `.github/workflows/deploy.yml` → Actions builds the standalone bundle on Ubuntu, SCPs `/tmp/me-deploy.tar.gz` to the VPS, then recreates pm2 with `node server.js` (port 3001). End-to-end ~90-180s; the heavy Three.js bundle pushes me toward the upper end.
 
-```bash
-# from X106/
-./deploy.sh me              # deploy origin/main
-./deploy.sh me <commit_sha> # deploy/rollback to a specific ref
-```
+Re-trigger / rollback to a branch or tag: `cd /Users/kynguyenpham/X106 && ./deploy.sh me [ref]`. SHA-direct rollback isn't supported by `gh workflow run` — tag the commit first.
 
-The orchestrator SSHs into the VPS and runs `/var/www/me/deploy.sh` (this repo's `deploy.sh`), which `git fetch`/`reset --hard`s the ref, reinstalls deps only when `package.json`/`package-lock.json` hashes change (stamped at `node_modules/.x106_install_stamp`), wipes `.next`, builds, and `pm2 restart me-pkn`.
+`./deploy.sh` (this repo's local file at `/var/www/me/deploy.sh`) is now a manual fallback only — it expects the tar at `/tmp/me-deploy.tar.gz` and just extracts + recreates pm2.
 
-Health check after restart curls `https://me.pkn.io.vn/` and greps for Vietnamese-mojibake markers (e.g. `Pháº`, `Ká»`, `NguyÃ`) — deploy fails if any are found. If you touch fonts or text encoding, verify Vietnamese diacritics render correctly before deploying.
-
-Live at `me.pkn.io.vn`, port 3001, PM2 process `me-pkn`, VPS path `/var/www/me`.
+Live at `me.pkn.io.vn`, port 3001, PM2 process `me-pkn`, VPS path `/var/www/me`. Watch deploys at `https://github.com/nguyenrot/me/actions`.
