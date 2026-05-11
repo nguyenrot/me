@@ -70,4 +70,4 @@ Re-trigger / rollback to a branch or tag: `cd /Users/kynguyenpham/X106 && ./depl
 
 `./deploy.sh` (this repo's local file at `/var/www/me/deploy.sh`) is now a manual fallback only — it expects the tar at `/tmp/me-deploy.tar.gz` and just extracts + recreates pm2.
 
-Live at `me.pkn.io.vn`, port 3001, PM2 process `me-pkn`, VPS path `/var/www/me`. Watch deploys at `https://github.com/nguyenrot/me/actions`.
+Live at `me.kynguyen.cc`, port 3001, PM2 process `me-pkn`, VPS path `/var/www/me`. Watch deploys at `https://github.com/nguyenrot/me/actions`.

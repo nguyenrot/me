@@ -84,12 +84,12 @@ export const JOURNEY_DEFAULTS: JourneyItem[] = [
 ]
 
 export const LINKS_DEFAULTS: LinkItem[] = [
-  { icon: "🌐", name: "Vibe Hub",          subtitle: "Main portal — personal digital realm hub",  link: "https://pkn.io.vn",          accent: "#ffd700" },
-  { icon: "🌙", name: "Daily Vibe Journal", subtitle: "Neural mood logging system",                link: "https://journal.pkn.io.vn",  accent: "#00f5ff" },
-  { icon: "🎨", name: "Generative Art",     subtitle: "Procedural canvas engine",                  link: "https://art.pkn.io.vn",      accent: "#aa00ff" },
-  { icon: "💡", name: "Neon Quotes",        subtitle: "Holographic quote collector",               link: "https://quotes.pkn.io.vn",   accent: "#ff00aa" },
-  { icon: "🔮", name: "Habit Tracker",      subtitle: "Behavioral cultivation matrix",             link: "https://habits.pkn.io.vn",   accent: "#00ff88" },
-  { icon: "☕", name: "Cà Phê Diary",       subtitle: "Coffee journey logs — Đà Nẵng",            link: "https://cafe.pkn.io.vn",     accent: "#ffaa00" },
+  { icon: "🌐", name: "Vibe Hub",          subtitle: "Main portal — personal digital realm hub",  link: "https://kynguyen.cc",          accent: "#ffd700" },
+  { icon: "🌙", name: "Daily Vibe Journal", subtitle: "Neural mood logging system",                link: "https://journal.kynguyen.cc",  accent: "#00f5ff" },
+  { icon: "🎨", name: "Generative Art",     subtitle: "Procedural canvas engine",                  link: "https://art.kynguyen.cc",      accent: "#aa00ff" },
+  { icon: "💡", name: "Neon Quotes",        subtitle: "Holographic quote collector",               link: "https://quotes.kynguyen.cc",   accent: "#ff00aa" },
+  { icon: "🔮", name: "Habit Tracker",      subtitle: "Behavioral cultivation matrix",             link: "https://habits.kynguyen.cc",   accent: "#00ff88" },
+  { icon: "☕", name: "Cà Phê Diary",       subtitle: "Coffee journey logs — Đà Nẵng",            link: "https://cafe.kynguyen.cc",     accent: "#ffaa00" },
 ]
 
 export const SOCIAL_DEFAULTS: SocialItem[] = [

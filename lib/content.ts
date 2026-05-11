@@ -1,4 +1,4 @@
-const API_BASE = process.env.API_URL || 'https://api.pkn.io.vn'
+const API_BASE = process.env.API_URL || 'https://api.kynguyen.cc'
 
 export async function getContent<T>(app: string, section: string, fallback: T): Promise<T> {
   try {

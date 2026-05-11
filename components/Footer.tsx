@@ -52,7 +52,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <p className="mt-3 font-space text-[10px] tracking-[0.25em]" style={heroSubtitleStyle}>
-            © 2026 // Đà Nẵng, Việt Nam // me.pkn.io.vn
+            © 2026 // Đà Nẵng, Việt Nam // me.kynguyen.cc
           </p>
 
           {/* Live clock */}

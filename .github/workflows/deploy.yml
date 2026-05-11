@@ -79,4 +79,4 @@ jobs:
             sleep 3
             pm2 describe "$PM2_NAME" | grep -E 'status|restart_time' | head -3
             curl -fsSL "http://127.0.0.1:$PORT/" -o /dev/null -w 'local HTTP %{http_code}\n'
-            curl -fsSL https://me.pkn.io.vn/ -o /dev/null -w 'public HTTP %{http_code}\n'
+            curl -fsSL https://me.kynguyen.cc/ -o /dev/null -w 'public HTTP %{http_code}\n'
