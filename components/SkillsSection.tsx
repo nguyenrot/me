@@ -1,97 +1,135 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Card3D from "./Card3D";
-import type { Skill } from "@/lib/defaults";
+import { memo } from "react";
+import { motion, type Variants } from "framer-motion";
 import {
-  heroAccent,
-  heroCardMotion,
-  heroDividerClassName,
-  heroEyebrowClassName,
-  heroHeaderMotion,
-  heroScanlineStyle,
-  heroStagger,
-  heroSubtitleStyle,
-  heroTitleStyle,
-  heroTransition,
-} from "./motion/heroEffects";
+  Code,
+  Browsers,
+  PlugsConnected,
+  LinkSimple,
+  Brain,
+  Robot,
+  Database,
+  Sparkle,
+} from "@phosphor-icons/react/dist/ssr";
+import type { Skill } from "@/lib/defaults";
+
+const ICON_MAP: Record<string, typeof Code> = {
+  Python: Code,
+  Django: Browsers,
+  "API Development": PlugsConnected,
+  Integration: LinkSimple,
+  "Algorithmic Thinking": Brain,
+  "AI Agents": Robot,
+  "Database Software": Database,
+};
+
+const fade: Variants = {
+  hidden: { opacity: 0, y: 14 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 110, damping: 22 },
+  },
+};
+
+const container: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.05 } },
+};
+
+const spanClass = (index: number, total: number) => {
+  if (total < 4) return "lg:col-span-1";
+  if (index === 0 || index === total - 1) return "lg:col-span-2";
+  return "lg:col-span-1";
+};
+
+const SkillTile = memo(function SkillTile({
+  skill,
+  span,
+  featured,
+}: {
+  skill: Skill;
+  span: string;
+  featured: boolean;
+}) {
+  const Icon = ICON_MAP[skill.name] ?? Sparkle;
+  return (
+    <motion.div
+      variants={fade}
+      whileHover={{ y: -2 }}
+      transition={{ type: "spring", stiffness: 280, damping: 22 }}
+      className={`group relative flex flex-col gap-3 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 transition-colors hover:border-zinc-700 ${span}`}
+    >
+      <div className="flex items-start justify-between">
+        <div className="flex size-9 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-950/60 text-zinc-300 transition-colors group-hover:border-emerald-400/40 group-hover:text-emerald-400">
+          <Icon weight="regular" className="size-[18px]" />
+        </div>
+        <span className="font-mono text-xs text-zinc-500">
+          {String(skill.level).padStart(2, "0")}
+        </span>
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <h3 className="text-base font-medium text-zinc-100">{skill.name}</h3>
+        <p
+          className={`text-sm leading-relaxed text-zinc-400 ${featured ? "max-w-[52ch]" : ""}`}
+        >
+          {skill.description}
+        </p>
+      </div>
+
+      <div className="mt-auto pt-4">
+        <div className="h-px w-full bg-zinc-800">
+          <motion.div
+            initial={{ width: 0 }}
+            whileInView={{ width: `${skill.level}%` }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ type: "spring", stiffness: 80, damping: 24, delay: 0.1 }}
+            className="h-px bg-emerald-400"
+          />
+        </div>
+      </div>
+    </motion.div>
+  );
+});
 
 export default function SkillsSection({ skills }: { skills: Skill[] }) {
   return (
-    <section id="skills" className="relative px-4 py-24 sm:px-8 sm:py-32">
-      <div className="relative z-10 mx-auto max-w-6xl">
-        {/* Section Header */}
-        <motion.div
-          className="mb-12"
-          {...heroHeaderMotion}
-          transition={heroTransition(0.3, 0.8)}
-        >
-          <p className={heroEyebrowClassName}>
-            {">"} ls -la /cultivation/divine_arts
-          </p>
-          <h2
-            className="mt-4 font-orbitron text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight"
-            style={heroTitleStyle}
-          >
-            {"// CULTIVATION REALM"}
-          </h2>
-          <p className="mt-3 font-space text-xs" style={heroSubtitleStyle}>
-            {skills.length} divine arts mastered · cultivation in progress · seeking dao
-          </p>
-          <div className={heroDividerClassName} />
+    <section id="skills" className="scroll-mt-20 py-24 md:py-32">
+      <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={container}
+        className="flex flex-col gap-10"
+      >
+        <motion.div variants={fade} className="flex items-end justify-between gap-6">
+          <div className="flex flex-col gap-3">
+            <span className="eyebrow">Skills</span>
+            <h2 className="text-3xl font-medium tracking-tight md:text-5xl">
+              What I work with daily.
+            </h2>
+          </div>
+          <span className="font-mono text-xs text-zinc-500 md:text-sm">
+            {skills.length.toString().padStart(2, "0")} disciplines
+          </span>
         </motion.div>
 
-        {/* Skills Grid */}
-        <div className="grid gap-5 md:grid-cols-2">
-          {skills.map((skill, index) => (
-            <motion.div
+        <motion.div
+          variants={container}
+          className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {skills.map((skill, i) => (
+            <SkillTile
               key={skill.name}
-              {...heroCardMotion}
-              transition={heroStagger(index, 0.4, 0.08, 0.85)}
-            >
-              <Card3D className="glass-dark group relative overflow-hidden rounded-2xl p-6" glowColor={heroAccent(index)}>
-                {/* Hover scanline */}
-                <div className="absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100">
-                  <div className="absolute inset-0" style={heroScanlineStyle} />
-                </div>
-
-                <div className="relative z-10">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                      <span className="text-2xl">{skill.icon}</span>
-                      <h3 className="font-orbitron text-sm font-bold text-white/90 sm:text-base">
-                        {skill.name}
-                      </h3>
-                    </div>
-                    <span className="font-space text-xs font-bold" style={{ color: heroAccent(index) }}>
-                      {skill.level}%
-                    </span>
-                  </div>
-
-                  <p className="mt-3 text-sm leading-6 text-[rgba(200,216,255,0.6)]">
-                    {skill.description}
-                  </p>
-
-                  {/* Progress bar */}
-                  <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-[rgba(255,255,255,0.06)]">
-                    <motion.div
-                      className="h-full rounded-full"
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${skill.level}%` }}
-                      viewport={{ once: true }}
-                      transition={heroStagger(index, 0.55, 0.08, 1.2)}
-                      style={{
-                        background: `linear-gradient(90deg, ${heroAccent(index)}, ${heroAccent(index)}80)`,
-                        boxShadow: `0 0 12px ${heroAccent(index)}60, 0 0 24px ${heroAccent(index)}20`,
-                      }}
-                    />
-                  </div>
-                </div>
-              </Card3D>
-            </motion.div>
+              skill={skill}
+              span={spanClass(i, skills.length)}
+              featured={i === 0 || i === skills.length - 1}
+            />
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

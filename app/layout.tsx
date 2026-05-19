@@ -1,36 +1,28 @@
 import type { Metadata, Viewport } from "next";
-import { Chakra_Petch, Inter, Space_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin", "vietnamese"],
-  variable: "--font-inter",
+const geist = Geist({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-sans",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
 });
 
-const display = Chakra_Petch({
-  subsets: ["latin", "vietnamese"],
-  variable: "--font-orbitron",
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
   display: "swap",
-  weight: ["300", "400", "500", "600", "700"],
-});
-
-const spaceMono = Space_Mono({
-  subsets: ["latin", "vietnamese"],
-  variable: "--font-space-mono",
-  display: "swap",
-  weight: ["400", "700"],
 });
 
 export const viewport: Viewport = {
   colorScheme: "dark",
+  themeColor: "#09090b",
 };
 
 export const metadata: Metadata = {
-  title: "NGUYÊN • 元 // Digital Immortal Cultivator",
+  title: "Phạm Kỷ Nguyên — Software Engineer",
   description:
-    "Phạm Kỷ Nguyên — Digital Immortal Cultivator. Foundation Establishment · Code & Qi Dual Cultivator · Đà Nẵng Realm. A modern immortal cultivator forging digital realms with code and spiritual energy.",
+    "Phạm Kỷ Nguyên — Software Development Engineer at Workday, based in Đà Nẵng, Việt Nam. Building reliable web systems with Python, Django, and modern APIs.",
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
     shortcut: ["/favicon.svg"],
@@ -45,20 +37,13 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${inter.variable} ${display.variable} ${spaceMono.variable}`}
-      style={{ backgroundColor: "#020208", colorScheme: "dark" }}
+      className={`${geist.variable} ${geistMono.variable}`}
+      style={{ backgroundColor: "#09090b", colorScheme: "dark" }}
     >
       <head>
-        <style>{`html{background-color:#020208!important;color-scheme:dark!important}body{background:#020208!important;color:rgba(200,216,255,0.88)!important}`}</style>
+        <style>{`html{background-color:#09090b!important;color-scheme:dark!important}body{background:#09090b!important;color:#f4f4f5!important}`}</style>
       </head>
-      <body
-        className="min-h-screen overflow-x-hidden antialiased"
-        style={{
-          background: "#020208",
-          color: "rgba(200,216,255,0.88)",
-          fontFamily: "var(--font-inter)",
-        }}
-      >
+      <body className="min-h-[100dvh] overflow-x-hidden bg-zinc-950 font-sans text-zinc-100 antialiased">
         {children}
       </body>
     </html>

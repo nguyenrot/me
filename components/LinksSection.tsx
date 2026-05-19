@@ -1,103 +1,108 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
-import Card3D from "./Card3D";
-import type { LinkItem } from "@/lib/defaults";
+import { memo } from "react";
+import { motion, type Variants } from "framer-motion";
 import {
-  heroAccent,
-  heroCardMotion,
-  heroDividerClassName,
-  heroEyebrowClassName,
-  heroHeaderMotion,
-  heroScanlineStyle,
-  heroStagger,
-  heroSubtitleStyle,
-  heroTitleStyle,
-  heroTransition,
-} from "./motion/heroEffects";
+  House,
+  Notebook,
+  PaintBrush,
+  Quotes,
+  Target,
+  Coffee,
+  ArrowUpRight,
+  Sparkle,
+} from "@phosphor-icons/react/dist/ssr";
+import type { LinkItem } from "@/lib/defaults";
+
+const ICON_MAP: Record<string, typeof House> = {
+  "Vibe Hub": House,
+  "Daily Vibe Journal": Notebook,
+  "Generative Art": PaintBrush,
+  "Neon Quotes": Quotes,
+  "Habit Tracker": Target,
+  "Cà Phê Diary": Coffee,
+};
+
+const fade: Variants = {
+  hidden: { opacity: 0, y: 14 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 110, damping: 22 },
+  },
+};
+
+const container: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.05 } },
+};
+
+const LinkCard = memo(function LinkCard({ item }: { item: LinkItem }) {
+  const Icon = ICON_MAP[item.name] ?? Sparkle;
+  return (
+    <motion.a
+      variants={fade}
+      whileHover={{ y: -2 }}
+      whileTap={{ scale: 0.985 }}
+      transition={{ type: "spring", stiffness: 260, damping: 22 }}
+      href={item.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex items-start gap-4 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 transition-colors hover:border-zinc-700"
+    >
+      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-950/60 text-zinc-300 transition-colors group-hover:border-emerald-400/40 group-hover:text-emerald-400">
+        <Icon weight="regular" className="size-5" />
+      </div>
+
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
+        <div className="flex items-center justify-between gap-3">
+          <h3 className="truncate text-base font-medium text-zinc-100">
+            {item.name}
+          </h3>
+          <ArrowUpRight
+            weight="bold"
+            className="size-4 shrink-0 text-zinc-500 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-emerald-400"
+          />
+        </div>
+        <p className="line-clamp-2 text-sm leading-relaxed text-zinc-400">
+          {item.subtitle}
+        </p>
+      </div>
+    </motion.a>
+  );
+});
 
 export default function LinksSection({ links }: { links: LinkItem[] }) {
   return (
-    <section id="treasures" className="relative px-4 py-24 sm:px-8 sm:py-32">
-      <div className="relative z-10 mx-auto max-w-6xl">
-        {/* Section Header */}
-        <motion.div
-          className="mb-12"
-          {...heroHeaderMotion}
-          transition={heroTransition(0.3, 0.8)}
-        >
-          <p className={heroEyebrowClassName}>
-            {">"} ls /vault/spiritual_treasures
-          </p>
-          <h2
-            className="mt-4 font-orbitron text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight"
-            style={heroTitleStyle}
-          >
-            {"// SPIRITUAL TREASURES"}
-          </h2>
-          <p className="mt-3 font-space text-xs" style={heroSubtitleStyle}>
-            {links.length} artifacts discovered · all realms accessible
-          </p>
-          <div className={heroDividerClassName} />
+    <section id="links" className="scroll-mt-20 py-24 md:py-32">
+      <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={container}
+        className="flex flex-col gap-10"
+      >
+        <motion.div variants={fade} className="flex items-end justify-between gap-6">
+          <div className="flex flex-col gap-3">
+            <span className="eyebrow">Things I&rsquo;ve built</span>
+            <h2 className="text-3xl font-medium tracking-tight md:text-5xl">
+              Side projects.
+            </h2>
+          </div>
+          <span className="font-mono text-xs text-zinc-500 md:text-sm">
+            {links.length.toString().padStart(2, "0")} live
+          </span>
         </motion.div>
 
-        {/* Projects Grid */}
-        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-          {links.map((project, index) => (
-            <motion.div
-              key={project.name}
-              {...heroCardMotion}
-              transition={heroStagger(index, 0.4, 0.08, 0.85)}
-            >
-              <Card3D
-                as="a"
-                href={project.link}
-                target="_blank"
-                rel="noreferrer"
-                className="glass-dark group relative block overflow-hidden rounded-2xl p-6"
-                glowColor={heroAccent(index)}
-              >
-                {/* Hover border glow */}
-                <div
-                  className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  style={{ boxShadow: `inset 0 0 0 1px ${heroAccent(index)}40, 0 0 20px ${heroAccent(index)}20` }}
-                />
-
-                {/* Scanline */}
-                <div className="absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100">
-                  <div className="absolute inset-0" style={heroScanlineStyle} />
-                </div>
-
-                <div className="relative z-10">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <span className="text-3xl">{project.icon}</span>
-                      <h3 className="mt-3 font-orbitron text-base font-bold text-white/90">
-                        {project.name}
-                      </h3>
-                      <p className="mt-2 text-sm leading-6 text-[rgba(200,216,255,0.55)]">
-                        {project.subtitle}
-                      </p>
-                    </div>
-                    <ArrowUpRight
-                      size={16}
-                      className="mt-1 shrink-0 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
-                      style={{ color: `${heroAccent(index)}99` }}
-                    />
-                  </div>
-
-                  {/* Bottom accent */}
-                  <div
-                    className="mt-5 h-px rounded-full"
-                    style={{ background: `linear-gradient(90deg, transparent, ${heroAccent(index)}60, transparent)` }}
-                  />
-                </div>
-              </Card3D>
-            </motion.div>
+        <motion.div
+          variants={container}
+          className="grid grid-cols-1 gap-3 md:grid-cols-2"
+        >
+          {links.map((item) => (
+            <LinkCard key={item.name} item={item} />
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

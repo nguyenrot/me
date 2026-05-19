@@ -1,71 +1,60 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import {
-  heroDividerClassName,
-  heroHeaderMotion,
-  heroSubtitleStyle,
-  heroTitleStyle,
-  heroTransition,
-} from "./motion/heroEffects";
+import { memo, useEffect, useState } from "react";
+import { ArrowUp } from "@phosphor-icons/react/dist/ssr";
 
-export default function Footer() {
+const LiveClock = memo(function LiveClock() {
   const [time, setTime] = useState("");
 
   useEffect(() => {
-    const update = () => {
+    const tick = () =>
       setTime(
-        new Date().toLocaleTimeString("en-US", {
-          hour12: false,
+        new Date().toLocaleTimeString("en-GB", {
           hour: "2-digit",
           minute: "2-digit",
           second: "2-digit",
           timeZone: "Asia/Ho_Chi_Minh",
-        })
+        }),
       );
-    };
-    update();
-    const interval = setInterval(update, 1000);
-    return () => clearInterval(interval);
+    tick();
+    const id = window.setInterval(tick, 1000);
+    return () => window.clearInterval(id);
   }, []);
 
+  if (!time) return null;
   return (
-    <footer className="relative px-4 pb-10 pt-6 sm:px-8">
-      <div className="relative z-10 mx-auto max-w-6xl">
-        {/* Gradient divider */}
-        <div className={`${heroDividerClassName} mx-auto mb-8 w-full max-w-3xl`} />
+    <span className="font-mono text-xs tabular-nums text-zinc-500">
+      {time} <span className="text-zinc-600">GMT+7</span>
+    </span>
+  );
+});
 
-        <motion.div className="text-center" {...heroHeaderMotion} transition={heroTransition(0.3, 0.8)}>
-          {/* Status */}
-          <p className="font-space text-[10px] uppercase tracking-[0.4em] text-[rgba(0,204,255,0.5)]">
-            ◈ Cultivation Stable • Qi Flow Optimal • Realm: Active ◈
+export default function Footer() {
+  return (
+    <footer className="border-t border-zinc-800 py-10">
+      <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-col gap-1">
+          <p className="text-base font-medium text-zinc-100">Phạm Kỷ Nguyên</p>
+          <p className="text-sm text-zinc-500">
+            Software Engineer · Đà Nẵng, Việt Nam
           </p>
+        </div>
 
-          {/* Name */}
-          <p
-            className="mt-4 font-orbitron text-lg font-bold tracking-[0.15em]"
-            style={heroTitleStyle}
+        <div className="flex flex-col items-start gap-2 md:items-end">
+          <LiveClock />
+          <a
+            href="#hero"
+            className="inline-flex items-center gap-1.5 text-xs text-zinc-500 transition-colors hover:text-zinc-200"
           >
-            Phạm Kỷ Nguyên
-          </p>
-
-          {/* Copyright */}
-          <p className="mt-3 font-space text-[10px] tracking-[0.25em]" style={heroSubtitleStyle}>
-            © 2026 // Đà Nẵng, Việt Nam // me.kynguyen.cc
-          </p>
-
-          {/* Live clock */}
-          {time && (
-            <div className="mt-3 inline-flex items-center gap-2">
-              <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#aa44ff] shadow-[0_0_6px_rgba(170,68,255,0.7)]" />
-              <span className="font-space text-[10px] tracking-[0.2em] text-[rgba(200,216,255,0.3)]">
-                {time} GMT+7
-              </span>
-            </div>
-          )}
-        </motion.div>
+            <ArrowUp weight="bold" className="size-3.5" />
+            Back to top
+          </a>
+        </div>
       </div>
+
+      <p className="mt-8 font-mono text-[11px] tracking-wide text-zinc-600">
+        © 2026 · me.kynguyen.cc
+      </p>
     </footer>
   );
 }

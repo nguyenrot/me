@@ -1,102 +1,186 @@
 export interface HeroContent {
-  badge:       string
-  subtitle:    string
-  description: string
-  ctaText:     string
+  badge: string;
+  subtitle: string;
+  description: string;
+  ctaText: string;
 }
 
 export interface AboutContent {
-  paragraphs: string[]
-  quote:      string
-  infoCards:  { label: string; value: string }[]
+  paragraphs: string[];
+  quote: string;
+  infoCards: { label: string; value: string }[];
 }
 
 export interface Skill {
-  name:        string
-  description: string
-  level:       number
-  color:       string
-  icon:        string
+  name: string;
+  description: string;
+  level: number;
 }
 
 export interface JourneyItem {
-  period:      string
-  title:       string
-  org:         string
-  description: string
-  accent:      string
-  badge:       string
+  period: string;
+  title: string;
+  org: string;
+  description: string;
 }
 
 export interface LinkItem {
-  icon:     string
-  name:     string
-  subtitle: string
-  link:     string
-  accent:   string
+  name: string;
+  subtitle: string;
+  link: string;
 }
 
 export interface SocialItem {
-  name:     string
-  handle:   string
-  link:     string
-  accent:   string
-  iconType: string
+  name: string;
+  handle: string;
+  link: string;
+  iconType: string;
 }
 
 export const HERO_DEFAULTS: HeroContent = {
-  badge:       "Cultivator Profile · Foundation Establishment",
-  subtitle:    "元 // Digital Immortal Cultivator",
-  description: "Code & Qi Dual Cultivator | Đà Nẵng Realm",
-  ctaText:     "Enter My Realm",
-}
+  badge: "Software Engineer · Đà Nẵng",
+  subtitle: "Software Engineer @ Workday",
+  description:
+    "I build backend systems and developer tools. Previously 4 years at Paradox, including a stint in Scottsdale, Arizona. Currently based in Đà Nẵng, Việt Nam.",
+  ctaText: "See projects",
+};
 
 export const ABOUT_DEFAULTS: AboutContent = {
   paragraphs: [
-    "Born and raised in Đà Nẵng, Việt Nam — a coastal city where sky meets ocean, generating abundant spiritual energy. Started the cultivation path as an Engineer Intern at Paradox in late 2021, awakening the code spirit within and beginning the journey of Dual Cultivation: mastering both technology and craftsmanship.",
-    "After nearly 4 years cultivating at Paradox — including an overseas expedition to Scottsdale, Arizona — the foundation was established. Now advancing to a new realm as a Software Development Engineer at Workday, pushing boundaries and forging a core of pure code energy.",
+    "Born and raised in Đà Nẵng, Việt Nam. Started my career as an Engineer Intern at Paradox in late 2021, learning Python and Django from the ground up.",
+    "After nearly four years at Paradox — including a two-month assignment in Scottsdale, Arizona — I joined Workday as a Software Development Engineer in 2026.",
   ],
-  quote: "The Dao gives birth to One, One gives birth to Two, Two gives birth to Three, Three gives birth to all things. — From an idea, code is born. From code, products emerge. From products, entire digital worlds arise.",
+  quote:
+    "Make it correct. Then make it fast. Then leave it better than you found it.",
   infoCards: [
-    { label: "◈ NAME",     value: "Phạm Kỷ Nguyên" },
-    { label: "⌖ LOCATION", value: "Đà Nẵng, Việt Nam" },
-    { label: "⚙ ROLE",     value: "Software Development Engineer" },
-    { label: "⟐ SECT",     value: "Workday" },
+    { label: "Name", value: "Phạm Kỷ Nguyên" },
+    { label: "Location", value: "Đà Nẵng, Việt Nam" },
+    { label: "Role", value: "Software Development Engineer" },
+    { label: "Employer", value: "Workday" },
   ],
-}
+};
 
 export const SKILLS_DEFAULTS: Skill[] = [
-  { name: "Python",               description: "The universal elixir — a versatile spirit language, the foundation for all arts from backend sorcery to AI cultivation.", level: 92, color: "#ffd700", icon: "🐍" },
-  { name: "Django",               description: "An impenetrable heavenly fortress — a battle-tested framework for building web realms at divine speed.", level: 88, color: "#00f5ff", icon: "🏯" },
-  { name: "API Development",      description: "The art of divine bridges — designing REST & GraphQL APIs, connecting all things across the Digital Realm.", level: 90, color: "#aa00ff", icon: "🌉" },
-  { name: "Integration",          description: "The fusion formation — connecting systems, third-party services, and orchestrating data flow between realms.", level: 85, color: "#ff00aa", icon: "🔗" },
-  { name: "Algorithmic Thinking", description: "The art of the heavenly mind — algorithmic reasoning, optimization, and problem-solving at the spiritual intellect level.", level: 83, color: "#ffd700", icon: "🧠" },
-  { name: "AI Agents",            description: "The spirit puppet technique — building autonomous AI agents, LLM orchestration, and prompt cultivation.", level: 78, color: "#00f5ff", icon: "🤖" },
-  { name: "Database Software",    description: "The ancient archive hall — PostgreSQL, MongoDB, Redis — storing and querying knowledge across ten thousand ages.", level: 87, color: "#aa00ff", icon: "📚" },
-]
+  {
+    name: "Python",
+    description:
+      "Backbone of my work — used daily for backend services, scripts, and tooling.",
+    level: 92,
+  },
+  {
+    name: "Django",
+    description:
+      "Production web framework. Ship APIs, admin interfaces, and dashboards with it.",
+    level: 88,
+  },
+  {
+    name: "API Development",
+    description:
+      "Designing REST and GraphQL APIs. Versioning, authentication, pagination, observability.",
+    level: 90,
+  },
+  {
+    name: "Integration",
+    description:
+      "Connecting third-party systems — payment, identity, analytics. Webhooks, retries, idempotency.",
+    level: 85,
+  },
+  {
+    name: "Algorithmic Thinking",
+    description:
+      "Profiling, optimizing, and reasoning about correctness under load.",
+    level: 83,
+  },
+  {
+    name: "AI Agents",
+    description:
+      "Building agentic systems with LLMs. Tool use, structured outputs, evaluation harnesses.",
+    level: 78,
+  },
+  {
+    name: "Database Software",
+    description:
+      "PostgreSQL, MySQL, Redis. Schema design, indexing, query tuning.",
+    level: 87,
+  },
+];
 
 export const JOURNEY_DEFAULTS: JourneyItem[] = [
-  { period: "2026 — Present", title: "Software Development Engineer", org: "Workday",                   description: "Breakthrough to a new realm — joined one of the world's leading sects. Full-time cultivation, on-site. Elevating code mastery to an entirely new level of power.",                                                                                     accent: "#ffd700", badge: "CORE FORMATION" },
-  { period: "2022 — 2026",    title: "Software Engineer",             org: "Paradox",                   description: "3 years 10 months of secluded cultivation in the Đà Nẵng Realm. Built a rock-solid foundation, mastering Django, SQL, and many other arts. Rose from disciple to pillar of the sect.",                                                             accent: "#00f5ff", badge: "FOUNDATION BUILDING" },
-  { period: "2022",           title: "Software Engineer",             org: "Paradox — Scottsdale, AZ",  description: "Dispatched to Scottsdale, Arizona, USA — 2 months on-site. Experienced international cultivation, broadened cross-realm perspectives, and refined Django & Python skills in a global environment.",                                                   accent: "#aa00ff", badge: "OVERSEAS EXPEDITION" },
-  { period: "2021 — 2022",    title: "Engineer Intern",               org: "Paradox",                   description: "The spirit root awakened — first steps into the Paradox sect in Đà Nẵng. 5 months of on-site apprenticeship, comprehending the fundamentals of Vue.js and JavaScript. The cultivation path begins.",                                                accent: "#ff00aa", badge: "QI CONDENSATION" },
-  { period: "2018 — 2022",    title: "Bachelor's Degree",             org: "Duy Tan University",         description: "4 years of foundational cultivation at Duy Tan University, Đà Nẵng. Studied Computer Software Engineering, graduated with 'Good' classification. The sacred scriptures of code were first revealed here.", accent: "#ffd700", badge: "MORTAL REALM" },
-]
+  {
+    period: "2026 — Present",
+    title: "Software Development Engineer",
+    org: "Workday",
+    description:
+      "Joined Workday in 2026. Working full-time on enterprise software at one of the largest HCM platforms.",
+  },
+  {
+    period: "2022 — 2026",
+    title: "Software Engineer",
+    org: "Paradox",
+    description:
+      "Nearly 4 years building HR automation tooling in the Đà Nẵng office. Grew from junior to senior — owning Django services, SQL pipelines, and integration work.",
+  },
+  {
+    period: "2022",
+    title: "Software Engineer (Onsite)",
+    org: "Paradox — Scottsdale, AZ",
+    description:
+      "Two-month on-site assignment in Scottsdale, Arizona. Worked closely with the US team and broadened my engineering toolbox.",
+  },
+  {
+    period: "2021 — 2022",
+    title: "Engineer Intern",
+    org: "Paradox",
+    description:
+      "First role. Five months on-site in Đà Nẵng. Worked on the Vue.js front-end and learned the codebase.",
+  },
+  {
+    period: "2018 — 2022",
+    title: "B.Sc., Computer Software Engineering",
+    org: "Duy Tan University",
+    description:
+      "Four years studying Computer Software Engineering. Graduated with 'Good' classification.",
+  },
+];
 
 export const LINKS_DEFAULTS: LinkItem[] = [
-  { icon: "🌐", name: "Vibe Hub",          subtitle: "Main portal — personal digital realm hub",  link: "https://kynguyen.cc",          accent: "#ffd700" },
-  { icon: "🌙", name: "Daily Vibe Journal", subtitle: "Neural mood logging system",                link: "https://journal.kynguyen.cc",  accent: "#00f5ff" },
-  { icon: "🎨", name: "Generative Art",     subtitle: "Procedural canvas engine",                  link: "https://art.kynguyen.cc",      accent: "#aa00ff" },
-  { icon: "💡", name: "Neon Quotes",        subtitle: "Holographic quote collector",               link: "https://quotes.kynguyen.cc",   accent: "#ff00aa" },
-  { icon: "🔮", name: "Habit Tracker",      subtitle: "Behavioral cultivation matrix",             link: "https://habits.kynguyen.cc",   accent: "#00ff88" },
-  { icon: "☕", name: "Cà Phê Diary",       subtitle: "Coffee journey logs — Đà Nẵng",            link: "https://cafe.kynguyen.cc",     accent: "#ffaa00" },
-]
+  {
+    name: "Vibe Hub",
+    subtitle: "Personal site hub and landing page.",
+    link: "https://kynguyen.cc",
+  },
+  {
+    name: "Daily Vibe Journal",
+    subtitle: "Daily mood tracker — Server Actions + JWT cookies.",
+    link: "https://journal.kynguyen.cc",
+  },
+  {
+    name: "Generative Art",
+    subtitle: "p5.js canvas sketches, persisted to localStorage.",
+    link: "https://art.kynguyen.cc",
+  },
+  {
+    name: "Neon Quotes",
+    subtitle: "Quote collection with a clean reader UI.",
+    link: "https://quotes.kynguyen.cc",
+  },
+  {
+    name: "Habit Tracker",
+    subtitle: "Personal habits dashboard.",
+    link: "https://habits.kynguyen.cc",
+  },
+  {
+    name: "Cà Phê Diary",
+    subtitle: "Coffee log from cafés around Đà Nẵng.",
+    link: "https://cafe.kynguyen.cc",
+  },
+];
 
 export const SOCIAL_DEFAULTS: SocialItem[] = [
-  { name: "Facebook",  handle: "@phkynguyen",   link: "https://www.facebook.com/phkynguyen",           accent: "#1877f2", iconType: "facebook" },
-  { name: "Instagram", handle: "@phkynguyen",   link: "https://www.instagram.com/phkynguyen",          accent: "#e1306c", iconType: "instagram" },
-  { name: "GitHub",    handle: "@nguyenrot",    link: "https://github.com/nguyenrot",                  accent: "#c8d8ff", iconType: "github" },
-  { name: "TikTok",    handle: "@phamkynguyen", link: "https://www.tiktok.com/@phamkynguyen",          accent: "#ff0050", iconType: "tiktok" },
-  { name: "LinkedIn",  handle: "Nguyen Pham Ky", link: "https://www.linkedin.com/in/nguyen-pham-ky",  accent: "#0a66c2", iconType: "linkedin" },
-  { name: "Threads",   handle: "@phkynguyen",   link: "https://www.threads.com/@phkynguyen",           accent: "#f0f0f0", iconType: "threads" },
-]
+  { name: "GitHub", handle: "@nguyenrot", link: "https://github.com/nguyenrot", iconType: "github" },
+  { name: "LinkedIn", handle: "Nguyen Pham Ky", link: "https://www.linkedin.com/in/nguyen-pham-ky", iconType: "linkedin" },
+  { name: "Facebook", handle: "@phkynguyen", link: "https://www.facebook.com/phkynguyen", iconType: "facebook" },
+  { name: "Instagram", handle: "@phkynguyen", link: "https://www.instagram.com/phkynguyen", iconType: "instagram" },
+  { name: "Threads", handle: "@phkynguyen", link: "https://www.threads.com/@phkynguyen", iconType: "threads" },
+  { name: "TikTok", handle: "@phamkynguyen", link: "https://www.tiktok.com/@phamkynguyen", iconType: "tiktok" },
+];
