@@ -111,10 +111,7 @@ export default function Hero({ content }: { content: HeroContent }) {
           <aside className="hero__side">
             <figure className="portrait">
               <div className="portrait__frame">
-                {/* TODO: when you have a portrait, drop it at public/portrait.jpg
-                    (≥800px, square crop) and uncomment the <img> below. */}
-                {/* <img className="portrait__img" src="/portrait.jpg" alt="Phạm Kỷ Nguyên" /> */}
-                <div className="portrait__placeholder">drop your avatar here</div>
+                <img className="portrait__img" src="/portrait.jpg" alt="Phạm Kỷ Nguyên" />
                 <div className="portrait__crosshair" aria-hidden>
                   <span className="ch ch-tl" />
                   <span className="ch ch-tr" />
