@@ -362,7 +362,7 @@ export const PROJECTS_DEFAULTS: ProjectsContent = {
   section_num: { en: "04 / projects", vi: "04 / dự án" },
   title: { en: "Side projects.", vi: "Dự án cá nhân." },
   aside_label: { en: "live", vi: "đang chạy" },
-  aside_count: 6,
+  aside_count: 7,
   items: [
     {
       idx: "P/01",
@@ -399,6 +399,18 @@ export const PROJECTS_DEFAULTS: ProjectsContent = {
     },
     {
       idx: "P/04",
+      name: "Ledger",
+      desc: {
+        en: "Personal finance ledger with hand-rolled SVG charts.",
+        vi: "Sổ chi tiêu cá nhân với biểu đồ SVG tự dựng.",
+      },
+      url: "https://ledger.kynguyen.cc",
+      url_label: "ledger.kynguyen.cc",
+      stack: "nuxt · vue",
+      tone: "emerald",
+    },
+    {
+      idx: "P/05",
       name: "Neon Quotes",
       desc: {
         en: "Quote collection with a clean reader UI.",
@@ -410,7 +422,7 @@ export const PROJECTS_DEFAULTS: ProjectsContent = {
       tone: "amber",
     },
     {
-      idx: "P/05",
+      idx: "P/06",
       name: "Habit Tracker",
       desc: {
         en: "Personal habits dashboard.",
@@ -422,7 +434,7 @@ export const PROJECTS_DEFAULTS: ProjectsContent = {
       tone: "violet",
     },
     {
-      idx: "P/06",
+      idx: "P/07",
       name: "Cà Phê Diary",
       desc: {
         en: "Coffee log from cafés around Đà Nẵng.",
