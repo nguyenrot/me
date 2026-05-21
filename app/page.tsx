@@ -1,42 +1,49 @@
-import HeroSection from "@/components/HeroSection";
-import AboutSection from "@/components/AboutSection";
-import SkillsSection from "@/components/SkillsSection";
-import ExperienceSection from "@/components/ExperienceSection";
-import LinksSection from "@/components/LinksSection";
-import SocialSection from "@/components/SocialSection";
+import Marquee from "@/components/Marquee";
+import Nav from "@/components/Nav";
+import Scrollbar from "@/components/Scrollbar";
+import Hero from "@/components/Hero";
+import About from "@/components/About";
+import Skills from "@/components/Skills";
+import Experience from "@/components/Experience";
+import Projects from "@/components/Projects";
+import Elsewhere from "@/components/Elsewhere";
 import Footer from "@/components/Footer";
 import { getContent } from "@/lib/content";
 import {
+  MARQUEE_DEFAULTS,
   HERO_DEFAULTS,
   ABOUT_DEFAULTS,
   SKILLS_DEFAULTS,
-  JOURNEY_DEFAULTS,
-  LINKS_DEFAULTS,
-  SOCIAL_DEFAULTS,
+  EXPERIENCE_DEFAULTS,
+  PROJECTS_DEFAULTS,
+  ELSEWHERE_DEFAULTS,
 } from "@/lib/defaults";
 
 export default async function Home() {
-  const [hero, about, skills, journey, links, social] = await Promise.all([
+  const [marquee, hero, about, skills, experience, projects, elsewhere] = await Promise.all([
+    getContent("me", "marquee", MARQUEE_DEFAULTS),
     getContent("me", "hero", HERO_DEFAULTS),
     getContent("me", "about", ABOUT_DEFAULTS),
     getContent("me", "skills", SKILLS_DEFAULTS),
-    getContent("me", "experience", JOURNEY_DEFAULTS),
-    getContent("me", "links", LINKS_DEFAULTS),
-    getContent("me", "social", SOCIAL_DEFAULTS),
+    getContent("me", "experience", EXPERIENCE_DEFAULTS),
+    getContent("me", "projects", PROJECTS_DEFAULTS),
+    getContent("me", "elsewhere", ELSEWHERE_DEFAULTS),
   ]);
 
   return (
     <>
-      <div className="grain" aria-hidden />
-      <main className="relative mx-auto max-w-6xl px-6 md:px-10">
-        <HeroSection content={hero} />
-        <AboutSection content={about} />
-        <SkillsSection skills={skills} />
-        <ExperienceSection journey={journey} />
-        <LinksSection links={links} />
-        <SocialSection socials={social} />
-        <Footer />
+      <Marquee content={marquee} />
+      <Nav />
+      <Scrollbar />
+      <main>
+        <Hero content={hero} />
+        <About content={about} />
+        <Skills content={skills} />
+        <Experience content={experience} />
+        <Projects content={projects} />
+        <Elsewhere content={elsewhere} />
       </main>
+      <Footer />
     </>
   );
 }

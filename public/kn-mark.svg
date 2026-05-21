@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" fill="none">
+  <defs>
+    <mask id="kn">
+      <rect width="320" height="320" fill="white"></rect>
+      <polygon fill="black" points="51,66 75,66 75,142 133,66 163,66 101,154 167,242 139,242 75,162 75,242 51,242"></polygon>
+      <polygon fill="black" points="179,66 203,66 243,200 243,66 265,66 265,242 241,242 201,108 201,242 179,242"></polygon>
+    </mask>
+  </defs>
+
+  
+  <rect x="18" y="14" width="288" height="288" rx="10" fill="currentColor" opacity="0.18" mask="url(#kn)" transform="translate(4 5) rotate(2 162 158)"></rect>
+
+  
+  <rect x="14" y="10" width="288" height="288" rx="10" fill="currentColor" mask="url(#kn)"></rect>
+
+  
+  <circle fill="currentColor" cx="304" cy="22" r="1.6"></circle>
+  <circle fill="currentColor" cx="14" cy="276" r="1.4"></circle>
+  <circle fill="currentColor" cx="296" cy="294" r="0.9"></circle>
+  <circle fill="currentColor" cx="10" cy="40" r="0.8"></circle>
+</svg>

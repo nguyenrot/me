@@ -1,50 +1,53 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
+import { cookies } from "next/headers";
 import "./globals.css";
+import { PrefsProvider } from "@/components/Providers";
+import { parsePrefs } from "@/lib/prefs";
 
-const geist = Geist({
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin", "latin-ext", "vietnamese"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-jetbrains-mono",
   display: "swap",
 });
 
 export const viewport: Viewport = {
-  colorScheme: "dark",
-  themeColor: "#09090b",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+    { media: "(prefers-color-scheme: light)", color: "#f6f4ef" },
+  ],
 };
 
 export const metadata: Metadata = {
   title: "Phạm Kỷ Nguyên — Software Engineer",
   description:
-    "Phạm Kỷ Nguyên — Software Development Engineer at Workday, based in Đà Nẵng, Việt Nam. Building reliable web systems with Python, Django, and modern APIs.",
+    "Phạm Kỷ Nguyên — Software Development Engineer at Workday, based in Đà Nẵng, Việt Nam.",
   icons: {
-    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
-    shortcut: ["/favicon.svg"],
+    icon: [{ url: "/kn-mark.svg", type: "image/svg+xml" }],
+    shortcut: ["/kn-mark.svg"],
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieJar = await cookies();
+  const prefs = parsePrefs(cookieJar);
+
   return (
     <html
-      lang="vi"
-      className={`${geist.variable} ${geistMono.variable}`}
-      style={{ backgroundColor: "#09090b", colorScheme: "dark" }}
+      lang={prefs.lang}
+      data-theme={prefs.theme}
+      data-accent={prefs.accent}
+      data-density={prefs.density}
+      className={jetbrainsMono.variable}
     >
-      <head>
-        <style>{`html{background-color:#09090b!important;color-scheme:dark!important}body{background:#09090b!important;color:#f4f4f5!important}`}</style>
-      </head>
-      <body className="min-h-[100dvh] overflow-x-hidden bg-zinc-950 font-sans text-zinc-100 antialiased">
-        {children}
+      <body>
+        <PrefsProvider initial={prefs}>{children}</PrefsProvider>
       </body>
     </html>
   );
