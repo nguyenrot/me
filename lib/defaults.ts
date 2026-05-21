@@ -96,7 +96,7 @@ export type Project = {
   url: string;
   url_label: string;
   stack: string;
-  tone: "lime" | "cyan" | "magenta" | "amber" | "violet" | "rose";
+  tone: "lime" | "cyan" | "magenta" | "amber" | "violet" | "rose" | "emerald";
 };
 
 export type ProjectsContent = {
