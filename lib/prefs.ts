@@ -1,4 +1,5 @@
-export type Theme = "dark" | "light";
+export type Theme = "dark" | "light" | "system";
+export type ThemeResolved = "dark" | "light";
 export type Lang = "en" | "vi";
 export type Accent = "lime" | "amber" | "cyan" | "rose" | "violet";
 export type Density = "compact" | "cozy" | "roomy";
@@ -11,7 +12,7 @@ export type Prefs = {
 };
 
 export const PREF_DEFAULTS: Prefs = {
-  theme: "dark",
+  theme: "system",
   lang: "en",
   accent: "lime",
   density: "cozy",
@@ -24,7 +25,7 @@ export const COOKIE_KEYS: Record<keyof Prefs, string> = {
   density: "kn:density",
 };
 
-const THEMES: Theme[] = ["dark", "light"];
+const THEMES: Theme[] = ["dark", "light", "system"];
 const LANGS: Lang[] = ["en", "vi"];
 const ACCENTS: Accent[] = ["lime", "amber", "cyan", "rose", "violet"];
 const DENSITIES: Density[] = ["compact", "cozy", "roomy"];
@@ -40,6 +41,15 @@ export function parsePrefs(cookieJar: { get: (key: string) => { value?: string }
     accent: pick(cookieJar.get(COOKIE_KEYS.accent)?.value, ACCENTS, PREF_DEFAULTS.accent),
     density: pick(cookieJar.get(COOKIE_KEYS.density)?.value, DENSITIES, PREF_DEFAULTS.density),
   };
+}
+
+/** Map preference to the concrete theme CSS will see. SSR cannot know the
+ *  client OS preference, so `"system"` collapses to `"dark"` until the inline
+ *  preboot script (see lib/preboot.ts) replaces it on the client. */
+export function resolveTheme(pref: Theme): ThemeResolved {
+  if (pref === "dark" || pref === "light") return pref;
+  if (typeof window === "undefined") return "dark";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
 export const ACCENT_SWATCHES: { value: Accent; color: string }[] = [

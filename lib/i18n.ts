@@ -27,6 +27,9 @@ export const UI_STRINGS = {
     en: "Language",
     vi: "Ngôn ngữ",
   },
-  ariaToggleTheme: { en: "Toggle theme", vi: "Đổi giao diện" },
+  ariaToggleTheme: { en: "Theme", vi: "Giao diện" },
   ariaAccent: { en: "Accent color", vi: "Màu nhấn" },
+  themeLight: { en: "Light", vi: "Sáng" },
+  themeSystem: { en: "System", vi: "Hệ thống" },
+  themeDark: { en: "Dark", vi: "Tối" },
 } as const;

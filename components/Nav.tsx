@@ -211,37 +211,54 @@ export default function Nav() {
               </div>
             </div>
 
-            <button
-              type="button"
-              className="iconbtn"
+            <div
+              className="themetoggle"
+              role="radiogroup"
               aria-label={t(UI_STRINGS.ariaToggleTheme, lang)}
-              title={t(UI_STRINGS.ariaToggleTheme, lang)}
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             >
-              <svg
-                className="ico ico-sun"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
+              <button
+                type="button"
+                role="radio"
+                aria-checked={theme === "light"}
+                aria-label={t(UI_STRINGS.themeLight, lang)}
+                title={t(UI_STRINGS.themeLight, lang)}
+                className={theme === "light" ? "is-active" : undefined}
+                onClick={() => setTheme("light")}
               >
-                <circle cx="8" cy="8" r="3" />
-                <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.4 1.4M11.55 11.55l1.4 1.4M3.05 12.95l1.4-1.4M11.55 4.45l1.4-1.4" />
-              </svg>
-              <svg
-                className="ico ico-moon"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                  <circle cx="8" cy="8" r="3" />
+                  <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.4 1.4M11.55 11.55l1.4 1.4M3.05 12.95l1.4-1.4M11.55 4.45l1.4-1.4" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                role="radio"
+                aria-checked={theme === "system"}
+                aria-label={t(UI_STRINGS.themeSystem, lang)}
+                title={t(UI_STRINGS.themeSystem, lang)}
+                className={theme === "system" ? "is-active" : undefined}
+                onClick={() => setTheme("system")}
               >
-                <path d="M13 9.5A5.5 5.5 0 1 1 6.5 3a4.5 4.5 0 0 0 6.5 6.5z" />
-              </svg>
-            </button>
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="1.75" y="2.75" width="12.5" height="8.5" rx="0.8" />
+                  <line x1="5" y1="13.75" x2="11" y2="13.75" />
+                  <line x1="8" y1="11.25" x2="8" y2="13.75" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                role="radio"
+                aria-checked={theme === "dark"}
+                aria-label={t(UI_STRINGS.themeDark, lang)}
+                title={t(UI_STRINGS.themeDark, lang)}
+                className={theme === "dark" ? "is-active" : undefined}
+                onClick={() => setTheme("dark")}
+              >
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M13 9.5A5.5 5.5 0 1 1 6.5 3a4.5 4.5 0 0 0 6.5 6.5z" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </header>

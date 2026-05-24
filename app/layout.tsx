@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import "./globals.css";
 import { PrefsProvider } from "@/components/Providers";
 import { parsePrefs } from "@/lib/prefs";
+import { preboot } from "@/lib/preboot";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin", "latin-ext", "vietnamese"],
@@ -38,14 +39,24 @@ export default async function RootLayout({
   const cookieJar = await cookies();
   const prefs = parsePrefs(cookieJar);
 
+  // SSR can't know the client OS preference. If pref is "system" we fall back
+  // to "dark" and let the inline preboot script flip to "light" before React
+  // hydrates. The pref itself is preserved on data-theme-pref for the client
+  // Provider to read back.
+  const resolvedForSSR = prefs.theme === "system" ? "dark" : prefs.theme;
+
   return (
     <html
       lang={prefs.lang}
-      data-theme={prefs.theme}
+      data-theme={resolvedForSSR}
+      data-theme-pref={prefs.theme}
       data-accent={prefs.accent}
       data-density={prefs.density}
       className={jetbrainsMono.variable}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: preboot }} />
+      </head>
       <body>
         <PrefsProvider initial={prefs}>{children}</PrefsProvider>
       </body>

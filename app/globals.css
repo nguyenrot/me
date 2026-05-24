@@ -253,9 +253,6 @@ strong { font-weight: 600; color: var(--fg); }
 .iconbtn--sm { width: 24px; height: 24px; }
 
 .ico { stroke: currentColor; }
-.ico-sun  { display: none; }
-[data-theme="light"] .ico-sun  { display: block; }
-[data-theme="light"] .ico-moon { display: none; }
 
 /* accent picker popover */
 .accent-picker { position: relative; }
@@ -1256,6 +1253,36 @@ strong { font-weight: 600; color: var(--fg); }
 }
 @media (max-width: 540px) {
   .langtoggle button { padding: 6px 7px; font-size: 10px; }
+}
+
+/* =============================================================
+   THEME TOGGLE (header) — 3-state radio: Light / System / Dark
+   ============================================================= */
+.themetoggle {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: var(--r-2);
+  overflow: hidden;
+  background: var(--bg-elev);
+}
+.themetoggle button {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  color: var(--fg-dim);
+  transition: background var(--t-fast), color var(--t-fast);
+  border-right: 1px solid var(--border);
+}
+.themetoggle button:last-child { border-right: 0; }
+.themetoggle button:hover { color: var(--fg); }
+.themetoggle button.is-active {
+  background: var(--fg);
+  color: var(--bg);
+}
+@media (max-width: 540px) {
+  .themetoggle button { width: 26px; height: 26px; }
+  .themetoggle button svg { width: 12px; height: 12px; }
 }
 
 /* =============================================================

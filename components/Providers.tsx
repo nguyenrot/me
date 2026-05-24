@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { COOKIE_KEYS, type Accent, type Density, type Lang, type Prefs, type Theme } from "@/lib/prefs";
+import { COOKIE_KEYS, resolveTheme, type Accent, type Density, type Lang, type Prefs, type Theme } from "@/lib/prefs";
 
 type PrefsContextValue = Prefs & {
   setTheme: (v: Theme) => void;
@@ -25,6 +25,12 @@ function persist(key: keyof typeof COOKIE_KEYS, value: string) {
   }
 }
 
+function applyTheme(pref: Theme) {
+  const root = document.documentElement;
+  root.setAttribute("data-theme", resolveTheme(pref));
+  root.setAttribute("data-theme-pref", pref);
+}
+
 export function PrefsProvider({ initial, children }: { initial: Prefs; children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(initial.theme);
   const [lang, setLangState] = useState<Lang>(initial.lang);
@@ -32,8 +38,12 @@ export function PrefsProvider({ initial, children }: { initial: Prefs; children:
   const [density, setDensityState] = useState<Density>(initial.density);
 
   useEffect(() => {
-    const root = document.documentElement;
-    root.setAttribute("data-theme", theme);
+    applyTheme(theme);
+    if (theme !== "system") return;
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const handler = () => applyTheme("system");
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
   }, [theme]);
   useEffect(() => {
     const root = document.documentElement;
