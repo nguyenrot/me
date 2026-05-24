@@ -71,3 +71,13 @@ Re-trigger / rollback to a branch or tag: `cd /Users/kynguyenpham/X106 && ./depl
 `./deploy.sh` (this repo's local file at `/var/www/me/deploy.sh`) is now a manual fallback only — it expects the tar at `/tmp/me-deploy.tar.gz` and just extracts + recreates pm2.
 
 Live at `me.kynguyen.cc`, port 3001, PM2 process `me-pkn`, VPS path `/var/www/me`. Watch deploys at `https://github.com/nguyenrot/me/actions`.
+
+## Verification cleanup (mandatory)
+
+After verifying changes with chrome-devtools-mcp or a local `npm run dev` server, ALWAYS clean up before ending the turn:
+
+1. Close every chrome-devtools page you opened: `mcp__chrome-devtools__list_pages` then `mcp__chrome-devtools__close_page` each one. Do not leave a page sitting at `http://localhost:3001`.
+2. If you started `npm run dev` in the background, stop it: `pkill -f "next dev --port 3001"`.
+3. Remove any throwaway artifacts you wrote during verification (e.g. `.tmp-screens/`, `/tmp/*.png` from screenshots).
+
+Why: prior sessions left a Chrome DevTools tab + dev server running for ~40 minutes, holding ports and a browser process. The rule applies even when you think the user might want to look at the page — the user will reopen it themselves when needed. Do not skip this step on partial / failed verification either.

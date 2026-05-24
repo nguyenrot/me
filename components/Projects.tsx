@@ -1,8 +1,10 @@
 "use client";
 
 import { usePrefs } from "./Providers";
-import { t } from "@/lib/i18n";
+import { t, UI_STRINGS } from "@/lib/i18n";
 import type { ProjectsContent } from "@/lib/defaults";
+
+const SWIPE_HINT = { en: "Swipe", vi: "Vuốt" } as const;
 
 export default function Projects({ content }: { content: ProjectsContent }) {
   const { lang } = usePrefs();
@@ -17,10 +19,14 @@ export default function Projects({ content }: { content: ProjectsContent }) {
           <div className="section__aside">
             <span className="dim">{t(content.aside_label, lang)}</span>
             <span className="bignum">{String(content.aside_count).padStart(2, "0")}</span>
+            <span className="projects__hint" aria-hidden>
+              {t(SWIPE_HINT, lang)}
+              <span className="projects__hint-arrow">→</span>
+            </span>
           </div>
         </header>
 
-        <div className="projects">
+        <div className="projects" role="list" aria-label={t(UI_STRINGS.nav.projects, lang)}>
           {content.items.map((p) => (
             <a
               key={p.idx}
@@ -28,6 +34,7 @@ export default function Projects({ content }: { content: ProjectsContent }) {
               href={p.url}
               target="_blank"
               rel="noopener"
+              role="listitem"
               style={{ "--proj-tone": p.tone } as React.CSSProperties}
             >
               <header className="proj__head">
