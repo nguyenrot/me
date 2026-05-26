@@ -11,6 +11,10 @@
 
 /* ---------- TOKENS ---------- */
 :root {
+  /* JetBrains Mono is loaded via <link> in nuxt.config.ts → app.head.link.
+     The CSS variable is kept for parity with the previous Next.js setup
+     that exposed it through `next/font/google`. */
+  --font-jetbrains-mono: "JetBrains Mono";
   --font-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   /* spacing */
