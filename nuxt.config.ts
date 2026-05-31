@@ -34,6 +34,15 @@ export default defineNuxtConfig({
   // on '/' mirrors the previous `next: { revalidate: 300 }` content cache.
   ssr: true,
 
+  modules: ['@nuxtjs/sitemap', '@nuxtjs/robots'],
+
+  // Public portfolio — emit an indexable robots.txt that points Google at the
+  // sitemap. The single page ('/') is auto-discovered from the router.
+  site: {
+    url: 'https://me.kynguyen.cc',
+    name: 'Phạm Kỷ Nguyên',
+  },
+
   devtools: { enabled: false },
 
   css: ['~/assets/css/main.css'],
