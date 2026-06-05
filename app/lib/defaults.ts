@@ -362,7 +362,7 @@ export const PROJECTS_DEFAULTS: ProjectsContent = {
   section_num: { en: '04 / projects', vi: '04 / dự án' },
   title: { en: 'Side projects.', vi: 'Dự án cá nhân.' },
   aside_label: { en: 'live', vi: 'đang chạy' },
-  aside_count: 7,
+  aside_count: 9,
   items: [
     {
       idx: 'P/01',
@@ -444,6 +444,30 @@ export const PROJECTS_DEFAULTS: ProjectsContent = {
       url_label: 'cafe.kynguyen.cc',
       stack: 'next · md',
       tone: 'rose',
+    },
+    {
+      idx: 'P/08',
+      name: 'Lattice',
+      desc: {
+        en: 'A blog, a small social space, and real-time chat.',
+        vi: 'Một blog, một góc mạng xã hội nhỏ, và chat thời gian thực.',
+      },
+      url: 'https://lattice.kynguyen.cc',
+      url_label: 'lattice.kynguyen.cc',
+      stack: 'nuxt · django',
+      tone: 'violet',
+    },
+    {
+      idx: 'P/09',
+      name: 'Lumi',
+      desc: {
+        en: 'A ChatGPT-style AI assistant with its own quiet voice.',
+        vi: 'Trợ lý AI kiểu ChatGPT với giọng riêng của nó.',
+      },
+      url: 'https://lumi.kynguyen.cc',
+      url_label: 'lumi.kynguyen.cc',
+      stack: 'nuxt · ai',
+      tone: 'cyan',
     },
   ],
 }
