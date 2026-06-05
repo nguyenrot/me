@@ -314,8 +314,8 @@ export const EXPERIENCE_DEFAULTS: ExperienceContent = {
       org: 'Paradox',
       location: 'Đà Nẵng',
       desc: {
-        en: 'Nearly 4 years building HR automation tooling in the Đà Nẵng office. Grew from junior to senior — owning Django services, SQL pipelines, and integration work.',
-        vi: 'Gần 4 năm xây tooling HR automation tại văn phòng Đà Nẵng. Từ junior lên senior — own Django service, SQL pipeline và integration.',
+        en: 'Nearly 4 years building HR automation tooling in the Đà Nẵng office. Grew from junior to middle — owning Django services, SQL pipelines, and integration work.',
+        vi: 'Gần 4 năm xây tooling HR automation tại văn phòng Đà Nẵng. Từ junior lên middle — own Django service, SQL pipeline và integration.',
       },
     },
     {
