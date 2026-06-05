@@ -70,6 +70,16 @@ export type SkillsContent = {
   items: Skill[]
 }
 
+export type ExperienceOnsite = {
+  /** Short badge label, e.g. "ONSITE" */
+  label: string
+  /** City / location of the on-site stint */
+  place: string
+  /** When + duration, e.g. "Aug–Sep 2025 · 2 months" */
+  when: I18nValue
+  desc: I18nValue
+}
+
 export type ExperienceEntry = {
   variant?: 'current' | 'edu'
   year_start: string
@@ -79,6 +89,10 @@ export type ExperienceEntry = {
   org: string
   location: string
   desc: I18nValue
+  /** Optional sub-event that happened *within* this role (e.g. a
+      temporary on-site assignment). Rendered as an inset highlight
+      under the description — not as a separate timeline node. */
+  onsite?: ExperienceOnsite
 }
 
 export type ExperienceContent = {
@@ -292,7 +306,7 @@ export const EXPERIENCE_DEFAULTS: ExperienceContent = {
   section_num: { en: '03 / experience', vi: '03 / kinh nghiệm' },
   title: { en: "Where I've been.", vi: 'Nơi tôi đã đi qua.' },
   aside_label: { en: 'chapters', vi: 'chương' },
-  aside_count: 5,
+  aside_count: 4,
   entries: [
     {
       variant: 'current',
@@ -317,16 +331,14 @@ export const EXPERIENCE_DEFAULTS: ExperienceContent = {
         en: 'Nearly 4 years building HR automation tooling in the Đà Nẵng office. Grew from junior to middle — owning Django services, SQL pipelines, and integration work.',
         vi: 'Gần 4 năm xây tooling HR automation tại văn phòng Đà Nẵng. Từ junior lên middle — own Django service, SQL pipeline và integration.',
       },
-    },
-    {
-      year_start: '2025',
-      year_end: null,
-      title: { en: 'Software Engineer · Onsite', vi: 'Kỹ sư phần mềm · Onsite' },
-      org: 'Paradox',
-      location: 'Scottsdale, Arizona 🇺🇸',
-      desc: {
-        en: 'Two-month on-site assignment (Aug–Sep 2025) in Scottsdale, Arizona. Worked closely with the US team and broadened my engineering toolbox.',
-        vi: 'Hai tháng on-site (tháng 8–9 năm 2025) tại Scottsdale, Arizona. Làm việc chặt với team US và mở rộng toolbox kỹ thuật.',
+      onsite: {
+        label: 'ONSITE',
+        place: 'Scottsdale, Arizona',
+        when: { en: 'Aug–Sep 2025 · 2 months', vi: 'Th8–Th9 2025 · 2 tháng' },
+        desc: {
+          en: 'Embedded with the US team in person — broadened my engineering toolbox and shipped alongside them.',
+          vi: 'Hai tháng làm việc trực tiếp với team US — mở rộng toolbox kỹ thuật và ship cùng họ.',
+        },
       },
     },
     {

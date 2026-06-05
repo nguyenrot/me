@@ -44,6 +44,14 @@ function entryClass(e: ExperienceEntry) {
               {{ e.org }} <span class="dim">· {{ e.location }}</span>
             </p>
             <p class="entry__desc">{{ t(e.desc) }}</p>
+            <div v-if="e.onsite" class="onsite">
+              <div class="onsite__top">
+                <span class="onsite__badge">{{ e.onsite.label }}</span>
+                <span class="onsite__place">{{ e.onsite.place }}</span>
+                <span class="onsite__when">{{ t(e.onsite.when) }}</span>
+              </div>
+              <p class="onsite__desc">{{ t(e.onsite.desc) }}</p>
+            </div>
           </div>
         </li>
       </ol>
