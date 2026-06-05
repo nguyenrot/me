@@ -319,14 +319,14 @@ export const EXPERIENCE_DEFAULTS: ExperienceContent = {
       },
     },
     {
-      year_start: '2022',
+      year_start: '2025',
       year_end: null,
       title: { en: 'Software Engineer · Onsite', vi: 'Kỹ sư phần mềm · Onsite' },
       org: 'Paradox',
       location: 'Scottsdale, Arizona 🇺🇸',
       desc: {
-        en: 'Two-month on-site assignment in Scottsdale, Arizona. Worked closely with the US team and broadened my engineering toolbox.',
-        vi: 'Hai tháng on-site tại Scottsdale, Arizona. Làm việc chặt với team US và mở rộng toolbox kỹ thuật.',
+        en: 'Two-month on-site assignment (Aug–Sep 2025) in Scottsdale, Arizona. Worked closely with the US team and broadened my engineering toolbox.',
+        vi: 'Hai tháng on-site (tháng 8–9 năm 2025) tại Scottsdale, Arizona. Làm việc chặt với team US và mở rộng toolbox kỹ thuật.',
       },
     },
     {
