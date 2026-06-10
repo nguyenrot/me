@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ElsewhereContent } from '~/lib/defaults'
+import { safeUrl } from '~/lib/sanitize'
 
 defineProps<{ content: ElsewhereContent }>()
 
@@ -16,7 +17,7 @@ const { t } = useI18n()
 
       <ul class="links">
         <li v-for="item in content.items" :key="item.url">
-          <a :href="item.url" target="_blank" rel="noopener">
+          <a :href="safeUrl(item.url)" target="_blank" rel="noopener">
             <span class="links__idx" aria-hidden>
               <!-- NOTE: These icons are the ORIGINAL marks drawn in the design
                    prototype — not the official platform brand logos. Swap each

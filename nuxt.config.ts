@@ -30,8 +30,10 @@ const PREBOOT = `(function(){try{
 export default defineNuxtConfig({
   compatibilityDate: '2026-05-26',
 
-  // SSR + Nitro (universal). The portfolio is public and SEO-friendly; ISR
-  // on '/' mirrors the previous `next: { revalidate: 300 }` content cache.
+  // SSR + Nitro (universal). Plain per-request SSR — no ISR: the rendered
+  // HTML is personalized by the `kn:lang` cookie, and ISR caches by URL only,
+  // which poisoned the language cache for all visitors (and cached API-down
+  // fallbacks for 5 minutes).
   ssr: true,
 
   modules: ['@nuxtjs/sitemap', '@nuxtjs/robots'],
@@ -55,10 +57,6 @@ export default defineNuxtConfig({
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://api.kynguyen.cc',
     },
-  },
-
-  routeRules: {
-    '/': { isr: 300 },
   },
 
   app: {

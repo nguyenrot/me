@@ -112,16 +112,22 @@ export const usePrefs = () => {
   }
 
   if (import.meta.client) {
+    // Register the OS color-scheme listener unconditionally — the handler
+    // itself checks the pref, so switching to `system` later still reacts
+    // to OS changes. Cleaned up on unmount to avoid leaking listeners.
+    let mq: MediaQueryList | null = null
+    const onSchemeChange = () => {
+      if (theme.value === 'system') applyToRoot()
+    }
     onMounted(() => {
       applyToRoot()
       watch([theme, lang, accent, density], applyToRoot)
-      if (theme.value === 'system') {
-        const mq = window.matchMedia('(prefers-color-scheme: dark)')
-        const handler = () => {
-          if (theme.value === 'system') applyToRoot()
-        }
-        mq.addEventListener('change', handler)
-      }
+      mq = window.matchMedia('(prefers-color-scheme: dark)')
+      mq.addEventListener('change', onSchemeChange)
+    })
+    onBeforeUnmount(() => {
+      mq?.removeEventListener('change', onSchemeChange)
+      mq = null
     })
   }
 

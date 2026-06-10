@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ProjectsContent } from '~/lib/defaults'
+import { safeUrl } from '~/lib/sanitize'
 
 defineProps<{ content: ProjectsContent }>()
 
@@ -31,7 +32,7 @@ const SWIPE_HINT = { en: 'Swipe', vi: 'Vuốt' } as const
           v-for="p in content.items"
           :key="p.idx"
           class="proj"
-          :href="p.url"
+          :href="safeUrl(p.url)"
           target="_blank"
           rel="noopener"
           role="listitem"

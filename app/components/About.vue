@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { AboutContent } from '~/lib/defaults'
+import { sanitizeHtml } from '~/lib/sanitize'
 
 defineProps<{ content: AboutContent }>()
 
@@ -11,16 +12,16 @@ const { t } = useI18n()
     <div class="container">
       <header class="section__head">
         <span class="section__num">{{ t(content.section_num) }}</span>
-        <h2 class="section__title" v-html="t(content.title_html)" />
+        <h2 class="section__title" v-html="sanitizeHtml(t(content.title_html))" />
       </header>
 
       <div class="about__grid">
         <div class="about__prose">
-          <p v-for="(p, i) in content.paragraphs_html" :key="i" v-html="t(p)" />
+          <p v-for="(p, i) in content.paragraphs_html" :key="i" v-html="sanitizeHtml(t(p))" />
 
           <blockquote class="quote">
             <span class="quote__mark" aria-hidden>/*</span>
-            <p v-html="t(content.quote_html)" />
+            <p v-html="sanitizeHtml(t(content.quote_html))" />
             <span class="quote__mark quote__mark--end" aria-hidden>*/</span>
           </blockquote>
 
