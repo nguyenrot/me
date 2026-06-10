@@ -21,7 +21,7 @@ No test suite is configured.
 
 Single-page portfolio (`me.kynguyen.cc`). All sections live in one scrollable page with anchor-based navigation (`#hero`, `#about`, `#skills`, `#experience`, `#projects`, `#elsewhere`).
 
-**SSR + Nitro (universal mode).** ISR is wired on `/` via `routeRules: { '/': { isr: 300 } }` in `nuxt.config.ts` — mirrors the `next: { revalidate: 300 }` content cache the previous Next.js setup had.
+**SSR + Nitro (universal mode), per-request SSR.** The ISR rule on `/` was removed 2026-06-10: SSR output is personalized by the `kn:lang` cookie but ISR cached by URL only, so one visitor's language poisoned the cache for everyone (and API-down fallback HTML got cached too). Do not re-add ISR/SWR on `/` unless the cache key varies on the cookie. CMS HTML fields rendered with `v-html` must pass through `app/lib/sanitize.ts` (strict tag/class allowlist).
 
 ### File layout
 
