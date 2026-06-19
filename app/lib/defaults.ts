@@ -374,7 +374,7 @@ export const PROJECTS_DEFAULTS: ProjectsContent = {
   section_num: { en: '04 / projects', vi: '04 / dự án' },
   title: { en: 'Side projects.', vi: 'Dự án cá nhân.' },
   aside_label: { en: 'live', vi: 'đang chạy' },
-  aside_count: 9,
+  aside_count: 10,
   items: [
     {
       idx: 'P/01',
@@ -480,6 +480,18 @@ export const PROJECTS_DEFAULTS: ProjectsContent = {
       url_label: 'lumi.kynguyen.cc',
       stack: 'nuxt · ai',
       tone: 'cyan',
+    },
+    {
+      idx: 'P/10',
+      name: 'Developer Tools',
+      desc: {
+        en: 'A collection of small tools, generators, and everyday utilities.',
+        vi: 'Tập hợp các công cụ nhỏ, generator và tiện ích hằng ngày.',
+      },
+      url: 'https://tool.kynguyen.cc',
+      url_label: 'tool.kynguyen.cc',
+      stack: 'nuxt · tools',
+      tone: 'amber',
     },
   ],
 }
