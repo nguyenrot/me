@@ -6,6 +6,5 @@ usePrefs()
 </script>
 
 <template>
-  <WorldCupBanner />
   <NuxtPage />
 </template>
