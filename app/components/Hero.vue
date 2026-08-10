@@ -49,6 +49,8 @@ function handleAnchor(e: MouseEvent) {
     <div class="hero__year" aria-hidden>
       {{ content.year }}
     </div>
+    <div class="hero__blob hero__blob--a" aria-hidden />
+    <div class="hero__blob hero__blob--b" aria-hidden />
     <div class="hero__spotlight" aria-hidden />
 
     <div class="container">
@@ -64,31 +66,26 @@ function handleAnchor(e: MouseEvent) {
       <div class="hero__grid">
         <div class="hero__main">
           <p class="kicker">
-            <span class="dim">{{ content.kicker_prefix }}</span>
+            <span class="kicker__wave" aria-hidden>👋</span>
             <span>{{ t(content.kicker) }}</span>
           </p>
           <h1 class="hero__name">
             <span class="hero__name-line">{{ content.name_first }}</span>
             <br />
-            <span class="hero__name-line">{{ content.name_last }}</span>
-            <span class="hero__name-cursor" aria-hidden>_</span>
+            <span class="hero__name-line">{{ content.name_last }}</span><span class="hero__name-dot" aria-hidden>.</span>
           </h1>
           <div
-            class="hero__role"
-            :aria-label="`role: ${content.role_value} at ${content.at_value}`"
+            class="hero__chips"
+            :aria-label="`${content.role_label}: ${content.role_value} — ${content.at_label}: ${content.at_value}`"
           >
-            <div class="hero__role-row">
-              <span class="hero__role-key">{{ content.role_label }}</span>
-              <span class="hero__role-eq">=</span>
-              <span class="hero__role-val">
-                &ldquo;{{ content.role_value }}&rdquo;<span class="hero__role-punc">,</span>
-              </span>
-            </div>
-            <div class="hero__role-row">
-              <span class="hero__role-key">{{ content.at_label }}</span>
-              <span class="hero__role-eq">=</span>
-              <span class="hero__role-val">&ldquo;{{ content.at_value }}&rdquo;</span>
-            </div>
+            <span class="chip">
+              <span class="chip__icon" aria-hidden>💼</span>
+              <span>{{ content.role_value }}</span>
+            </span>
+            <span class="chip">
+              <span class="chip__icon" aria-hidden>🏢</span>
+              <span>{{ content.at_value }}</span>
+            </span>
           </div>
 
           <p class="hero__lede">{{ t(content.lede) }}</p>
@@ -109,12 +106,6 @@ function handleAnchor(e: MouseEvent) {
           <figure class="portrait">
             <div class="portrait__frame">
               <img class="portrait__img" src="/portrait.jpg" alt="Phạm Kỷ Nguyên" />
-              <div class="portrait__crosshair" aria-hidden>
-                <span class="ch ch-tl" />
-                <span class="ch ch-tr" />
-                <span class="ch ch-bl" />
-                <span class="ch ch-br" />
-              </div>
             </div>
             <figcaption class="portrait__caption">
               <div>

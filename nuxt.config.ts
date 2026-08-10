@@ -25,6 +25,11 @@ const PREBOOT = `(function(){try{
   root.setAttribute('data-accent',accent);
   root.setAttribute('data-density',density);
   root.setAttribute('lang',lang);
+  // Gate for the scroll-reveal CSS: [data-reveal] elements start hidden
+  // only when this attribute is present, so no-JS visitors and crawlers
+  // always get the fully visible page. Kept in sync with main.css and
+  // app/plugins/reveal.client.ts.
+  root.setAttribute('data-js','');
 }catch(e){}})();`
 
 export default defineNuxtConfig({
@@ -71,8 +76,8 @@ export default defineNuxtConfig({
           content:
             'Phạm Kỷ Nguyên — Software Development Engineer at Workday, based in Đà Nẵng, Việt Nam.',
         },
-        { name: 'theme-color', content: '#0a0a0a', media: '(prefers-color-scheme: dark)' },
-        { name: 'theme-color', content: '#f6f4ef', media: '(prefers-color-scheme: light)' },
+        { name: 'theme-color', content: '#1b1726', media: '(prefers-color-scheme: dark)' },
+        { name: 'theme-color', content: '#fff9f0', media: '(prefers-color-scheme: light)' },
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/kn-mark.svg' },
@@ -80,8 +85,10 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
+          // Both families ship a `vietnamese` subset — required for the
+          // diacritics in display-size headings (checked 2026-08-10).
           rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap',
+          href: 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap',
         },
       ],
       script: [

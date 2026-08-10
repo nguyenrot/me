@@ -10,19 +10,19 @@ const { t } = useI18n()
 <template>
   <section class="section" id="about">
     <div class="container">
-      <header class="section__head">
+      <header class="section__head" data-reveal>
         <span class="section__num">{{ t(content.section_num) }}</span>
         <h2 class="section__title" v-html="sanitizeHtml(t(content.title_html))" />
       </header>
 
       <div class="about__grid">
-        <div class="about__prose">
+        <div class="about__prose" data-reveal>
           <p v-for="(p, i) in content.paragraphs_html" :key="i" v-html="sanitizeHtml(t(p))" />
 
           <blockquote class="quote">
-            <span class="quote__mark" aria-hidden>/*</span>
+            <span class="quote__mark" aria-hidden>“</span>
             <p v-html="sanitizeHtml(t(content.quote_html))" />
-            <span class="quote__mark quote__mark--end" aria-hidden>*/</span>
+            <span class="quote__mark quote__mark--end" aria-hidden>”</span>
           </blockquote>
 
           <p class="about__sig">
@@ -31,7 +31,7 @@ const { t } = useI18n()
           </p>
         </div>
 
-        <aside class="about__card">
+        <aside class="about__card" data-reveal="pop" style="--rd: .15s">
           <header class="card__head">
             <span class="card__label">{{ content.card_label }}</span>
             <span class="card__dot" aria-hidden />

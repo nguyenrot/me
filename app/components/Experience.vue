@@ -15,19 +15,25 @@ function entryClass(e: ExperienceEntry) {
 <template>
   <section class="section" id="experience">
     <div class="container">
-      <header class="section__head section__head--row">
+      <header class="section__head section__head--row" data-reveal>
         <div>
           <span class="section__num">{{ t(content.section_num) }}</span>
           <h2 class="section__title">{{ t(content.title) }}</h2>
         </div>
         <div class="section__aside">
           <span class="dim">{{ t(content.aside_label) }}</span>
-          <span class="bignum">{{ String(content.aside_count).padStart(2, '0') }}</span>
+          <span class="bignum" data-countup>{{ String(content.aside_count).padStart(2, '0') }}</span>
         </div>
       </header>
 
-      <ol class="timeline">
-        <li v-for="(e, i) in content.entries" :key="i" :class="entryClass(e)">
+      <ol class="timeline" data-reveal>
+        <li
+          v-for="(e, i) in content.entries"
+          :key="i"
+          :class="entryClass(e)"
+          data-reveal="left"
+          :style="{ '--rd': `${Math.min(i * 0.1, 0.4)}s` }"
+        >
           <div class="entry__year">
             <span>{{ e.year_start }}</span>
             <template v-if="e.year_end != null">

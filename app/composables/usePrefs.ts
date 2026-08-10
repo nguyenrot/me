@@ -45,11 +45,11 @@ export function resolveTheme(pref: Theme): ThemeResolved {
 }
 
 export const ACCENT_SWATCHES: { value: Accent; color: string }[] = [
-  { value: 'lime', color: '#b5e853' },
-  { value: 'amber', color: '#f0a04b' },
-  { value: 'cyan', color: '#62d9ff' },
-  { value: 'rose', color: '#ff7aa1' },
-  { value: 'violet', color: '#b39bff' },
+  { value: 'lime', color: '#6bcb77' },
+  { value: 'amber', color: '#ffa94d' },
+  { value: 'cyan', color: '#4dabf7' },
+  { value: 'rose', color: '#ff8fa3' },
+  { value: 'violet', color: '#9775fa' },
 ]
 
 const COOKIE_OPTS = {

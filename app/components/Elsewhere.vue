@@ -10,13 +10,18 @@ const { t } = useI18n()
 <template>
   <section class="section" id="elsewhere">
     <div class="container">
-      <header class="section__head">
+      <header class="section__head" data-reveal>
         <span class="section__num">{{ t(content.section_num) }}</span>
         <h2 class="section__title">{{ t(content.title) }}</h2>
       </header>
 
       <ul class="links">
-        <li v-for="item in content.items" :key="item.url">
+        <li
+          v-for="(item, i) in content.items"
+          :key="item.url"
+          data-reveal
+          :style="{ '--rd': `${Math.min(i * 0.08, 0.4)}s` }"
+        >
           <a :href="safeUrl(item.url)" target="_blank" rel="noopener">
             <span class="links__idx" aria-hidden>
               <!-- NOTE: These icons are the ORIGINAL marks drawn in the design
