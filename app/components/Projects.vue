@@ -16,12 +16,19 @@ const statusOf = (p: Project): ProjectStatus =>
 
 const isLive = (p: Project) => statusOf(p) === 'live'
 
-/** Only live projects get a link — a dead domain is worse than no link. */
+/**
+ * Only live projects get a link — a dead domain is worse than no link.
+ *
+ * Live ones sort to the front (stable, so `idx` order is kept within each
+ * group) so the grid doesn't open on a row of retired cards.
+ */
 const items = computed(() =>
-  (props.content.items ?? []).map((p) => {
-    const status = statusOf(p)
-    return { ...p, status, live: status === 'live' }
-  }),
+  (props.content.items ?? [])
+    .map((p) => {
+      const status = statusOf(p)
+      return { ...p, status, live: status === 'live' }
+    })
+    .sort((a, b) => Number(b.live) - Number(a.live)),
 )
 
 /* The aside counter is derived, not read from `aside_count`: the label says

@@ -392,7 +392,7 @@ export const PROJECTS_DEFAULTS: ProjectsContent = {
   section_num: { en: '04 / projects', vi: '04 / dự án' },
   title: { en: 'Side projects.', vi: 'Dự án cá nhân.' },
   aside_label: { en: 'live', vi: 'đang chạy' },
-  aside_count: 10,
+  aside_count: 6,
   items: [
     {
       idx: 'P/01',
@@ -414,6 +414,7 @@ export const PROJECTS_DEFAULTS: ProjectsContent = {
       url_label: 'journal.kynguyen.cc',
       stack: 'next · auth',
       tone: 'cyan',
+      status: 'offline',
     },
     {
       idx: 'P/03',
@@ -426,6 +427,7 @@ export const PROJECTS_DEFAULTS: ProjectsContent = {
       url_label: 'art.kynguyen.cc',
       stack: 'p5 · canvas',
       tone: 'magenta',
+      status: 'offline',
     },
     {
       idx: 'P/04',
@@ -438,6 +440,7 @@ export const PROJECTS_DEFAULTS: ProjectsContent = {
       url_label: 'ledger.kynguyen.cc',
       stack: 'nuxt · vue',
       tone: 'emerald',
+      status: 'offline',
     },
     {
       idx: 'P/05',
@@ -462,6 +465,7 @@ export const PROJECTS_DEFAULTS: ProjectsContent = {
       url_label: 'habits.kynguyen.cc',
       stack: 'next · sql',
       tone: 'violet',
+      status: 'offline',
     },
     {
       idx: 'P/07',
