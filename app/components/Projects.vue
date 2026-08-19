@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Project, ProjectStatus, ProjectsContent } from '~/lib/defaults'
+import { KNOWN_PROJECT_STATUS, projectHost } from '~/lib/defaults'
 import { safeUrl } from '~/lib/sanitize'
 
 const props = defineProps<{ content: ProjectsContent }>()
@@ -10,9 +11,16 @@ const SWIPE_HINT = { en: 'Swipe', vi: 'Vuốt' } as const
 
 const STATUSES: readonly ProjectStatus[] = ['live', 'wip', 'archived', 'offline']
 
-/** Unknown / missing status from the CMS falls back to `live`. */
-const statusOf = (p: Project): ProjectStatus =>
-  p.status && STATUSES.includes(p.status) ? p.status : 'live'
+/**
+ * An explicit, valid `status` on the item always wins. Otherwise fall back
+ * to the reachability overlay (projects verified unreachable), and only
+ * then to `live` — so a CMS payload that predates the field can't
+ * resurrect a dead link.
+ */
+const statusOf = (p: Project): ProjectStatus => {
+  if (p.status && STATUSES.includes(p.status)) return p.status
+  return KNOWN_PROJECT_STATUS[projectHost(p.url)] ?? 'live'
+}
 
 const isLive = (p: Project) => statusOf(p) === 'live'
 

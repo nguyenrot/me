@@ -518,6 +518,39 @@ export const PROJECTS_DEFAULTS: ProjectsContent = {
   ],
 }
 
+/**
+ * Hostname of a project URL, used as the identity of a project across the
+ * CMS payload and the fallback data. Returns '' for anything unparseable.
+ */
+export function projectHost(url: unknown): string {
+  if (typeof url !== 'string') return ''
+  try {
+    return new URL(url).hostname.toLowerCase()
+  } catch {
+    return ''
+  }
+}
+
+/**
+ * Reachability overlay: hostname -> status, derived from the non-live
+ * entries in PROJECTS_DEFAULTS so there is exactly one place to edit.
+ *
+ * Why this exists: the live site renders the CMS payload, and fallback
+ * data only applies when the API is unreachable. Until `status` lands in
+ * the CMS, a payload without the field would present retired projects as
+ * live links again — this map fills that gap.
+ *
+ * Precedence is deliberate: an explicit `status` in the CMS payload always
+ * wins over this map (see statusOf() in Projects.vue). So once the CMS
+ * carries `status` for these entries, drop their `status` here and the
+ * overlay empties itself out.
+ */
+export const KNOWN_PROJECT_STATUS: Record<string, ProjectStatus> = Object.fromEntries(
+  PROJECTS_DEFAULTS.items
+    .filter((p): p is Project & { status: ProjectStatus } => !!p.status && p.status !== 'live')
+    .map((p) => [projectHost(p.url), p.status]),
+)
+
 export const ELSEWHERE_DEFAULTS: ElsewhereContent = {
   section_num: { en: '05 / elsewhere', vi: '05 / liên hệ' },
   title: { en: 'Find me online.', vi: 'Tìm tôi trên mạng.' },
