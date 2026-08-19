@@ -1212,6 +1212,87 @@ html:not([data-js]) .timeline::before { transform: scaleY(1); }
 .proj:hover .proj__url { color: var(--accent); }
 .proj__stack { text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
 
+/* ---------- status: live / wip / archived / offline ---------- */
+.proj__head-end {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.proj__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 10.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--fg-dim);
+  background: var(--bg-inset);
+}
+.proj__badge::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+.proj__badge[data-status="live"] {
+  color: var(--accent);
+  border-color: color-mix(in oklab, var(--accent), transparent 60%);
+  background: var(--accent-soft);
+}
+.proj__badge[data-status="live"]::before {
+  animation: livePulse 2.4s ease-in-out infinite;
+}
+@keyframes livePulse {
+  0%, 100% { opacity: 1;  box-shadow: 0 0 0 0 var(--accent-glow); }
+  50%      { opacity: .55; box-shadow: 0 0 0 4px transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .proj__badge[data-status="live"]::before { animation: none; }
+}
+.proj__badge[data-status="wip"] { color: var(--fg-muted); }
+.proj__badge[data-status="archived"],
+.proj__badge[data-status="offline"] { color: var(--fg-dim); }
+.proj__badge[data-status="offline"]::before {
+  background: none;
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+
+/* Non-live cards keep the layout but drop every clickable affordance —
+   no accent hover, no lift, and the URL reads as a former address. */
+.proj--dim {
+  cursor: default;
+  background: color-mix(in oklab, var(--bg-elev), var(--bg) 55%);
+  border-style: dashed;
+}
+.proj--dim .proj__name { color: var(--fg-muted); }
+.proj--dim .proj__desc,
+.proj--dim .proj__foot { color: var(--fg-dim); }
+.proj--dim .proj__url {
+  color: var(--fg-dim);
+  text-decoration: line-through;
+  text-decoration-color: var(--fg-veryDim);
+}
+.proj--dim:hover {
+  border-color: var(--border-strong);
+  --lift: 0px;
+  box-shadow: var(--shadow);
+}
+.proj--dim:hover::before { opacity: 0; }
+.proj--dim:hover .proj__url { color: var(--fg-dim); }
+
+/* "NN / total" — total sits quieter than the live count next to it */
+.projects__total {
+  font-size: var(--t-micro);
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
 /* =============================================================
    ELSEWHERE
    ============================================================= */

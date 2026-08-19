@@ -16,6 +16,16 @@ export const UI_STRINGS = {
     projects: { en: 'Projects', vi: 'Dự án' },
     elsewhere: { en: 'Elsewhere', vi: 'Liên hệ' },
   },
+  projects: {
+    /** Section aside label — the counter next to it only counts live items. */
+    liveLabel: { en: 'live', vi: 'đang chạy' },
+    status: {
+      live: { en: 'Live', vi: 'Đang chạy' },
+      wip: { en: 'In progress', vi: 'Đang làm' },
+      archived: { en: 'Archived', vi: 'Lưu trữ' },
+      offline: { en: 'Offline', vi: 'Đã tắt' },
+    },
+  },
   footer: {
     role: {
       en: 'Software Engineer · Đà Nẵng, Việt Nam',

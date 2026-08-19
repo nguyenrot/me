@@ -103,6 +103,20 @@ export type ExperienceContent = {
   entries: ExperienceEntry[]
 }
 
+/**
+ * Lifecycle of a side project.
+ *
+ *  live     — deployed and reachable; the card links out.
+ *  wip      — being built, not public yet.
+ *  archived — was shipped, kept read-only / no longer maintained.
+ *  offline  — taken down; the domain no longer resolves.
+ *
+ * Anything other than `live` renders as a non-clickable card so the page
+ * never hands a visitor a dead link. Omitted = `live` (CMS payloads that
+ * predate this field keep their old behaviour).
+ */
+export type ProjectStatus = 'live' | 'wip' | 'archived' | 'offline'
+
 export type Project = {
   idx: string
   name: I18nValue
@@ -111,12 +125,16 @@ export type Project = {
   url_label: string
   stack: string
   tone: 'lime' | 'cyan' | 'magenta' | 'amber' | 'violet' | 'rose' | 'emerald'
+  status?: ProjectStatus
 }
 
 export type ProjectsContent = {
   section_num: I18nValue
   title: I18nValue
   aside_label: I18nValue
+  /** Kept for CMS payload compatibility — Projects.vue derives the
+      displayed number from the items that are actually `live`, so the
+      "live" counter can never drift from the cards below it. */
   aside_count: number
   items: Project[]
 }
