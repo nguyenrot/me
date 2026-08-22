@@ -1,8 +1,8 @@
 name: Deploy to VPS
 
+# RETIRED 2026-08-22: me.kynguyen.cc is merged into kynguyen.cc (nguyenrot/vibe-hub).
+# Manual trigger only — pushes must not recreate the me-pkn process.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 concurrency:

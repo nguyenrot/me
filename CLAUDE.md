@@ -1,5 +1,12 @@
 # CLAUDE.md
 
+> **RETIRED 2026-08-22 — merged into `kynguyen.cc` (repo `nguyenrot/vibe-hub`, local `../vibe-hub`).**
+> `me.kynguyen.cc` is now a nginx `301 → https://kynguyen.cc$request_uri`; the PM2 process `me-pkn`
+> was removed and `/var/www/me` is kept only as history. The whole `app/` of this repo was ported
+> into vibe-hub (same CMS sections `me/*`, same cookies, same design) and extended there with the
+> app directory + blog teaser — **make portfolio changes in `../vibe-hub`, not here.**
+> The deploy workflow below is `workflow_dispatch`-only so a stray push cannot resurrect the host.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Important: Nuxt 4 (migrated from Next.js 16)
